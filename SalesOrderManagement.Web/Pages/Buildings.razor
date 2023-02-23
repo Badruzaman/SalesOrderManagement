@@ -3,40 +3,43 @@
 
 @if (Buildings == null)
 {
- <h3>Loading....</h3>
+    <h3>Loading....</h3>
 }
 else
 {
-   <input type="text" @bind="name" placeholder="building name" />
-    <button @onclick="addItem">Add</button>
+    int i = 1;
+    <div>
+    <input type="text" @bind="name" placeholder="building name" />
+    <button class="btn-primary btn-sm" @onclick="addItem">Add</button>
 
-<h3 class="mb-5">Building Info</h3>
-<table>
-    <tr>
-        <th>
-            Name
-        </th>
-    </tr>
-        @foreach (var item in Buildings)
-    {
+    <table class="table-bordered">
         <tr>
-            <td>
-                @item.Name
-            </td>
+            <th>SL</th>
+            <th>
+                Name
+            </th>
+            <th>
+                Action
+            </th>
         </tr>
-    }
-</table>
+        @foreach (var item in Buildings)
+        {
+            <tr>
+                <td>
+                    @(i++)
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    <button class="btn-primary btn-sm">Edit</button>
+                </td>
+            </tr>
+        }
+    </table>
+    </div>
 }
 
-@*
-@code {
-    private DTOBuilding[] buildings;
 
-    protected override async Task OnInitializedAsync()
-    {
-        buildings = await httpClient.GetFromJsonAsync<DTOBuilding[]>("api/Building");
-    }
-}
 
-*@
 

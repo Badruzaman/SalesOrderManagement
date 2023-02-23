@@ -1,0 +1,33 @@
+﻿@page "/Dimension"
+@inherits DimensionBase
+
+@if (Dimensions == null)
+{
+    <h3>Loading Dimension Info....</h3>
+}
+else
+{
+    <h3 class="mb-5">Dimension Info</h3>
+    <table>
+        <tr>
+            <th>
+                Width
+            </th>
+            <th>
+                Height
+            </th>
+        </tr>
+        @foreach (var item in Dimensions)
+        {
+            <tr>
+                <td>
+                    @item.Width
+                </td>
+                <td>
+                    @item.Height
+                </td>
+            </tr>
+        }
+    </table>
+}
+

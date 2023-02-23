@@ -1,0 +1,42 @@
+﻿@page "/Building"
+@inherits BuildingBase
+
+@if (Buildings == null)
+{
+ <h3>Loading....</h3>
+}
+else
+{
+   <input type="text" @bind="name" placeholder="building name" />
+    <button @onclick="addItem">Add</button>
+
+<h3 class="mb-5">Building Info</h3>
+<table>
+    <tr>
+        <th>
+            Name
+        </th>
+    </tr>
+        @foreach (var item in Buildings)
+    {
+        <tr>
+            <td>
+                @item.Name
+            </td>
+        </tr>
+    }
+</table>
+}
+
+@*
+@code {
+    private DTOBuilding[] buildings;
+
+    protected override async Task OnInitializedAsync()
+    {
+        buildings = await httpClient.GetFromJsonAsync<DTOBuilding[]>("api/Building");
+    }
+}
+
+*@
+

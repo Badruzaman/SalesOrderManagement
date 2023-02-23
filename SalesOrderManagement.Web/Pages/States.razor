@@ -1,0 +1,27 @@
+﻿@page "/State"
+@inherits StateBase
+
+@if (States == null)
+{
+ <h3>Loading State Info....</h3>
+}
+else
+{
+    <h3 class="mb-5">State Info</h3>
+<table>
+    <tr>
+        <th>
+            Name
+        </th>
+    </tr>
+        @foreach (var item in States)
+    {
+        <tr>
+            <td>
+                @item.Name
+            </td>
+        </tr>
+    }
+</table>
+}
+

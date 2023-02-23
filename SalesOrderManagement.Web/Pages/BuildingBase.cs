@@ -4,7 +4,7 @@ using SalesOrderManagement.Models.Dtos;
 
 namespace SalesOrderManagement.Web.Pages
 {
-    public class BuildingBase : ComponentBase  
+    public class BuildingBase : ComponentBase
     {
         [Inject]
         public IBuildingService BuildingService { get; set; }
@@ -16,8 +16,13 @@ namespace SalesOrderManagement.Web.Pages
         }
         public async Task addItem()
         {
-            var building = new DTOBuilding { Name = name };
-            await BuildingService.Create(building);
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                var building = new DTOBuilding { Name = name.Trim()};
+                await BuildingService.Create(building);
+                this.name = string.Empty;
+                Buildings = await BuildingService.GetBuildings();
+            }
         }
     }
 }

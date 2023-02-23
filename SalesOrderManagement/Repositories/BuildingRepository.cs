@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SalesOrderManagement.Api.Data;
 using SalesOrderManagement.Api.Entities;
 using SalesOrderManagement.Api.Repositories.Contracts;
@@ -22,7 +23,7 @@ namespace SalesOrderManagement.Api.Repositories
         public async Task<IEnumerable<DTOBuilding>> GetBuildings()
         {
             var buildings = await this._dbContext.Building.ToListAsync();
-            var DTObuilding =  from build in buildings select new DTOBuilding {BuildingId = build.BuildingId ,Name= build.Name };
+            var DTObuilding = from build in buildings select new DTOBuilding { BuildingId = build.BuildingId, Name = build.Name };
             return DTObuilding;
         }
 
@@ -30,9 +31,9 @@ namespace SalesOrderManagement.Api.Repositories
         {
             try
             {
-                var building = new Building { Name = model.Name};
+                var building = new Building { Name = model.Name };
                 _dbContext.Building.Add(building);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)

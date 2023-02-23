@@ -36,21 +36,13 @@ namespace SalesOrderManagement.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error retrieving data from the database");
             }
-
         }
 
         [HttpPost]
-        public async Task<bool>Create(DTOBuilding model)
+        public async Task<ActionResult<bool>> Create(DTOBuilding model)
         {
-            try
-            {
-                var result = await this.buildingRepository.Create(model);
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-            return true;
+            var result = await this.buildingRepository.Create(model);
+            return Ok(result);
         }
 
         //[HttpGet]

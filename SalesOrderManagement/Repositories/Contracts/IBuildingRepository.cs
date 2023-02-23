@@ -1,4 +1,5 @@
-﻿using SalesOrderManagement.Api.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using SalesOrderManagement.Api.Entities;
 using SalesOrderManagement.Models.Dtos;
 
 namespace SalesOrderManagement.Api.Repositories.Contracts
@@ -7,7 +8,7 @@ namespace SalesOrderManagement.Api.Repositories.Contracts
     {
         Task<IEnumerable<DTOBuilding>> GetBuildings();
         Task<Building> GetBuildingById(int id);
-        Task<bool> Create(DTOBuilding name);
+        Task<bool> Create(DTOBuilding model);
 
     }
 }

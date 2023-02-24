@@ -9,34 +9,55 @@ else
 {
     int i = 1;
     <div>
-    <input type="text" @bind="name" placeholder="building name" />
-    <button class="btn-primary btn-sm" @onclick="addItem">Add</button>
+        <div class="row">
+            <div class="col-md-1">
+                <b> Name:</b>
+            </div>
+            <div class="col-md-4">
+               <input class="form-control" type="text" @bind="name" placeholder="building name" />
+            </div>
+            <div class="col-md-1">
+                <button class="btn-primary" @onclick="addItem">Add</button>
+            </div>
+        </div>
+       
+   
+   <div class="row">
+      
+            <div class="col-md-1">
+               
+            </div>
+       <div class="col-md-4">
+                <table class="table">
+                    <tr>
+                        <th>SL</th>
+                        <th class="">
+                            Name
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                    @foreach (var item in Buildings)
+                    {
+                        <tr>
+                            <td>
+                                @(i++)
+                            </td>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                <button class="btn-link">Edit</button>
+                            </td>
+                        </tr>
+                    }
+                </table>
+       </div>
+        
+   </div>
 
-    <table class="table-bordered">
-        <tr>
-            <th>SL</th>
-            <th>
-                Name
-            </th>
-            <th>
-                Action
-            </th>
-        </tr>
-        @foreach (var item in Buildings)
-        {
-            <tr>
-                <td>
-                    @(i++)
-                </td>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    <button class="btn-primary btn-sm">Edit</button>
-                </td>
-            </tr>
-        }
-    </table>
+   
     </div>
 }
 

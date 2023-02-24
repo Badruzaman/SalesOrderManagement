@@ -12,5 +12,7 @@ namespace SalesOrderManagement.Api.Entities
         public int BuildingId { get; set; }
         [StringLength(100)]
         public string Name { get; set; }
+        public int StateId { get; set; }
+
     }
 }

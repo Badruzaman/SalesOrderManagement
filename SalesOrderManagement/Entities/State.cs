@@ -9,8 +9,10 @@ namespace SalesOrderManagement.Api.Entities
 {
     public class State
     {
+     
         public int StateId { get; set; }
         [StringLength(100)]
         public string Name { get; set; }
+       
     }
 }

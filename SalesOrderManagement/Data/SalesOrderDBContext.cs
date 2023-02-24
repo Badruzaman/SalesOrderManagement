@@ -14,9 +14,12 @@ namespace SalesOrderManagement.Api.Data
         public SalesOrderDBContext(DbContextOptions<SalesOrderDBContext> options): base(options)
         {
         }
+        
         public DbSet<Building> Building { get; set; }
-        public DbSet<Dimension> Dimension { get; set; }
         public DbSet<State> State { get; set; }
+        public DbSet<Dimension> Dimension { get; set; }
+        public DbSet<Product> Product { get; set; }
+        public DbSet<ProductAttribute> ProductAttribute { get; set; }
         public DbSet<SalesOrder> SalesOrder { get; set; }
     }
 }

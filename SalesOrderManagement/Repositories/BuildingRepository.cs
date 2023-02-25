@@ -14,16 +14,23 @@ namespace SalesOrderManagement.Api.Repositories
         {
             _dbContext = dbContext;
         }
-        
+
         public async Task<DTOBuilding?> GetBuildingById(int id)
         {
-            var building = await this._dbContext.Building.FindAsync(id);
-            if(building != null)
+            try
             {
-                var DTOBuilding = new DTOBuilding() { BuildingId = building.BuildingId, Name = building.Name };
-                return DTOBuilding;
+                var building = await this._dbContext.Building.FindAsync(id);
+                if (building != null)
+                {
+                    var DTOBuilding = new DTOBuilding() { BuildingId = building.BuildingId, Name = building.Name };
+                    return DTOBuilding;
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
+            catch (Exception)
             {
                 return null;
             }

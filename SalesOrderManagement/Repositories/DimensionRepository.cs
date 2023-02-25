@@ -15,13 +15,22 @@ namespace SalesOrderManagement.Api.Repositories
         }
         public async Task<DTODimension?> GetDimensionById(int id)
         {
-            var dimension = await this._dbContext.Dimension.FindAsync(id);
-            if(dimension != null)
-            {
-                var DTODimension = new DTODimension () { DimensionId = dimension.DimensionId, Width = dimension.Width, Height = dimension.Height };
-                return DTODimension;
+            try
+            {   //exception generate
+                //object m = null;
+                //string s = m.ToString();
+                var dimension = await this._dbContext.Dimension.FindAsync(id);
+                if (dimension != null)
+                {
+                    var DTODimension = new DTODimension() { DimensionId = dimension.DimensionId, Width = dimension.Width, Height = dimension.Height };
+                    return DTODimension;
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
+            catch (Exception)
             {
                 return null;
             }

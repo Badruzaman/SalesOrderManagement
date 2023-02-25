@@ -41,7 +41,15 @@ namespace SalesOrderManagement.Api.Controllers
         public async Task<ActionResult<bool>> Create(DTODimension model)
         {
             var result = await this.DimensionRepository.Create(model);
-            return Ok(result);
+            if (result)
+            {
+                return Ok(model);
+            }
+            else
+            {
+                return NotFound();
+            }
+            
         }
         [HttpGet("id")]
         public async Task<ActionResult<Dimension>> GetDimensionById(int id)

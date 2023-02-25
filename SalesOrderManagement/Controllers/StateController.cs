@@ -37,6 +37,12 @@ namespace SalesOrderManagement.Api.Controllers
             }
 
         }
+        [HttpPost]
+        public async Task<ActionResult<bool>> Create(DTOState model)
+        {
+            var result = await this.StateRepository.Create(model);
+            return Ok(result);
+        }
 
         //[HttpGet]
         //public async Task<ActionResult<State>> GetStateById(int id)

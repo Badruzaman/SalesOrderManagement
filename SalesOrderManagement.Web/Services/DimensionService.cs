@@ -11,6 +11,9 @@ namespace SalesOderManagement.Web.Services
         {
             this._httpClient = httpClient;
         }
+
+
+
         public async Task<IEnumerable<DTODimension>> GetDimensions()
         {
             try
@@ -23,5 +26,10 @@ namespace SalesOderManagement.Web.Services
                 throw ex;
             }
         }
+        public async Task Create(DTODimension model)
+        {
+            await this._httpClient.PostAsJsonAsync("api/Dimension", model);
+        }
+
     }
 }

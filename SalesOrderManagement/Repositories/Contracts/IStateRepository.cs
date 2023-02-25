@@ -1,4 +1,5 @@
 ﻿using SalesOrderManagement.Api.Entities;
+using SalesOrderManagement.Models.Dtos;
 
 namespace SalesOrderManagement.Api.Repositories.Contracts
 {
@@ -6,5 +7,6 @@ namespace SalesOrderManagement.Api.Repositories.Contracts
     {
         Task<IEnumerable<State>> GetStates();
         Task<State> GetStateById(int id);
+        Task<bool> Create(DTOState model);
     }
 }

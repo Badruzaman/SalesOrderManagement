@@ -3,31 +3,69 @@
 
 @if (Dimensions == null)
 {
-    <h3>Loading Dimension Info....</h3>
+    <h3>Loading....</h3>
 }
 else
 {
-    <h3 class="mb-5">Dimension Info</h3>
-    <table>
-        <tr>
-            <th>
-                Width
-            </th>
-            <th>
-                Height
-            </th>
-        </tr>
-        @foreach (var item in Dimensions)
-        {
-            <tr>
-                <td>
-                    @item.Width
-                </td>
-                <td>
-                    @item.Height
-                </td>
-            </tr>
-        }
-    </table>
-}
+    int i = 1;
+    <div>
+        <div class="row">
+            <div class="col-md-1">
+                <b> Width:</b>
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" type="text" @bind="width" placeholder="Enter width" />
+            </div>
+             <div class="col-md-1">
+                <b> Height:</b>
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" type="text" @bind="height" placeholder="Enter height" />
+            </div>
+            <div class="col-md-1">
+                <button class="btn-primary" @onclick="addItem">Add</button>
+            </div>
+        </div>
+        <div class="row">
 
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-4">
+                <table class="table">
+                    <tr>
+                        <th>SL</th>
+                        <th class="">
+                            Width
+                        </th>
+                        <th>
+                            Height
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                    @foreach (var item in Dimensions)
+                    {
+                        <tr>
+                            <td>
+                                @(i++)
+                            </td>
+                            <td>
+                                @item.Width
+                            </td>
+                            <td>
+                                @item.Height
+                            </td>
+                            <td>
+                                <button class="btn-link">Edit</button>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+        </div>
+
+
+    </div>
+}

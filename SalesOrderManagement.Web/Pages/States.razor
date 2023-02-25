@@ -3,25 +3,60 @@
 
 @if (States == null)
 {
- <h3>Loading State Info....</h3>
+    <h3>Loading....</h3>
 }
 else
 {
-    <h3 class="mb-5">State Info</h3>
-<table>
-    <tr>
-        <th>
-            Name
-        </th>
-    </tr>
-        @foreach (var item in States)
-    {
-        <tr>
-            <td>
-                @item.Name
-            </td>
-        </tr>
-    }
-</table>
+    int i = 1;
+    <div>
+        <div class="row">
+            <div class="col-md-1">
+                <b> Name:</b>
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" type="text" @bind="name" placeholder="building name" />
+            </div>
+            <div class="col-md-1">
+                <button class="btn-primary" @onclick="addItem">Add</button>
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-4">
+                <table class="table">
+                    <tr>
+                        <th>SL</th>
+                        <th class="">
+                            Name
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                    @foreach (var item in States)
+                    {
+                        <tr>
+                            <td>
+                                @(i++)
+                            </td>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                <button class="btn-link">Edit</button>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+        </div>
+
+
+    </div>
 }
 

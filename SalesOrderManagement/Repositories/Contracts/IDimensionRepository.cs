@@ -1,4 +1,5 @@
 ﻿using SalesOrderManagement.Api.Entities;
+using SalesOrderManagement.Models.Dtos;
 
 namespace SalesOrderManagement.Api.Repositories.Contracts
 {
@@ -6,5 +7,6 @@ namespace SalesOrderManagement.Api.Repositories.Contracts
     {
         Task<IEnumerable<Dimension>> GetDimensions();
         Task<Dimension> GetDimensionById(int id);
+        Task<bool> Create(DTODimension model);
     }
 }

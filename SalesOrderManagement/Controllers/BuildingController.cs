@@ -31,7 +31,7 @@ namespace SalesOrderManagement.Api.Controllers
                     return Ok(buildings);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error retrieving data from the database");

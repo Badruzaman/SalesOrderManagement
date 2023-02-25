@@ -37,7 +37,12 @@ namespace SalesOrderManagement.Api.Controllers
             }
 
         }
-
+        [HttpPost]
+        public async Task<ActionResult<bool>> Create(DTODimension model)
+        {
+            var result = await this.DimensionRepository.Create(model);
+            return Ok(result);
+        }
         //[HttpGet]
         //public async Task<ActionResult<Dimension>> GetDimensionById(int id)
         //{

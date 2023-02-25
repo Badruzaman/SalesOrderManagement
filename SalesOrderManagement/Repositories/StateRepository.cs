@@ -2,6 +2,7 @@
 using SalesOrderManagement.Api.Data;
 using SalesOrderManagement.Api.Entities;
 using SalesOrderManagement.Api.Repositories.Contracts;
+using SalesOrderManagement.Models.Dtos;
 
 namespace SalesOrderManagement.Api.Repositories
 {
@@ -22,6 +23,20 @@ namespace SalesOrderManagement.Api.Repositories
         {
             var states = await this._dbContext.State.ToListAsync();
             return states;
+        }
+        public async Task<bool> Create(DTOState model)
+        {
+            try
+            {
+                var state = new State { Name = model.Name };
+                _dbContext.State.Add(state);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

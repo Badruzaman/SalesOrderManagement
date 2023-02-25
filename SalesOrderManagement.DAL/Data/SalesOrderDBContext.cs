@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+using Microsoft.EntityFrameworkCore;
+using SalesOrderManagement.DAL.Entities;
+
+namespace SalesOrderManagement.DAL.Data
+{
+    public class SalesOrderDBContext : DbContext
+    {
+        public SalesOrderDBContext(DbContextOptions<SalesOrderDBContext> options): base(options)
+        {
+        }
+        
+        public DbSet<Party> Party { get; set; }
+        //public DbSet<State> State { get; set; }
+        //public DbSet<Dimension> Dimension { get; set; }
+        //public DbSet<Product> Product { get; set; }
+        //public DbSet<ProductAttribute> ProductAttribute { get; set; }
+        //public DbSet<SalesOrder> SalesOrder { get; set; }
+    }
+}

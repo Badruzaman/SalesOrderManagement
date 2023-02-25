@@ -23,5 +23,9 @@ namespace SalesOderManagement.Web.Services
                 throw ex;
             }
         }
+        public async Task Create(DTOState model)
+        {
+            await this._httpClient.PostAsJsonAsync("api/State", model);
+        }
     }
 }

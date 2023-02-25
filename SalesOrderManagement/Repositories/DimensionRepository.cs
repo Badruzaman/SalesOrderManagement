@@ -13,10 +13,18 @@ namespace SalesOrderManagement.Api.Repositories
         {
             _dbContext = dbContext;
         }
-        public async Task<Dimension> GetDimensionById(int id)
+        public async Task<DTODimension?> GetDimensionById(int id)
         {
-            var Dimension = await this._dbContext.Dimension.FindAsync(id);
-            return Dimension;
+            var dimension = await this._dbContext.Dimension.FindAsync(id);
+            if(dimension != null)
+            {
+                var DTODimension = new DTODimension () { DimensionId = dimension.DimensionId, Width = dimension.Width, Height = dimension.Height };
+                return DTODimension;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<IEnumerable<Dimension>> GetDimensions()
@@ -29,11 +37,11 @@ namespace SalesOrderManagement.Api.Repositories
             try
             {
                 var dimension = new Dimension { Width = model.Width, Height = model.Height };
-                _dbContext.Dimension.Add(dimension);
+                await _dbContext.Dimension.AddAsync(dimension);
                 await _dbContext.SaveChangesAsync();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

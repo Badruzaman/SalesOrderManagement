@@ -7,7 +7,7 @@ namespace SalesOrderManagement.Api.Repositories.Contracts
     public interface IBuildingRepository
     {
         Task<IEnumerable<DTOBuilding>> GetBuildings();
-        Task<Building> GetBuildingById(int id);
+        Task<DTOBuilding?> GetBuildingById(int id);
         Task<bool> Create(DTOBuilding model);
 
     }

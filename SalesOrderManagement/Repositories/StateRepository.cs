@@ -13,11 +13,18 @@ namespace SalesOrderManagement.Api.Repositories
         {
             _dbContext = dbContext;
         }
-        public async Task<DTOState> GetStateById(int id)
+        public async Task<DTOState?> GetStateById(int id)
         {
             var state = await this._dbContext.State.FindAsync(id);
-            var DTOState = new DTOState { StateId = state.StateId, Name = state.Name };
-            return DTOState;
+            if(state != null)
+            {
+                var DTOState = new DTOState { StateId = state.StateId, Name = state.Name };
+                return DTOState;
+            }
+            else
+            {
+                return null;
+            }
         }
         public async Task<IEnumerable<DTOState>> GetStates()
         {
@@ -30,7 +37,7 @@ namespace SalesOrderManagement.Api.Repositories
             try
             {
                 var state = new State { Name = model.Name };
-                _dbContext.State.Add(state);
+                await _dbContext.State.AddAsync(state);
                 await _dbContext.SaveChangesAsync();
                 return true;
             }

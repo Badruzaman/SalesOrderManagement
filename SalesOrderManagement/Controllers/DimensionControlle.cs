@@ -43,28 +43,27 @@ namespace SalesOrderManagement.Api.Controllers
             var result = await this.DimensionRepository.Create(model);
             return Ok(result);
         }
-        //[HttpGet]
-        //public async Task<ActionResult<Dimension>> GetDimensionById(int id)
-        //{
-        //    try
-        //    {
-        //        var Dimension = await this.DimensionRepository.GetDimensionById(id);
-        //        if (Dimension == null)
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            return Ok(Dimension);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError,
-        //            "Error retrieving data from the database");
-        //    }
-
-        //}
+        [HttpGet("id")]
+        public async Task<ActionResult<Dimension>> GetDimensionById(int id)
+        {
+            try
+            {
+                var dimension = await this.DimensionRepository.GetDimensionById(id);
+                if (dimension == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Ok(dimension);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
     }
 }
 

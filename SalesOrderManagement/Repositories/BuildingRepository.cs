@@ -14,10 +14,19 @@ namespace SalesOrderManagement.Api.Repositories
         {
             _dbContext = dbContext;
         }
-        public async Task<Building> GetBuildingById(int id)
+        
+        public async Task<DTOBuilding?> GetBuildingById(int id)
         {
             var building = await this._dbContext.Building.FindAsync(id);
-            return building;
+            if(building != null)
+            {
+                var DTOBuilding = new DTOBuilding() { BuildingId = building.BuildingId, Name = building.Name };
+                return DTOBuilding;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<IEnumerable<DTOBuilding>> GetBuildings()
@@ -32,7 +41,7 @@ namespace SalesOrderManagement.Api.Repositories
             try
             {
                 var building = new Building { Name = model.Name, StateId = model.StateId };
-                _dbContext.Building.Add(building);
+                await _dbContext.Building.AddAsync(building);
                 await _dbContext.SaveChangesAsync();
                 return true;
             }

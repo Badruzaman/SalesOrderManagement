@@ -40,32 +40,39 @@ namespace SalesOrderManagement.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<bool>> Create(DTOState model)
         {
-            var result = await this.StateRepository.Create(model);
-            return Ok(result);
+            try
+            {
+                var result = await this.StateRepository.Create(model);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                   "Error storing data in the database");
+            }
         }
 
-        //[HttpGet]
-        //public async Task<ActionResult<State>> GetStateById(int id)
-        //{
-        //    try
-        //    {
-        //        var State = await this.StateRepository.GetStateById(id);
-        //        if (State == null)
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            return Ok(State);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError,
-        //            "Error retrieving data from the database");
-        //    }
-
-        //}
+        [HttpGet("id")]
+        public async Task<ActionResult<DTOState>> GetStateById(int id)
+        {
+            try
+            {
+                var State = await this.StateRepository.GetStateById(id);
+                if (State == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Ok(State);
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
     }
 }
 

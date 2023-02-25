@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SalesOrderManagement.Models.Dtos
+namespace SalesOrderManagement.Models.DTOs
 {
     public class DTOSalesOrder
     {

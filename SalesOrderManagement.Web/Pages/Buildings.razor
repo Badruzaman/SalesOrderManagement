@@ -1,7 +1,7 @@
 ﻿@page "/Building"
 @inherits BuildingBase
 
-@if (Buildings == null)
+@if (Buildings == null && States == null)
 {
     <h3>Loading....</h3>
 }
@@ -11,23 +11,31 @@ else
     <div>
         <div class="row">
             <div class="col-md-1">
+                <b> State:</b>
+            </div>
+           @* <div class="col-md-4">
+                <select class="form-control" @bind="stateId">
+                    <option value="">-- Select State --</option>
+                    @foreach (var state in States)
+                    {
+                        <option value="@state.StateId">@state.Name</option>
+                    }
+                </select>
+            </div>*@
+            <div class="col-md-1">
                 <b> Name:</b>
             </div>
             <div class="col-md-4">
-               <input class="form-control" type="text" @bind="name" placeholder="building name" />
+                <input class="form-control" type="text" @bind="name" placeholder="building name" />
             </div>
             <div class="col-md-1">
                 <button class="btn-primary" @onclick="addItem">Add</button>
             </div>
         </div>
-       
-   
-   <div class="row">
-      
+        <div class="row">
             <div class="col-md-1">
-               
             </div>
-       <div class="col-md-4">
+            <div class="col-md-4">
                 <table class="table">
                     <tr>
                         <th>SL</th>
@@ -53,11 +61,8 @@ else
                         </tr>
                     }
                 </table>
-       </div>
-        
-   </div>
-
-   
+            </div>
+        </div>
     </div>
 }
 

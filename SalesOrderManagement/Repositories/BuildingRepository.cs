@@ -31,7 +31,7 @@ namespace SalesOrderManagement.Api.Repositories
         {
             try
             {
-                var building = new Building { Name = model.Name };
+                var building = new Building { Name = model.Name, StateId = model.StateId };
                 _dbContext.Building.Add(building);
                 await _dbContext.SaveChangesAsync();
                 return true;

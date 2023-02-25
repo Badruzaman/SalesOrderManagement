@@ -13,16 +13,18 @@ namespace SalesOrderManagement.Api.Repositories
         {
             _dbContext = dbContext;
         }
-        public async Task<State> GetStateById(int id)
+        public async Task<DTOState> GetStateById(int id)
         {
             var state = await this._dbContext.State.FindAsync(id);
-            return state;
+            var DTOState = new DTOState { StateId = state.StateId, Name = state.Name };
+            return DTOState;
         }
 
-        public async Task<IEnumerable<State>> GetStates()
+        public async Task<IEnumerable<DTOState>> GetStates()
         {
             var states = await this._dbContext.State.ToListAsync();
-            return states;
+            var DTOState = from state in states select new DTOState { StateId = state.StateId, Name = state.Name };
+            return DTOState;
         }
         public async Task<bool> Create(DTOState model)
         {

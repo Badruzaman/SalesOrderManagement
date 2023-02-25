@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SalesOderManagement.Web.Services;
 using SalesOderManagement.Web.Services.Contracts;
-using SalesOrderManagement.Models.Dtos;
+using SalesOrderManagement.Models.DTOs;
 
 namespace SalesOrderManagement.Web.Pages
 {

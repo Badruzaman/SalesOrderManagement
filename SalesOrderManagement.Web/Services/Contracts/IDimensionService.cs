@@ -1,4 +1,4 @@
-﻿using SalesOrderManagement.Models.Dtos;
+﻿using SalesOrderManagement.Models.DTOs;
 
 namespace SalesOderManagement.Web.Services.Contracts
 {

@@ -2,7 +2,7 @@
 using SalesOrderManagement.Api.Data;
 using SalesOrderManagement.Api.Entities;
 using SalesOrderManagement.Api.Repositories.Contracts;
-using SalesOrderManagement.Models.Dtos;
+using SalesOrderManagement.Models.DTOs;
 
 namespace SalesOrderManagement.Api.Repositories
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SalesOrderManagement.Models.Dtos;
+using SalesOrderManagement.Models.DTOs;
 
 namespace SalesOrderManagement.Api.Controllers
 {

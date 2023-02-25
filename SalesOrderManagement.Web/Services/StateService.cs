@@ -1,5 +1,5 @@
 ﻿using SalesOderManagement.Web.Services.Contracts;
-using SalesOrderManagement.Models.Dtos;
+using SalesOrderManagement.Models.DTOs;
 using System.Net.Http.Json;
 
 namespace SalesOderManagement.Web.Services

@@ -1,4 +1,4 @@
-﻿using SalesOrderManagement.Models.Dtos;
+﻿using SalesOrderManagement.Models.DTOs;
 
 namespace SalesOderManagement.Web.Services.Contracts
 {
@@ -6,5 +6,5 @@ namespace SalesOderManagement.Web.Services.Contracts
     {
         Task<IEnumerable<DTOState>> GetStates();
         Task Create(DTOState model);
-    }
+    }   
 }

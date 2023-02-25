@@ -2,7 +2,7 @@
 using SalesOrderManagement.Api.Data;
 using SalesOrderManagement.Api.Entities;
 using SalesOrderManagement.Api.Repositories.Contracts;
-using SalesOrderManagement.Models.Dtos;
+using SalesOrderManagement.Models.DTOs;
 
 namespace SalesOrderManagement.Api.Repositories
 {
@@ -19,7 +19,6 @@ namespace SalesOrderManagement.Api.Repositories
             var DTOState = new DTOState { StateId = state.StateId, Name = state.Name };
             return DTOState;
         }
-
         public async Task<IEnumerable<DTOState>> GetStates()
         {
             var states = await this._dbContext.State.ToListAsync();
@@ -35,7 +34,7 @@ namespace SalesOrderManagement.Api.Repositories
                 await _dbContext.SaveChangesAsync();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

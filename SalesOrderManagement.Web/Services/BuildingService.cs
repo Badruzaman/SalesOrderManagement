@@ -1,5 +1,5 @@
 ﻿using SalesOderManagement.Web.Services.Contracts;
-using SalesOrderManagement.Models.Dtos;
+using SalesOrderManagement.Models.DTOs;
 using System.Net.Http;
 using System.Net.Http.Json;
 using static System.Net.WebRequestMethods;

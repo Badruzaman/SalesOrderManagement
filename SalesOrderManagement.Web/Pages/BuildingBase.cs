@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SalesOderManagement.Web.Services.Contracts;
-using SalesOrderManagement.Models.Dtos;
+using SalesOrderManagement.Models.DTOs;
 using System.Threading.Tasks;
 
 namespace SalesOrderManagement.Web.Pages

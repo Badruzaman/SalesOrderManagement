@@ -15,8 +15,8 @@ namespace SalesOderManagement.Web.Services
         {
             try
             {
-                var state = await this._httpClient.GetFromJsonAsync<IEnumerable<DTOState>>("api/State");
-                return state;
+                var states = await this._httpClient.GetFromJsonAsync<IEnumerable<DTOState>>("api/State");
+                return states;
             }
             catch (Exception ex)
             {
@@ -26,6 +26,11 @@ namespace SalesOderManagement.Web.Services
         public async Task Create(DTOState model)
         {
             await this._httpClient.PostAsJsonAsync("api/State", model);
+        }
+        public async Task<DTOState> GetStateById(int id)
+        {
+            var state = await this._httpClient.GetFromJsonAsync<DTOState>(@"api/State/GetStateById?id=" + id);
+            return state;
         }
     }
 }

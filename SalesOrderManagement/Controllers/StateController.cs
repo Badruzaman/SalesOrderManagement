@@ -52,7 +52,7 @@ namespace SalesOrderManagement.Api.Controllers
             }
         }
 
-        [HttpGet("id")]
+        [HttpGet("GetStateById")]
         public async Task<ActionResult<DTOState>> GetStateById(int id)
         {
             try

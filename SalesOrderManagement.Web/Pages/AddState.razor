@@ -1,0 +1,40 @@
+﻿@page "/AddState"
+@inherits StateBase
+
+
+@if (States == null)
+{
+    <h3>Loading....</h3>
+}
+else
+{
+    <h3>
+        Add State
+    </h3>
+    <form>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="Name" class="control-label">Name</label>
+                    <input for="Name" class="form-control"
+                       @bind="@state.Name" onfocus="this.value=''" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary"
+                        @onclick="CreateState">
+                        Save
+                    </button>
+                    <button type="button" class="btn btn-warning">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+

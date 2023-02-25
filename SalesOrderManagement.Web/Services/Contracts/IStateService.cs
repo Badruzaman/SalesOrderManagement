@@ -6,5 +6,6 @@ namespace SalesOderManagement.Web.Services.Contracts
     {
         Task<IEnumerable<DTOState>> GetStates();
         Task Create(DTOState model);
+        Task<DTOState> GetStateById(int id);
     }   
 }

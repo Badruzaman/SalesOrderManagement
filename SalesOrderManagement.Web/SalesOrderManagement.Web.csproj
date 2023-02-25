@@ -15,4 +15,8 @@
     <ProjectReference Include="..\SalesOrderManagement.Models\SalesOrderManagement.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\State\" />
+  </ItemGroup>
+
 </Project>

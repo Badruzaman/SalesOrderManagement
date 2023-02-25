@@ -1,0 +1,47 @@
+﻿@page "/StateList"
+@inherits StateBase
+
+<div>
+    <a class="btn btn-primary" href='/AddState'>Add New Data</a>
+</div>
+@if (States == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    int i = 1;
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th style="width:1%">SL</th>
+                <th>Name</th>
+                <th style="text-align:right; width: 10%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (States == null || States.Count() == 0)
+            {
+                <tr>
+                    <td colspan="3">
+                        No Records to display
+                    </td>
+                </tr>
+            }
+            else
+            {
+                foreach (var state in States)
+                {
+                    <tr>
+                        <td>@(i++)</td>
+                        <td>@state.Name</td>
+                        <td style="text-align:right">
+                            @*<a class="btn btn-primary" href='/EditState/@state.StateId'> Edit </a>*@
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+

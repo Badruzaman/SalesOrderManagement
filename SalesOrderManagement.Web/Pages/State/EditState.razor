@@ -1,6 +1,6 @@
 ﻿@page "/State/EditState/{id:int}"
 @inherits StateBase
-@inject NavigationManager NavigationManager
+@inject NavigationManager navigationManager
 
 @if (state == null)
 {
@@ -47,11 +47,11 @@ else
         {
             await StateService.Update(state);
             state.Name = string.Empty;
-            NavigationManager.NavigateTo("/State/StateList");
+            navigationManager.NavigateTo("/State/StateList");
         }
     }
     private void Cancel()
     {
-        NavigationManager.NavigateTo("/State/StateList");
+        navigationManager.NavigateTo("/State/StateList");
     }
 }

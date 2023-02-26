@@ -1,6 +1,6 @@
 ﻿@page "/State/StateList"
 @inherits StateBase
-@inject NavigationManager NavigationManager
+@inject NavigationManager navigationManager
 
 <div>
     <a class="btn btn-primary" href='/State/AddState'>Add New Data</a>
@@ -52,7 +52,7 @@ else
     }
     private void NavigateToEditState(int id)
     {
-        NavigationManager.NavigateTo($"/State/EditState/{id}");
+        navigationManager.NavigateTo($"/State/EditState/{id}");
     }
 }
 

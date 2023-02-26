@@ -1,6 +1,6 @@
 ﻿@page "/State/AddState"
 @inherits StateBase
-@inject NavigationManager NavigationManager
+@inject NavigationManager navigationManager
 
 
 <h3>
@@ -39,13 +39,13 @@
         {
             await StateService.Create(state);
             state.Name = string.Empty;
-            NavigationManager.NavigateTo("/State/StateList");
+            navigationManager.NavigateTo("/State/StateList");
         }
     }
 
     private void Cancel()
     {
-        NavigationManager.NavigateTo("/State/StateList");
+        navigationManager.NavigateTo("/State/StateList");
     }
 }
 

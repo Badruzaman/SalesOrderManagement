@@ -18,19 +18,23 @@ namespace SalesOderManagement.Web.Services
                 var states = await this._httpClient.GetFromJsonAsync<IEnumerable<DTOState>>("api/State");
                 return states;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
         public async Task Create(DTOState model)
         {
             await this._httpClient.PostAsJsonAsync("api/State", model);
         }
-        public async Task<DTOState> GetStateById(int id)
+        public async Task<DTOState?> GetStateById(int id)
         {
-            var state = await this._httpClient.GetFromJsonAsync<DTOState>(@"api/State/GetStateById?id=" + id);
+            var state = await this._httpClient.GetFromJsonAsync<DTOState>("api/State/GetStateById?id=" + id);
             return state;
+        }
+        public async Task Update(DTOState model)
+        {
+           await this._httpClient.PutAsJsonAsync("api/State", model);
         }
     }
 }

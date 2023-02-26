@@ -16,15 +16,12 @@ namespace SalesOrderManagement.Api.Repositories
         public async Task<DTOState?> GetStateById(int id)
         {
             var state = await this._dbContext.State.FindAsync(id);
-            if(state != null)
-            {
-                var DTOState = new DTOState { StateId = state.StateId, Name = state.Name };
-                return DTOState;
-            }
-            else
+            if (state == null)
             {
                 return null;
             }
+            var DTOState = new DTOState { StateId = state.StateId, Name = state.Name };
+            return DTOState;
         }
         public async Task<IEnumerable<DTOState>> GetStates()
         {
@@ -38,8 +35,26 @@ namespace SalesOrderManagement.Api.Repositories
             {
                 var state = new State { Name = model.Name };
                 await _dbContext.State.AddAsync(state);
-                await _dbContext.SaveChangesAsync();
+                var result = await _dbContext.SaveChangesAsync();
                 return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public async Task<bool> Update(DTOState model)
+        {
+            try
+            {
+                var state = await this._dbContext.State.FindAsync(model.StateId);
+                if (state != null)
+                {
+                    state.Name = model.Name;
+                    await _dbContext.SaveChangesAsync();
+                    return true;
+                }
+                return false; 
             }
             catch (Exception)
             {

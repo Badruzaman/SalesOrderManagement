@@ -1,0 +1,51 @@
+﻿@page "/State/AddState"
+@inherits StateBase
+@inject NavigationManager NavigationManager
+
+
+<h3>
+    Add State
+</h3>
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Name" class="control-label">Name</label>
+                <input for="Name" class="form-control" @bind="@state.Name" onfocus="this.value=''" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" @onclick="CreateState">Save</button>
+                <button type="button" class="btn btn-warning" @onclick="Cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        States = await StateService.GetStates();
+    }
+    private async Task CreateState()
+    {
+        if (!string.IsNullOrWhiteSpace(state.Name))
+        {
+            await StateService.Create(state);
+            state.Name = string.Empty;
+            NavigationManager.NavigateTo("/State/StateList");
+        }
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/State/StateList");
+    }
+}
+

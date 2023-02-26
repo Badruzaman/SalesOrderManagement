@@ -1,0 +1,57 @@
+﻿@page "/State/EditState/{id:int}"
+@inherits StateBase
+@inject NavigationManager NavigationManager
+
+@if (state == null)
+{
+    <h3>Loading....</h3>
+}
+else
+{
+    <h3>
+        Edit State
+    </h3>
+    <form>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="Name" class="control-label">Name</label>
+                    <input for="Name" class="form-control"@bind="@state.Name" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary"@onclick="UpdateState"> Save</button>
+                    <button type="button" class="btn btn-warning" @onclick="Cancel"> Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+
+@code
+{
+    [Parameter]
+    public int id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        state = await StateService.GetStateById(id);
+    }
+    private async Task UpdateState()
+    {
+        if (!string.IsNullOrWhiteSpace(state.Name))
+        {
+            await StateService.Update(state);
+            state.Name = string.Empty;
+            NavigationManager.NavigateTo("/State/StateList");
+        }
+    }
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/State/StateList");
+    }
+}

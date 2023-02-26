@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using SalesOrderManagement.Api.Entities;
 using SalesOrderManagement.Api.Repositories.Contracts;
 using SalesOrderManagement.Models.DTOs;
+using System.Net;
+
 namespace SalesOrderManagement.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -30,7 +32,7 @@ namespace SalesOrderManagement.Api.Controllers
                     return Ok(States);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error retrieving data from the database");
@@ -62,15 +64,31 @@ namespace SalesOrderManagement.Api.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    return Ok(State);
-                }
+                return Ok(State);
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error retrieving data from the database");
+            }
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<HttpResponseMessage>> Update(DTOState model)
+        {
+            try
+            {
+                var result = await this.StateRepository.Update(model);
+                if (result)
+                {
+                    return Ok(result);
+                }
+               return BadRequest();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                   "Error storing data in the database");
             }
         }
     }

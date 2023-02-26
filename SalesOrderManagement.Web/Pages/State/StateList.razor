@@ -1,8 +1,9 @@
-﻿@page "/StateList"
+﻿@page "/State/StateList"
 @inherits StateBase
+@inject NavigationManager NavigationManager
 
 <div>
-    <a class="btn btn-primary" href='/AddState'>Add New Data</a>
+    <a class="btn btn-primary" href='/State/AddState'>Add New Data</a>
 </div>
 @if (States == null)
 {
@@ -15,7 +16,7 @@ else
         <thead>
             <tr>
                 <th style="width:1%">SL</th>
-                <th>Name</th>
+                <th>State</th>
                 <th style="text-align:right; width: 10%">Action</th>
             </tr>
         </thead>
@@ -36,12 +37,22 @@ else
                         <td>@(i++)</td>
                         <td>@state.Name</td>
                         <td style="text-align:right">
-                            @*<a class="btn btn-primary" href='/EditState/@state.StateId'> Edit </a>*@
+                            <button class="btn btn-primary" @onclick="@(() => NavigateToEditState(state.StateId))">Edit</button>
                         </td>
                     </tr>
                 }
             }
         </tbody>
     </table>
+}
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        States = await StateService.GetStates();
+    }
+    private void NavigateToEditState(int id)
+    {
+        NavigationManager.NavigateTo($"/State/EditState/{id}");
+    }
 }
 

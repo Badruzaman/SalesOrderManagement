@@ -8,5 +8,6 @@ namespace SalesOrderManagement.Api.Repositories.Contracts
         Task<IEnumerable<DTOState>> GetStates();
         Task<DTOState?> GetStateById(int id);
         Task<bool> Create(DTOState model);
+        Task<bool> Update(DTOState model);
     }
 }

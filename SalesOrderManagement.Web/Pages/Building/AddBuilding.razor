@@ -1,0 +1,81 @@
+﻿@page "/Building/AddBuilding"
+@inherits BuildingBase
+@inject NavigationManager navigationManager
+
+@if (States == null)
+{
+    <h3>
+        Loading...
+    </h3>
+}
+else
+{
+    <h3>
+        Add Building
+    </h3>
+    <form>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="Name" class="control-label">Name</label>
+                    <input for="Name" class="form-control" @bind="@building.Name" onfocus="this.value=''" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Name" class="control-label">State</label>
+                    <select for="State" class="form-control" @bind="@building.StateId">
+                        @foreach (var state in States)
+                        {
+                            <option value="@state.StateId">@state.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" @onclick="CreateBuilding">Save</button>
+                    <button type="button" class="btn btn-warning" @onclick="Cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+        @if (DisplayAlert)
+        {
+            <div class="alert alert-success fade" role="alert">
+                Data Saved Successfully
+            </div>
+        }
+    </form>
+}
+
+@code {
+
+    [Parameter]
+    public bool DisplayAlert { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        States = await StateService.GetStates();
+    }
+    private async Task CreateBuilding()
+    {
+        if (!string.IsNullOrWhiteSpace(building.Name))
+        {
+            var response = await BuildingService.Create(building);
+            if (response.StatusCode.ToString() == "OK")
+            {
+                DisplayAlert = true;
+            }
+            building.Name = string.Empty;
+            navigationManager.NavigateTo("/Building/BuildingList");
+        }
+    }
+    private void Cancel()
+    {
+        navigationManager.NavigateTo("/Building/BuildingList");
+    }
+}
+

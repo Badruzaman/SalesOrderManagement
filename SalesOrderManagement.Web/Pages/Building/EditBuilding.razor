@@ -1,0 +1,57 @@
+﻿@page "/Building/EditBuilding/{id:int}"
+@inherits BuildingBase
+@inject NavigationManager navigationManager
+
+@if (building == null)
+{
+    <h3>Loading....</h3>
+}
+else
+{
+    <h3>
+        Edit Building
+    </h3>
+    <form>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="Name" class="control-label">Name</label>
+                    <input for="Name" class="form-control"@bind="@building.Name" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary"@onclick="UpdateBuilding"> Save</button>
+                    <button type="button" class="btn btn-warning" @onclick="Cancel"> Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+
+@code
+{
+    [Parameter]
+    public int id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //building = await BuildingService.GetBuildingById(id);
+    }
+    private async Task UpdateBuilding()
+    {
+        if (!string.IsNullOrWhiteSpace(building.Name))
+        {
+            //await BuildingService.Update(building);
+            building.Name = string.Empty;
+            navigationManager.NavigateTo("/Building/BuildingList");
+        }
+    }
+    private void Cancel()
+    {
+        navigationManager.NavigateTo("/Building/BuildingList");
+    }
+}

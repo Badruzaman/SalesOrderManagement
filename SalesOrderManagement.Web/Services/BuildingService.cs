@@ -25,9 +25,13 @@ namespace SalesOderManagement.Web.Services
                 throw ex;
             }
         }
-        public async Task Create(DTOBuilding model)
+        public async Task<HttpResponseMessage> Create(DTOBuilding model)
         {
-            await this._httpClient.PostAsJsonAsync("api/Building", model);
+            return await this._httpClient.PostAsJsonAsync("api/Building", model);
+        }
+        public async Task<HttpResponseMessage> Update(DTOBuilding model)
+        {
+            return await this._httpClient.PutAsJsonAsync<DTOBuilding>("api/Building", model);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace SalesOrderManagement.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<bool>> Create(DTOBuilding model)
+        public async Task<ActionResult<HttpResponseMessage>> Create(DTOBuilding model)
         {
             try
             {

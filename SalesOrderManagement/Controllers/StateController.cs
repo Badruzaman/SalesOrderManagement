@@ -18,7 +18,7 @@ namespace SalesOrderManagement.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<State>>> GetStates()
+        public async Task<ActionResult<IEnumerable<DTOState>>> GetStates()
         {
             try
             {

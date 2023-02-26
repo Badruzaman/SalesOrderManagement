@@ -1,0 +1,58 @@
+﻿@page "/Building/BuildingList"
+@inherits BuildingBase
+@inject NavigationManager navigationManager
+
+<div>
+    <a class="btn btn-primary" href='/Building/AddBuilding'>Add New Data</a>
+</div>
+@if (Buildings == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    int i = 1;
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th style="width:1%">SL</th>
+                <th>Building</th>
+                <th style="text-align:right; width: 10%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Buildings == null || Buildings.Count() == 0)
+            {
+                <tr>
+                    <td colspan="3">
+                        No Records to display
+                    </td>
+                </tr>
+            }
+            else
+            {
+                foreach (var Building in Buildings)
+                {
+                    <tr>
+                        <td>@(i++)</td>
+                        <td>@Building.Name</td>
+                        <td style="text-align:right">
+                            <button class="btn btn-primary" @onclick="@(() => NavigateToEditBuilding(Building.BuildingId))">Edit</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        Buildings = await BuildingService.GetBuildings();
+    }
+    private void NavigateToEditBuilding(int id)
+    {
+        navigationManager.NavigateTo($"/Building/EditBuilding/{id}");
+    }
+}
+

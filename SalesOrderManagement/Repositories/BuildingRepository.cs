@@ -52,7 +52,26 @@ namespace SalesOrderManagement.Api.Repositories
                 await _dbContext.SaveChangesAsync();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public async Task<bool> Update(DTOBuilding model)
+        {
+            try
+            {
+                var building = await this._dbContext.Building.FindAsync(model.BuildingId);
+                if (building != null)
+                {
+                    building.Name = model.Name;
+                    building.StateId = model.StateId;
+                    await _dbContext.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
             {
                 return false;
             }

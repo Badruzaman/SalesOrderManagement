@@ -8,5 +8,6 @@ namespace SalesOrderManagement.Api.Repositories.Contracts
         Task<IEnumerable<Dimension>> GetDimensions();
         Task<DTODimension?> GetDimensionById(int id);
         Task<bool> Create(DTODimension model);
+        Task<bool> Update(DTODimension model);
     }
 }

@@ -55,5 +55,24 @@ namespace SalesOrderManagement.Api.Repositories
                 return false;
             }
         }
+        public async Task<bool> Update(DTODimension model)
+        {
+            try
+            {
+                var dimension = await this._dbContext.Dimension.FindAsync(model.DimensionId);
+                if (dimension != null)
+                {
+                    dimension.Width = model.Width;
+                    dimension.Height = model.Height;
+                    await _dbContext.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

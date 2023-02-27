@@ -1,0 +1,60 @@
+﻿@page "/Dimension/DimensionList"
+@inherits DimensionBase
+@inject NavigationManager navigationManager
+
+<div>
+    <a class="btn btn-primary" href='/Dimension/AddDimension'>Add New Data</a>
+</div>
+@if (Dimensions == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    int i = 1;
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th style="width:1%">SL</th>
+                <th>Width</th>
+                <th>Height</th>
+                <th style="text-align:right; width: 10%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Dimensions == null || Dimensions.Count() == 0)
+            {
+                <tr>
+                    <td colspan="3">
+                        No Records to display
+                    </td>
+                </tr>
+            }
+            else
+            {
+                foreach (var dimension in Dimensions)
+                {
+                    <tr>
+                        <td>@(i++)</td>
+                        <td>@dimension.Width</td>
+                        <td>@dimension.Height</td>
+                        <td style="text-align:right">
+                            <button class="btn btn-primary" @onclick="@(() => NavigateToEditDimension(dimension.DimensionId))">Edit</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        Dimensions = await DimensionService.GetDimensions();
+    }
+    private void NavigateToEditDimension(int id)
+    {
+        navigationManager.NavigateTo($"/Dimension/EditDimension/{id}");
+    }
+}
+

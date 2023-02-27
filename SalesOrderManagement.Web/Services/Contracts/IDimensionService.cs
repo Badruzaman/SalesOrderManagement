@@ -6,5 +6,7 @@ namespace SalesOderManagement.Web.Services.Contracts
     {
         Task<IEnumerable<DTODimension>> GetDimensions();
         Task Create(DTODimension model);
+        Task<DTODimension?> GetDimensionById(int id);
+        Task Update(DTODimension model);
     }
 }

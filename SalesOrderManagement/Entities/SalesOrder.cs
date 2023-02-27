@@ -9,10 +9,10 @@ namespace SalesOrderManagement.Api.Entities
             this.SalesOrderDetail = new HashSet<SalesOrderDetail>();
         }
         public int SalesOrderId { get; set; }
-        public int BuildingId { get; set; }
-        public virtual Building Building { get; set; }
-        public int StateId { get; set; }
-        public virtual State State { get; set; }
+        public int BuildingsId { get; set; }
+        public virtual Building Buildings { get; set; }
+        public int StatesId { get; set; }
+        public virtual State States { get; set; }
         public virtual ICollection<SalesOrderDetail> SalesOrderDetail { get; set; }
     }
     public class SalesOrderDetail

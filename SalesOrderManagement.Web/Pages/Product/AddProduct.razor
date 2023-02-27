@@ -1,9 +1,9 @@
 ﻿@page "/Product/AddProduct"
 @inherits ProductBase
 @inject NavigationManager navigationManager
-@using SalesOderManagement.Web.Services.Contracts
 
-@if (States == null)
+
+@if (Products == null)
 {
     <h3>
         Loading...
@@ -19,11 +19,11 @@ else
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="Name" class="control-label">Name</label>
-                    <input for="Name" class="form-control" @bind="@product.Name" onfocus="this.value=''" />
+                    <input for="Name" class="form-control" @bind="@product.ProductName" onfocus="this.value=''" />
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="form-group">
+              @*  <div class="form-group">
                     <label for="Name" class="control-label">State</label>
                     <select for="State" class="form-control" @bind="@product.StateId">
                         <option value="0">--select state--</option>
@@ -32,7 +32,7 @@ else
                             <option value="@state.StateId">@state.Name</option>
                         }
                     </select>
-                </div>
+                </div>*@
             </div>
         </div>
 
@@ -58,22 +58,20 @@ else
     //[Parameter]
     //public bool DisplayAlert { get; set; }
 
-    [Inject]
-    public IStateService StateService { get; set; }
-    IEnumerable<DTOState> States { get; set; }
-    protected override async Task OnInitializedAsync()
-    {
-        States = await StateService.GetStates();
-    }
+   
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    Products = await ProductService.GetProducts();
+    //}
     private async Task CreateProduct()
     {
-        if (!string.IsNullOrWhiteSpace(Product.Name))
+        if (!string.IsNullOrWhiteSpace(product.ProductName))
         {
-            var response = await ProductService.Create(Product);
-            if (response.StatusCode.ToString() == "OK")
-            {
-                //DisplayAlert = true;
-            }
+            await ProductService.Create(product);
+            //if (response.StatusCode.ToString() == "OK")
+            //{
+            //    //DisplayAlert = true;
+            //}
             //Product.pro = string.Empty;
             navigationManager.NavigateTo("/Product/ProductList");
         }

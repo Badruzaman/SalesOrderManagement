@@ -2,7 +2,7 @@
 @inherits ProductBase
 @inject NavigationManager navigationManager
 
-@if (Product == null)
+@if (product == null)
 {
     <h3>Loading....</h3>
 }
@@ -16,7 +16,7 @@ else
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="Name" class="control-label">Name</label>
-                    <input for="Name" class="form-control"@bind="@Product.Name" />
+                    <input for="Name" class="form-control" @bind="@product.ProductName" />
                 </div>
             </div>
         </div>
@@ -39,14 +39,14 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        //Product = await ProductService.GetProductById(id);
+        product = await ProductService.GetProductById(id);
     }
     private async Task UpdateProduct()
     {
-        if (!string.IsNullOrWhiteSpace(Product.Name))
+        if (!string.IsNullOrWhiteSpace(product.ProductName))
         {
             //await ProductService.Update(Product);
-            Product.Name = string.Empty;
+            //Product.Name = string.Empty;
             navigationManager.NavigateTo("/Product/ProductList");
         }
     }

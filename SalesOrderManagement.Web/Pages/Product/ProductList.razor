@@ -17,7 +17,6 @@ else
             <tr>
                 <th style="width:1%">SL</th>
                 <th>Product</th>
-                <th>State</th>
                 <th style="text-align:right; width: 10%">Action</th>
             </tr>
         </thead>
@@ -32,14 +31,13 @@ else
             }
             else
             {
-                foreach (var Product in Products)
+                foreach (var product in Products)
                 {
                     <tr>
                         <td>@(i++)</td>
-                        <td>@Product.Name</td>
-                        <td>@Product.StateName</td>
+                        <td>@product.ProductName</td>
                         <td style="text-align:right">
-                            <button class="btn btn-primary" @onclick="@(() => NavigateToEditProduct(Product.ProductId))">Edit</button>
+                            <button class="btn btn-primary" @onclick="@(() => NavigateToEditProduct(product.ProductId))">Edit</button>
                         </td>
                     </tr>
                 }

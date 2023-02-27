@@ -1,11 +1,11 @@
-﻿@page "/Building/BuildingList"
+﻿@page "/Product/ProductList"
 @inherits ProductBase
 @inject NavigationManager navigationManager
 
 <div>
-    <a class="btn btn-primary" href='/Building/AddBuilding'>Add New Data</a>
+    <a class="btn btn-primary" href='/Product/AddProduct'>Add New Data</a>
 </div>
-@if (Buildings == null)
+@if (Products == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -16,13 +16,13 @@ else
         <thead>
             <tr>
                 <th style="width:1%">SL</th>
-                <th>Building</th>
+                <th>Product</th>
                 <th>State</th>
                 <th style="text-align:right; width: 10%">Action</th>
             </tr>
         </thead>
         <tbody>
-            @if (Buildings == null || Buildings.Count() == 0)
+            @if (Products == null || Products.Count() == 0)
             {
                 <tr>
                     <td colspan="3">
@@ -32,14 +32,14 @@ else
             }
             else
             {
-                foreach (var building in Buildings)
+                foreach (var Product in Products)
                 {
                     <tr>
                         <td>@(i++)</td>
-                        <td>@building.Name</td>
-                        <td>@building.StateName</td>
+                        <td>@Product.Name</td>
+                        <td>@Product.StateName</td>
                         <td style="text-align:right">
-                            <button class="btn btn-primary" @onclick="@(() => NavigateToEditBuilding(building.BuildingId))">Edit</button>
+                            <button class="btn btn-primary" @onclick="@(() => NavigateToEditProduct(Product.ProductId))">Edit</button>
                         </td>
                     </tr>
                 }
@@ -50,11 +50,11 @@ else
 @code {
     protected override async Task OnInitializedAsync()
     {
-        Buildings = await BuildingService.GetBuildings();
+        Products = await ProductService.GetProducts();
     }
-    private void NavigateToEditBuilding(int id)
+    private void NavigateToEditProduct(int id)
     {
-        navigationManager.NavigateTo($"/Building/EditBuilding/{id}");
+        navigationManager.NavigateTo($"/Product/EditProduct/{id}");
     }
 }
 

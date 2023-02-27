@@ -1,4 +1,4 @@
-﻿@page "/Building/AddBuilding"
+﻿@page "/Product/AddProduct"
 @inherits ProductBase
 @inject NavigationManager navigationManager
 @using SalesOderManagement.Web.Services.Contracts
@@ -12,20 +12,20 @@
 else
 {
     <h3>
-        Add Building
+        Add Product
     </h3>
     <form>
         <div class="row">
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="Name" class="control-label">Name</label>
-                    <input for="Name" class="form-control" @bind="@building.Name" onfocus="this.value=''" />
+                    <input for="Name" class="form-control" @bind="@product.Name" onfocus="this.value=''" />
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="Name" class="control-label">State</label>
-                    <select for="State" class="form-control" @bind="@building.StateId">
+                    <select for="State" class="form-control" @bind="@product.StateId">
                         <option value="0">--select state--</option>
                         @foreach (var state in States)
                         {
@@ -39,7 +39,7 @@ else
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary" @onclick="CreateBuilding">Save</button>
+                    <button type="button" class="btn btn-primary" @onclick="CreateProduct">Save</button>
                     <button type="button" class="btn btn-warning" @onclick="Cancel">Cancel</button>
                 </div>
             </div>
@@ -65,22 +65,22 @@ else
     {
         States = await StateService.GetStates();
     }
-    private async Task CreateBuilding()
+    private async Task CreateProduct()
     {
-        if (!string.IsNullOrWhiteSpace(building.Name))
+        if (!string.IsNullOrWhiteSpace(Product.Name))
         {
-            var response = await BuildingService.Create(building);
+            var response = await ProductService.Create(Product);
             if (response.StatusCode.ToString() == "OK")
             {
                 //DisplayAlert = true;
             }
-            building.Name = string.Empty;
-            navigationManager.NavigateTo("/Building/BuildingList");
+            //Product.pro = string.Empty;
+            navigationManager.NavigateTo("/Product/ProductList");
         }
     }
     private void Cancel()
     {
-        navigationManager.NavigateTo("/Building/BuildingList");
+        navigationManager.NavigateTo("/Product/ProductList");
     }
 }
 

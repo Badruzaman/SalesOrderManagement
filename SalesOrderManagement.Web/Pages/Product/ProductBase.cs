@@ -2,7 +2,7 @@
 using SalesOderManagement.Web.Services.Contracts;
 using SalesOrderManagement.Models.DTOs;
 
-namespace SalesOrderManagement.Web.Pages.Building
+namespace SalesOrderManagement.Web.Pages.Product
 {
     public class ProductBase : ComponentBase
     {

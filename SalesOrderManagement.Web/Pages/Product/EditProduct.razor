@@ -1,22 +1,22 @@
-﻿@page "/Building/EditBuilding/{id:int}"
+﻿@page "/Product/EditProduct/{id:int}"
 @inherits ProductBase
 @inject NavigationManager navigationManager
 
-@if (building == null)
+@if (Product == null)
 {
     <h3>Loading....</h3>
 }
 else
 {
     <h3>
-        Edit Building
+        Edit Product
     </h3>
     <form>
         <div class="row">
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="Name" class="control-label">Name</label>
-                    <input for="Name" class="form-control"@bind="@building.Name" />
+                    <input for="Name" class="form-control"@bind="@Product.Name" />
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@ else
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary"@onclick="UpdateBuilding"> Save</button>
+                    <button type="button" class="btn btn-primary"@onclick="UpdateProduct"> Save</button>
                     <button type="button" class="btn btn-warning" @onclick="Cancel"> Cancel</button>
                 </div>
             </div>
@@ -39,19 +39,19 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        //building = await BuildingService.GetBuildingById(id);
+        //Product = await ProductService.GetProductById(id);
     }
-    private async Task UpdateBuilding()
+    private async Task UpdateProduct()
     {
-        if (!string.IsNullOrWhiteSpace(building.Name))
+        if (!string.IsNullOrWhiteSpace(Product.Name))
         {
-            //await BuildingService.Update(building);
-            building.Name = string.Empty;
-            navigationManager.NavigateTo("/Building/BuildingList");
+            //await ProductService.Update(Product);
+            Product.Name = string.Empty;
+            navigationManager.NavigateTo("/Product/ProductList");
         }
     }
     private void Cancel()
     {
-        navigationManager.NavigateTo("/Building/BuildingList");
+        navigationManager.NavigateTo("/Product/ProductList");
     }
 }

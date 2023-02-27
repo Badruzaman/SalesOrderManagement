@@ -35,14 +35,12 @@ namespace SalesOrderManagement.Api.Repositories
                 return null;
             }
         }
-
         public async Task<IEnumerable<DTOBuilding>> GetBuildings()
         {
             var buildings = await this._dbContext.Building.ToListAsync();
-            var DTObuilding = from build in buildings select new DTOBuilding { BuildingId = build.BuildingId, Name = build.Name };
+            var DTObuilding = from building in buildings select new DTOBuilding { BuildingId = building.BuildingId, Name = building.Name, StateId = building.StateId, StateName = building.State.Name };
             return DTObuilding;
         }
-
         public async Task<bool> Create(DTOBuilding model)
         {
             try

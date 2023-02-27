@@ -10,6 +10,8 @@ namespace SalesOrderManagement.Models.DTOs
     {
         public int BuildingId { get; set; }
         public string Name { get; set; }
+        public string StateName { get; set; }
+
         public int StateId { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace SalesOderManagement.Web.Services
         }
         public async Task<DTODimension?> GetDimensionById(int id)
         {
-            var dimension = await this._httpClient.GetFromJsonAsync<DTODimension>("api/State/Dimension?id=" + id);
+            var dimension = await this._httpClient.GetFromJsonAsync<DTODimension>("api/Dimension/GetDimensionById?id=" + id);
             return dimension;
         }
 

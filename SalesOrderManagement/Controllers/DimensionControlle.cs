@@ -30,7 +30,7 @@ namespace SalesOrderManagement.Api.Controllers
                     return Ok(Dimensions);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error retrieving data from the database");
@@ -50,6 +50,24 @@ namespace SalesOrderManagement.Api.Controllers
                 return NotFound();
             }
             
+        }
+        [HttpPut]
+        public async Task<ActionResult<bool>> Update(DTODimension model)
+        {
+            try
+            {
+                var result = await this.DimensionRepository.Update(model);
+                if (result)
+                {
+                    return Ok(result);
+                }
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                   "Error storing data in the database");
+            }
         }
         [HttpGet("GetDimensionById")]
         public async Task<ActionResult<Dimension>> GetDimensionById(int id)

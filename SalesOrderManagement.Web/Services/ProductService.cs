@@ -1,5 +1,6 @@
 ﻿using SalesOderManagement.Web.Services.Contracts;
 using SalesOrderManagement.Models.DTOs;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
 namespace SalesOderManagement.Web.Services
@@ -15,7 +16,7 @@ namespace SalesOderManagement.Web.Services
         {
             try
             {
-                var products = await this._httpClient.GetFromJsonAsync<IEnumerable<DTOProduct>>("api/Product");
+                var products = new List<DTOProduct>(); //await this._httpClient.GetFromJsonAsync<IEnumerable<DTOProduct>>("api/Product");
                 return products;
             }
             catch (Exception)

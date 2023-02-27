@@ -1,38 +1,26 @@
 ﻿@page "/Product/AddProduct"
+@using SalesOderManagement.Web.Services.Contracts;
 @inherits ProductBase
 @inject NavigationManager navigationManager
 
 
-@if (Products == null)
+@if (Dimensions == null)
 {
-    <h3>
-        Loading...
-    </h3>
+    <h3>Loading....</h3>
 }
 else
 {
+    int i = 1;
     <h3>
         Add Product
     </h3>
     <form>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="Name" class="control-label">Name</label>
                     <input for="Name" class="form-control" @bind="@product.ProductName" onfocus="this.value=''" />
                 </div>
-            </div>
-            <div class="col-md-4">
-              @*  <div class="form-group">
-                    <label for="Name" class="control-label">State</label>
-                    <select for="State" class="form-control" @bind="@product.StateId">
-                        <option value="0">--select state--</option>
-                        @foreach (var state in States)
-                        {
-                            <option value="@state.StateId">@state.Name</option>
-                        }
-                    </select>
-                </div>*@
             </div>
         </div>
 
@@ -40,9 +28,9 @@ else
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="Name" class="control-label">Attribute Type</label>
-                    <select for="State" class="form-control" @bind="@product">
+                    <select for="State" class="form-control" @onchange="GetAttributeTypeValue">
                         <option value="0">--select attribute type--</option>
-                        @foreach (var attr in attributes)
+                        @foreach (var attr in Attributes)
                         {
                             <option value="@attr.Id">@attr.Name</option>
                         }
@@ -50,9 +38,56 @@ else
                 </div>
             </div>
             <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Name" class="control-label">Dimension</label>
+                    <select for="dimension" class="form-control" @onchange="GetDimensionIdValue">
+                        <option value="0">--select dimension--</option>
+                        @foreach (var dimension in Dimensions)
+                        {
+                            <option value="@dimension.DimensionId">@(dimension.Width + " X " + dimension.Height)</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    <label for="" class="control-label">Action</label>
+                    <button type="button" class="btn btn-primary" @onclick="AddToList">Add</button>
+                </div>
             </div>
         </div>
+        <div class="row">
 
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th style="width:1%">SL</th>
+                        <th>Attribute Type</th>
+                        <th>Dimension</th>
+                        <th style="text-align:right; width: 10%">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (product.ProductAttributes.Count() > 0)
+                    {
+                        foreach (var item in product.ProductAttributes)
+                        {
+
+                            <tr>
+                                <td>@(i++)</td>
+                                <td>@item.ProductAttributeType</td>
+                                <td>@item.ActualDimension</td>
+                                <td style="text-align:right">
+                                    <button class="btn btn-warning" @onclick="@(() => RemoveFromList(item))">Remove</button>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
@@ -61,34 +96,58 @@ else
                 </div>
             </div>
         </div>
-       @* @if (DisplayAlert)
-        {
-            <div class="alert alert-success fade" role="alert">
-                Data Saved Successfully
-            </div>
-        }*@
     </form>
+
 }
+
 
 @code {
 
-    //[Parameter]
-    //public bool DisplayAlert { get; set; }
+    [Inject]
+    public IDimensionService DimensionService { get; set; }
+    public IEnumerable<DTODimension> Dimensions { get; set; }
+    List<AttributeType> Attributes = new List<AttributeType>();
+    int SelectedAttrValue = 0;
+    int SelectedDimensionId = 0;
 
-    private class AttributeType {
-        public int Id{ get; set; }
-        public string Name{ get; set; }
-    }
-    List<AttributeType> attributes = new List<AttributeType>();
-    protected override void OnInitialized()
+    private class AttributeType
     {
-        attributes = new List<AttributeType>() { new AttributeType { Id = 1, Name = "Doors" }, new AttributeType { Id = 2, Name = "window" } };
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Attributes = new List<AttributeType>() { new AttributeType { Id = 1, Name = "Doors" }, new AttributeType { Id = 2, Name = "window" } };
+        Dimensions = await DimensionService.GetDimensions();
+    }
+
+    void GetAttributeTypeValue(ChangeEventArgs e)
+    {
+        SelectedAttrValue = Convert.ToUInt16(e.Value);
+    }
+    void GetDimensionIdValue(ChangeEventArgs e)
+    {
+        SelectedDimensionId = Convert.ToUInt16(e.Value);
+    }
+
+    private void AddToList()
+    {
+        string type = Attributes.FirstOrDefault(it => it.Id == SelectedAttrValue).Name;
+        var dimension = Dimensions.FirstOrDefault(it => it.DimensionId == SelectedDimensionId);
+        string dim = dimension.Width + " X " + dimension.Height;
+
+        product.ProductAttributes.Add(new ProductAttribute { ProductAttributeType = type, ActualDimension = dim });
+    }
+    void RemoveFromList(ProductAttribute item)
+    {
+        product.ProductAttributes.Remove(item);
     }
     private async Task CreateProduct()
     {
         if (!string.IsNullOrWhiteSpace(product.ProductName))
         {
-            await ProductService.Create(product);
+            //await ProductService.Create(product);
             //if (response.StatusCode.ToString() == "OK")
             //{
             //    //DisplayAlert = true;

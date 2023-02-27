@@ -51,7 +51,7 @@ namespace SalesOrderManagement.Api.Controllers
             }
             
         }
-        [HttpGet("id")]
+        [HttpGet("GetDimensionById")]
         public async Task<ActionResult<Dimension>> GetDimensionById(int id)
         {
             try
@@ -66,7 +66,7 @@ namespace SalesOrderManagement.Api.Controllers
                     return Ok(dimension);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error retrieving data from the database");

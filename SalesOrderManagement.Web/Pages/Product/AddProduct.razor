@@ -39,6 +39,23 @@ else
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
+                    <label for="Name" class="control-label">Attribute Type</label>
+                    <select for="State" class="form-control" @bind="@product">
+                        <option value="0">--select attribute type--</option>
+                        @foreach (var attr in attributes)
+                        {
+                            <option value="@attr.Id">@attr.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
                     <button type="button" class="btn btn-primary" @onclick="CreateProduct">Save</button>
                     <button type="button" class="btn btn-warning" @onclick="Cancel">Cancel</button>
                 </div>
@@ -58,11 +75,15 @@ else
     //[Parameter]
     //public bool DisplayAlert { get; set; }
 
-   
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    Products = await ProductService.GetProducts();
-    //}
+    private class AttributeType {
+        public int Id{ get; set; }
+        public string Name{ get; set; }
+    }
+    List<AttributeType> attributes = new List<AttributeType>();
+    protected override void OnInitialized()
+    {
+        attributes = new List<AttributeType>() { new AttributeType { Id = 1, Name = "Doors" }, new AttributeType { Id = 2, Name = "window" } };
+    }
     private async Task CreateProduct()
     {
         if (!string.IsNullOrWhiteSpace(product.ProductName))

@@ -10,10 +10,10 @@ namespace SalesOrderManagement.Api.Controllers
     [ApiController]
     public class BuildingController : ControllerBase
     {
-        private readonly IBuildingRepository buildingRepository;
-        public BuildingController(IBuildingRepository buildingRepository)
+        private readonly IBuildingRepository BuildingRepository;
+        public BuildingController(IBuildingRepository BuildingRepository)
         {
-            this.buildingRepository = buildingRepository;
+            this.BuildingRepository = BuildingRepository;
         }
 
         [HttpGet]
@@ -21,7 +21,7 @@ namespace SalesOrderManagement.Api.Controllers
         {
             try
             {
-                var buildings = await this.buildingRepository.GetBuildings();
+                var buildings = await this.BuildingRepository.GetBuildings();
                 if (buildings == null)
                 {
                     return NotFound();
@@ -39,11 +39,11 @@ namespace SalesOrderManagement.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<HttpResponseMessage>> Create(DTOBuilding model)
+        public async Task<ActionResult<bool>> Create(DTOBuilding model)
         {
             try
             {
-                var result = await this.buildingRepository.Create(model);
+                var result = await this.BuildingRepository.Create(model);
                 return Ok(result);
             }
             catch (Exception)
@@ -52,13 +52,31 @@ namespace SalesOrderManagement.Api.Controllers
                     "Error storing data in the database");
             }
         }
+        [HttpPut]
+        public async Task<ActionResult<bool>> Update(DTOBuilding model)
+        {
+            try
+            {
+                var result = await this.BuildingRepository.Update(model);
+                if (result)
+                {
+                    return Ok(result);
+                }
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                   "Error storing data in the database");
+            }
+        }
 
-        [HttpGet("id")]
+        [HttpGet("GetBuildingById")]
         public async Task<ActionResult<Building>> GetBuildingById(int id)
         {
             try
             {
-                var building = await this.buildingRepository.GetBuildingById(id);
+                var building = await this.BuildingRepository.GetBuildingById(id);
                 if (building == null)
                 {
                     return NotFound();

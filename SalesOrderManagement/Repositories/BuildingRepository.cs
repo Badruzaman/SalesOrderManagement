@@ -22,7 +22,7 @@ namespace SalesOrderManagement.Api.Repositories
                 var building = await this._dbContext.Building.FindAsync(id);
                 if (building != null)
                 {
-                    var DTOBuilding = new DTOBuilding() { BuildingId = building.BuildingId, Name = building.Name };
+                    var DTOBuilding = new DTOBuilding() { BuildingId = building.BuildingId, Name = building.Name, StateId = building.StateId };
                     return DTOBuilding;
                 }
                 else
@@ -37,7 +37,7 @@ namespace SalesOrderManagement.Api.Repositories
         }
         public async Task<IEnumerable<DTOBuilding>> GetBuildings()
         {
-            var buildings = await this._dbContext.Building.ToListAsync();
+            var buildings = await this._dbContext.Building.Include(it => it.State).ToListAsync();
             var DTObuilding = from building in buildings select new DTOBuilding { BuildingId = building.BuildingId, Name = building.Name, StateId = building.StateId, StateName = building.State.Name };
             return DTObuilding;
         }

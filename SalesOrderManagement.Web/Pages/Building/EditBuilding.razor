@@ -1,6 +1,7 @@
 ﻿@page "/Building/EditBuilding/{id:int}"
-@inherits ProductBase
+@inherits BuildingBase
 @inject NavigationManager navigationManager
+@using SalesOderManagement.Web.Services.Contracts
 
 @if (building == null)
 {
@@ -13,10 +14,22 @@ else
     </h3>
     <form>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="Name" class="control-label">Name</label>
                     <input for="Name" class="form-control"@bind="@building.Name" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Name" class="control-label">State</label>
+                    <select for="State" class="form-control" @bind="@building.StateId">
+                        <option value="0">--select state--</option>
+                        @foreach (var state in States)
+                        {
+                            <option value="@state.StateId">@state.Name</option>
+                        }
+                    </select>
                 </div>
             </div>
         </div>
@@ -37,15 +50,24 @@ else
     [Parameter]
     public int id { get; set; }
 
+    [Inject]
+    public IStateService StateService { get; set; }
+    IEnumerable<DTOState> States { get; set; }
+
+    [Inject]
+    IBuildingService BuildingService { get; set; }
+    public DTOBuilding building { get; set; } = new DTOBuilding();
+
     protected override async Task OnInitializedAsync()
     {
-        //building = await BuildingService.GetBuildingById(id);
+        building = await BuildingService.GetBuildingById(id);
+        States = await StateService.GetStates();
     }
     private async Task UpdateBuilding()
     {
         if (!string.IsNullOrWhiteSpace(building.Name))
         {
-            //await BuildingService.Update(building);
+            await BuildingService.Update(building);
             building.Name = string.Empty;
             navigationManager.NavigateTo("/Building/BuildingList");
         }

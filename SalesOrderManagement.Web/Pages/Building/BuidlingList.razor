@@ -1,5 +1,6 @@
 ﻿@page "/Building/BuildingList"
-@inherits ProductBase
+@using SalesOderManagement.Web.Services.Contracts;
+@inherits BuildingBase
 @inject NavigationManager navigationManager
 
 <div>
@@ -48,6 +49,8 @@ else
     </table>
 }
 @code {
+    [Inject]
+    public IBuildingService BuildingService { get; set; }
     protected override async Task OnInitializedAsync()
     {
         Buildings = await BuildingService.GetBuildings();

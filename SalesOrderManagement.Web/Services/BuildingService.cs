@@ -20,18 +20,23 @@ namespace SalesOderManagement.Web.Services
                 var buildling = await this._httpClient.GetFromJsonAsync<IEnumerable<DTOBuilding>>("api/Building");
                 return buildling;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
-        public async Task<HttpResponseMessage> Create(DTOBuilding model)
+        public async Task<DTOBuilding?> GetBuildingById(int id)
         {
-            return await this._httpClient.PostAsJsonAsync("api/Building", model);
+            var state = await this._httpClient.GetFromJsonAsync<DTOBuilding>("api/Building/GetBuildingById?id=" + id);
+            return state;
         }
-        public async Task<HttpResponseMessage> Update(DTOBuilding model)
+        public async Task Create(DTOBuilding model)
         {
-            return await this._httpClient.PutAsJsonAsync<DTOBuilding>("api/Building", model);
+             await this._httpClient.PostAsJsonAsync("api/Building", model);
+        }
+        public async Task Update(DTOBuilding model)
+        {
+            await this._httpClient.PutAsJsonAsync("api/Building", model);
         }
     }
 }

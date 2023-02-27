@@ -1,5 +1,5 @@
 ﻿@page "/Building/AddBuilding"
-@inherits ProductBase
+@inherits BuildingBase
 @inject NavigationManager navigationManager
 @using SalesOderManagement.Web.Services.Contracts
 
@@ -55,12 +55,13 @@ else
 
 @code {
 
-    //[Parameter]
-    //public bool DisplayAlert { get; set; }
-
     [Inject]
     public IStateService StateService { get; set; }
     IEnumerable<DTOState> States { get; set; }
+    [Inject]
+    IBuildingService BuildingService { get; set; }
+    public DTOBuilding building { get; set; } = new DTOBuilding();
+
     protected override async Task OnInitializedAsync()
     {
         States = await StateService.GetStates();
@@ -69,12 +70,7 @@ else
     {
         if (!string.IsNullOrWhiteSpace(building.Name))
         {
-            var response = await BuildingService.Create(building);
-            if (response.StatusCode.ToString() == "OK")
-            {
-                //DisplayAlert = true;
-            }
-            building.Name = string.Empty;
+            await BuildingService.Create(building);
             navigationManager.NavigateTo("/Building/BuildingList");
         }
     }

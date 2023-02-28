@@ -11,7 +11,7 @@ using SalesOrderManagement.Api.Data;
 namespace SalesOrderManagement.Api.DataAccessMigration.migration
 {
     [DbContext(typeof(SalesOrderDBContext))]
-    [Migration("20230227054012_initial")]
+    [Migration("20230228083807_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -116,11 +116,11 @@ namespace SalesOrderManagement.Api.DataAccessMigration.migration
 
             modelBuilder.Entity("SalesOrderManagement.Api.Entities.SalesOrder", b =>
                 {
-                    b.Property<int>("SalesOrderId")
+                    b.Property<long>("SalesOrderId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SalesOrderId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("SalesOrderId"));
 
                     b.Property<int>("BuildingsId")
                         .HasColumnType("int");
@@ -139,24 +139,24 @@ namespace SalesOrderManagement.Api.DataAccessMigration.migration
 
             modelBuilder.Entity("SalesOrderManagement.Api.Entities.SalesOrderDetail", b =>
                 {
-                    b.Property<int>("SalesOrderDetailId")
+                    b.Property<long>("SalesOrderDetailId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SalesOrderDetailId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("SalesOrderDetailId"));
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("ProductAttributeId")
                         .HasColumnType("int");
 
                     b.Property<int>("QuantityOfWindows")
                         .HasColumnType("int");
 
-                    b.Property<int>("SalesOrderId")
-                        .HasColumnType("int");
+                    b.Property<long>("SalesOrderId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("SalesOrderDetailId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductAttributeId");
 
                     b.HasIndex("SalesOrderId");
 
@@ -232,9 +232,9 @@ namespace SalesOrderManagement.Api.DataAccessMigration.migration
 
             modelBuilder.Entity("SalesOrderManagement.Api.Entities.SalesOrderDetail", b =>
                 {
-                    b.HasOne("SalesOrderManagement.Api.Entities.Product", "Product")
+                    b.HasOne("SalesOrderManagement.Api.Entities.ProductAttribute", "ProductAttribute")
                         .WithMany()
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ProductAttributeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -244,7 +244,7 @@ namespace SalesOrderManagement.Api.DataAccessMigration.migration
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.Navigation("ProductAttribute");
 
                     b.Navigation("SalesOrder");
                 });

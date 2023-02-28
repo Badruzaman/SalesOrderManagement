@@ -8,7 +8,7 @@ namespace SalesOrderManagement.Api.Entities
         {
             this.SalesOrderDetail = new HashSet<SalesOrderDetail>();
         }
-        public int SalesOrderId { get; set; }
+        public long SalesOrderId { get; set; }
         public int BuildingsId { get; set; }
         public virtual Building Buildings { get; set; }
         public int StatesId { get; set; }
@@ -17,11 +17,11 @@ namespace SalesOrderManagement.Api.Entities
     }
     public class SalesOrderDetail
     {
-        public int SalesOrderDetailId { get; set; }
-        public int SalesOrderId { get; set; }
-        public int ProductId { get; set; }
+        public long SalesOrderDetailId { get; set; }
+        public long SalesOrderId { get; set; }
+        public int ProductAttributeId { get; set; }
         public int QuantityOfWindows { get; set; }
         public virtual SalesOrder SalesOrder { get; set; }
-        public virtual Product Product { get; set; }
+        public virtual ProductAttribute ProductAttribute { get; set; }
     }
 }

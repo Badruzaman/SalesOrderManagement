@@ -101,7 +101,7 @@ namespace SalesOrderManagement.Api.DataAccessMigration.migration
                 name: "SalesOrder",
                 columns: table => new
                 {
-                    SalesOrderId = table.Column<int>(type: "int", nullable: false)
+                    SalesOrderId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BuildingsId = table.Column<int>(type: "int", nullable: false),
                     StatesId = table.Column<int>(type: "int", nullable: false)
@@ -127,20 +127,20 @@ namespace SalesOrderManagement.Api.DataAccessMigration.migration
                 name: "SalesOrderDetail",
                 columns: table => new
                 {
-                    SalesOrderDetailId = table.Column<int>(type: "int", nullable: false)
+                    SalesOrderDetailId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SalesOrderId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    SalesOrderId = table.Column<long>(type: "bigint", nullable: false),
+                    ProductAttributeId = table.Column<int>(type: "int", nullable: false),
                     QuantityOfWindows = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SalesOrderDetail", x => x.SalesOrderDetailId);
                     table.ForeignKey(
-                        name: "FK_SalesOrderDetail_Product_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Product",
-                        principalColumn: "ProductId",
+                        name: "FK_SalesOrderDetail_ProductAttribute_ProductAttributeId",
+                        column: x => x.ProductAttributeId,
+                        principalTable: "ProductAttribute",
+                        principalColumn: "ProductAttributeId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SalesOrderDetail_SalesOrder_SalesOrderId",
@@ -176,9 +176,9 @@ namespace SalesOrderManagement.Api.DataAccessMigration.migration
                 column: "StatesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SalesOrderDetail_ProductId",
+                name: "IX_SalesOrderDetail_ProductAttributeId",
                 table: "SalesOrderDetail",
-                column: "ProductId");
+                column: "ProductAttributeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SalesOrderDetail_SalesOrderId",
@@ -190,19 +190,19 @@ namespace SalesOrderManagement.Api.DataAccessMigration.migration
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "SalesOrderDetail");
+
+            migrationBuilder.DropTable(
                 name: "ProductAttribute");
 
             migrationBuilder.DropTable(
-                name: "SalesOrderDetail");
+                name: "SalesOrder");
 
             migrationBuilder.DropTable(
                 name: "Dimension");
 
             migrationBuilder.DropTable(
                 name: "Product");
-
-            migrationBuilder.DropTable(
-                name: "SalesOrder");
 
             migrationBuilder.DropTable(
                 name: "Building");

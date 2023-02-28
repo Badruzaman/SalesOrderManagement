@@ -68,9 +68,9 @@ else
                     </tr>
                 </thead>
                 <tbody>
-                    @if (product.DTOProductAttribute.Count() > 0)
+                    @if (product.DTOProductAttributes.Count() > 0)
                     {
-                        foreach (var item in product.DTOProductAttribute)
+                        foreach (var item in product.DTOProductAttributes)
                         {
                             <tr>
                                 <td>@(i++)</td>
@@ -124,11 +124,11 @@ else
         string type = Attributes.FirstOrDefault(it => it.Id == SelectedAttrValue).Name;
         var dimension = Dimensions.FirstOrDefault(it => it.DimensionId == SelectedDimensionId);
         string actualDimension = dimension.Width + " X " + dimension.Height;
-        product.DTOProductAttribute.Add(new DTOProductAttribute { ProductAttributeType = type, DimensionId = SelectedDimensionId, ActualDimension = actualDimension });
+        product.DTOProductAttributes.Add(new DTOProductAttribute { ProductAttributeType = type, DimensionId = SelectedDimensionId, ActualDimension = actualDimension });
     }
     void RemoveFromList(DTOProductAttribute item)
     {
-        product.DTOProductAttribute.Remove(item);
+        product.DTOProductAttributes.Remove(item);
     }
     private async Task CreateProduct()
     {

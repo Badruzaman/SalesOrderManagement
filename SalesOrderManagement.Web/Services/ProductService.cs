@@ -16,7 +16,7 @@ namespace SalesOderManagement.Web.Services
         {
             try
             {
-                var products = new List<DTOProduct>(); //await this._httpClient.GetFromJsonAsync<IEnumerable<DTOProduct>>("api/Product");
+                var products = await this._httpClient.GetFromJsonAsync<IEnumerable<DTOProduct>>("api/Product");
                 return products;
             }
             catch (Exception)

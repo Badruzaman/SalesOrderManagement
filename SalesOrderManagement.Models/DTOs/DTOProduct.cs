@@ -10,13 +10,13 @@ namespace SalesOrderManagement.Models.DTOs
     {
         public DTOProduct()
         {
-            this.ProductAttributes = new List<ProductAttribute>();
+            this.DTOProductAttribute = new List<DTOProductAttribute>();
         }
         public int ProductId { get; set; }
         public string? ProductName { get; set; }
-        public List<ProductAttribute> ProductAttributes { get; set; }
+        public List<DTOProductAttribute?> DTOProductAttribute { get; set; }
     }
-    public class ProductAttribute
+    public class DTOProductAttribute
     {
         public int ProductAttributeId { get; set; }
         public string? ProductAttributeType { get; set; }

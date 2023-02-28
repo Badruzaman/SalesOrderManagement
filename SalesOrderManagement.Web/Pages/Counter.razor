@@ -1,18 +1,45 @@
 ﻿@page "/counter"
 
-<PageTitle>Counter</PageTitle>
+<h1>Client-Side Example</h1>
 
-<h1>Counter</h1>
+<p>Add or remove items from the list:</p>
 
-<p role="status">Current count: @currentCount</p>
+<div class="row">
+    <div class="col-md-6">
+        <input type="text" class="form-control" @bind-value="@newItemText" />
+    </div>
+    <div class="col-md-6">
+        <button class="btn btn-primary" @onclick="AddItem">Add Item</button>
+    </div>
+</div>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
-
-@code {
-    private int currentCount = 0;
-
-    private void IncrementCount()
+<ul>
+    @foreach (var item in items)
     {
-        currentCount++;
+        <li>@item <button class="btn btn-danger btn-sm" @onclick="() => DeleteItem(item)">Delete</button></li>
+    }
+</ul>
+
+@code 
+{
+    private List<string> items = new List<string>();
+    private string newItemText;
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+    private void AddItem()
+    {
+        if (!string.IsNullOrEmpty(newItemText))
+        {
+            items.Add(newItemText);
+            newItemText = string.Empty;
+        }
+    }
+
+    private void DeleteItem(string item)
+    {
+        items.Remove(item);
     }
 }

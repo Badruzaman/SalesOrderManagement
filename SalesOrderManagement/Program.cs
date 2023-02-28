@@ -16,6 +16,7 @@ builder.Services.AddDbContext<SalesOrderDBContext>(options => options.UseSqlServ
 builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IDimensionRepository, DimensionRepository>();
 builder.Services.AddScoped<IStateRepository, StateRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

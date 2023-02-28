@@ -68,11 +68,10 @@ else
                     </tr>
                 </thead>
                 <tbody>
-                    @if (product.ProductAttributes.Count() > 0)
+                    @if (product.DTOProductAttribute.Count() > 0)
                     {
-                        foreach (var item in product.ProductAttributes)
+                        foreach (var item in product.DTOProductAttribute)
                         {
-
                             <tr>
                                 <td>@(i++)</td>
                                 <td>@item.ProductAttributeType</td>
@@ -83,7 +82,6 @@ else
                             </tr>
                         }
                     }
-
 
                 </tbody>
             </table>
@@ -103,19 +101,9 @@ else
 
 @code {
 
-    [Inject]
-    public IDimensionService DimensionService { get; set; }
-    public IEnumerable<DTODimension> Dimensions { get; set; }
-    List<AttributeType> Attributes = new List<AttributeType>();
     int SelectedAttrValue = 0;
     int SelectedDimensionId = 0;
-
-    private class AttributeType
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
-
+    public List<AttributeType> Attributes = new List<AttributeType>();
     protected override async Task OnInitializedAsync()
     {
         Attributes = new List<AttributeType>() { new AttributeType { Id = 1, Name = "Doors" }, new AttributeType { Id = 2, Name = "window" } };
@@ -135,24 +123,22 @@ else
     {
         string type = Attributes.FirstOrDefault(it => it.Id == SelectedAttrValue).Name;
         var dimension = Dimensions.FirstOrDefault(it => it.DimensionId == SelectedDimensionId);
-        string dim = dimension.Width + " X " + dimension.Height;
-
-        product.ProductAttributes.Add(new ProductAttribute { ProductAttributeType = type, ActualDimension = dim });
+        string actualDimension = dimension.Width + " X " + dimension.Height;
+        product.DTOProductAttribute.Add(new DTOProductAttribute { ProductAttributeType = type, DimensionId = SelectedDimensionId, ActualDimension = actualDimension });
     }
-    void RemoveFromList(ProductAttribute item)
+    void RemoveFromList(DTOProductAttribute item)
     {
-        product.ProductAttributes.Remove(item);
+        product.DTOProductAttribute.Remove(item);
     }
     private async Task CreateProduct()
     {
         if (!string.IsNullOrWhiteSpace(product.ProductName))
         {
-            //await ProductService.Create(product);
+            await ProductService.Create(product);
             //if (response.StatusCode.ToString() == "OK")
             //{
             //    //DisplayAlert = true;
             //}
-            //Product.pro = string.Empty;
             navigationManager.NavigateTo("/Product/ProductList");
         }
     }

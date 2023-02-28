@@ -26,8 +26,7 @@ namespace SalesOrderManagement.Api.Repositories
         }
         public async Task<IEnumerable<DTOProduct>> GetProducts()
         {
-            var Products = await this._dbContext.Product.Include(it => it.ProductAttribute).Include(_it => _it.ProductAttribute).ToListAsync();
-            var DTOProducts = Products
+            var DTOProducts = await this._dbContext.Product
             .Select(it => new DTOProduct
             {
                 ProductId = it.ProductId,
@@ -36,12 +35,10 @@ namespace SalesOrderManagement.Api.Repositories
                 {
                     ProductAttributeId = _it.ProductAttributeId,
                     ProductAttributeType = _it.ProductAttributeType,
-                    DimensionId = _it.DimensionId
-                    //Width = _it.Dimension.Width,
-                    //Height = _it.Dimension.Height
+                    DimensionId = _it.DimensionId,
+                    ActualDimension = _it.Dimension.Width + " X " + _it.Dimension.Height
                 }).ToList()
-            }).ToList();
-
+            }).ToListAsync();
             return DTOProducts;
         }
         public async Task<bool> Create(DTOProduct model)

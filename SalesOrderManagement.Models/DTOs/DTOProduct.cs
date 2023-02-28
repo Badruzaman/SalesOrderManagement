@@ -24,7 +24,7 @@ namespace SalesOrderManagement.Models.DTOs
         public int ProductId { get; set; }
         public string? Width { get; set; }
         public string? Height { get; set; }
-        public DTODimension DTODimension { get; set; }
+        public DTODimension? DTODimension { get; set; }
         public string? ActualDimension { get; set; }
     }
                    

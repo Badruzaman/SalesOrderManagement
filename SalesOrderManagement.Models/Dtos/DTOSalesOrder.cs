@@ -11,37 +11,22 @@ namespace SalesOrderManagement.Models.DTOs
     {
         public DTOSalesOrder()
         {
-            this.SalesOrderItems = new HashSet<SalesOrderItems>();
+            this.DTOSalesOrderDetails = new List<DTOSalesOrderDetail>();
         }
-        public int SalesOrderId { get; set; }
-        public int BuildingId { get; set; }
-        public int StateId { get; set; }
-        public string  Building { get; set; }
-        public string State  { get; set; }
-        public virtual ICollection<SalesOrderItems> SalesOrderItems { get; set; }
+        public long SalesOrderId { get; set; }
+        public int BuildingsId { get; set; }
+        public DTOBuilding Building { get; set; }
+        public int StatesId { get; set; }
+        public DTOState State  { get; set; }
+        public List<DTOSalesOrderDetail> DTOSalesOrderDetails { get; set; }
     }
-    public class SalesOrderItems
+    public class DTOSalesOrderDetail
     {
-        public SalesOrderItems()
-        {
-            this.SalesOrderItemDetails = new HashSet<SalesOrderItemDetails>();
-        }
-        public int SalesOrderItemsId { get; set; }
-        public int SalesOrderId { get; set; }
-        public string Name { get; set; }
+        public long SalesOrderDetailId { get; set; }
+        public long SalesOrderId { get; set; }
+        public int ProductAttributeId { get; set; }
         public int QuantityOfWindows { get; set; }
-        public int TotalSubElements { get; set; }
-        public  DTOSalesOrder SalesOrder { get; set; }
-        public  ICollection<SalesOrderItemDetails> SalesOrderItemDetails { get; set; }
-    }
-    public class SalesOrderItemDetails
-    {
-        public int SalesOrderItemDetailsId { get; set; }
-        public int SalesOrderItemsId { get; set; }
-        public int Element { get; set; }
-        public string Type { get; set; }
-        public int DimensionId { get; set; }
-        public string  Dimension { get; set; }
-        public  SalesOrderItems SalesOrderItems { get; set; }
+        public DTOSalesOrder SalesOrder { get; set; }
+        public DTOProductAttribute ProductAttribute { get; set; }
     }
 }

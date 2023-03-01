@@ -6,7 +6,7 @@ using SalesOrderManagement.Models.DTOs;
 
 namespace SalesOrderManagement.Api.Repositories
 {
-    public class SalesOrderRepository : ISalesOrder
+    public class SalesOrderRepository : ISalesOrderRepository
     {
 
         private readonly SalesOrderDBContext _dbContext;

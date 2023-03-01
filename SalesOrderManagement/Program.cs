@@ -17,6 +17,7 @@ builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
 builder.Services.AddScoped<IDimensionRepository, DimensionRepository>();
 builder.Services.AddScoped<IStateRepository, StateRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ISalesOrderRepository, SalesOrderRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

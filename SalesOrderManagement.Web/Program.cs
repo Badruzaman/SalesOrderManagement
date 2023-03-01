@@ -13,5 +13,6 @@ builder.Services.AddScoped<IBuildingService, BuildingService>();
 builder.Services.AddScoped<IStateService, StateService>();
 builder.Services.AddScoped<IDimensionService, DimensionService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ISalesOrderService, SalesOrderService>();
 
 await builder.Build().RunAsync();

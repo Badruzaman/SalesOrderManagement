@@ -1,4 +1,4 @@
-﻿@page "/Product/AddProduct"
+﻿@page "/SalesOrder/AddSalesOrder"
 @using SalesOderManagement.Web.Services.Contracts;
 @inherits SalesOrderBase
 @inject NavigationManager navigationManager
@@ -12,14 +12,14 @@ else
 {
     int i = 1;
     <h3>
-        Add Product
+        Add SalesOrder
     </h3>
     <form>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="Name" class="control-label">Name</label>
-                    <input for="Name" class="form-control" @bind="@product.ProductName" onfocus="this.value=''" />
+                   @* <input for="Name" class="form-control" @bind="@SalesOrder.SalesOrderName" onfocus="this.value=''" />*@
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@ else
                     </select>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div class="form-group">
                     <label for="" class="control-label">Action</label>
                     <button type="button" class="btn btn-primary" @onclick="AddToList">Add</button>
@@ -68,20 +68,20 @@ else
                     </tr>
                 </thead>
                 <tbody>
-                    @if (product.DTOProductAttributes.Count() > 0)
+                 @*   @if (SalesOrder.DTOSalesOrderAttributes.Count() > 0)
                     {
-                        foreach (var item in product.DTOProductAttributes)
+                        foreach (var item in SalesOrder.DTOSalesOrderAttributes)
                         {
                             <tr>
                                 <td>@(i++)</td>
-                                <td>@item.ProductAttributeType</td>
+                                <td>@item.SalesOrderAttributeType</td>
                                 <td>@item.ActualDimension</td>
                                 <td style="text-align:right">
                                     <button class="btn btn-warning" @onclick="@(() => RemoveFromList(item))">Remove</button>
                                 </td>
                             </tr>
                         }
-                    }
+                    }*@
 
                 </tbody>
             </table>
@@ -89,7 +89,7 @@ else
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary" @onclick="CreateProduct">Save</button>
+                    <button type="button" class="btn btn-primary" @onclick="CreateSalesOrder">Save</button>
                     <button type="button" class="btn btn-warning" @onclick="Cancel">Cancel</button>
                 </div>
             </div>
@@ -124,27 +124,27 @@ else
         string type = Attributes.FirstOrDefault(it => it.Id == SelectedAttrValue).Name;
         var dimension = Dimensions.FirstOrDefault(it => it.DimensionId == SelectedDimensionId);
         string actualDimension = dimension.Width + " X " + dimension.Height;
-        product.DTOProductAttributes.Add(new DTOProductAttribute { ProductAttributeType = type, DimensionId = SelectedDimensionId, ActualDimension = actualDimension });
+        //SalesOrder.DTOSalesOrderAttributes.Add(new DTOSalesOrderAttribute { SalesOrderAttributeType = type, DimensionId = SelectedDimensionId, ActualDimension = actualDimension });
     }
-    void RemoveFromList(DTOProductAttribute item)
+    //void RemoveFromList(DTOSalesOrderAttribute item)
+    //{
+    //    SalesOrder.DTOSalesOrderAttributes.Remove(item);
+    //}
+    private async Task CreateSalesOrder()
     {
-        product.DTOProductAttributes.Remove(item);
-    }
-    private async Task CreateProduct()
-    {
-        if (!string.IsNullOrWhiteSpace(product.ProductName))
+        if (true)
         {
-            await ProductService.Create(product);
+            await SalesOrderService.Create(SalesOrder);
             //if (response.StatusCode.ToString() == "OK")
             //{
             //    //DisplayAlert = true;
             //}
-            navigationManager.NavigateTo("/Product/ProductList");
+            navigationManager.NavigateTo("/SalesOrder/SalesOrderList");
         }
     }
     private void Cancel()
     {
-        navigationManager.NavigateTo("/Product/ProductList");
+        navigationManager.NavigateTo("/SalesOrder/SalesOrderList");
     }
 }
 

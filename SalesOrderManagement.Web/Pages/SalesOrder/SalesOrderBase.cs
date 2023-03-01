@@ -2,17 +2,17 @@
 using SalesOderManagement.Web.Services.Contracts;
 using SalesOrderManagement.Models.DTOs;
 
-namespace SalesOrderManagement.Web.Pages.Product
+namespace SalesOrderManagement.Web.Pages.SalesOrder
 {
     public class SalesOrderBase : ComponentBase
     {
         [Inject]
-        public IProductService ProductService { get; set; }
-        public IEnumerable<DTOProduct> Products { get; set; }
+        public ISalesOrderService SalesOrderService { get; set; }
+        public IEnumerable<DTOSalesOrder> SalesOrders { get; set; }
         [Inject]
         public IDimensionService DimensionService { get; set; }
         public IEnumerable<DTODimension> Dimensions { get; set; }
-        public DTOProduct product { get; set; } = new DTOProduct();
+        public DTOSalesOrder SalesOrder { get; set; } = new DTOSalesOrder();
         public int AttributeTypeId { get; set; }
         
     }

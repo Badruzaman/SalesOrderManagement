@@ -1,22 +1,22 @@
-﻿@page "/Product/EditProduct/{id:int}"
+﻿@page "/SalesOrder/EditSalesOrder/{id:int}"
 @inherits SalesOrderBase
 @inject NavigationManager navigationManager
 
-@if (product == null)
+@if (SalesOrder == null)
 {
     <h3>Loading....</h3>
 }
 else
 {
     <h3>
-        Edit Product
+        Edit SalesOrder
     </h3>
     <form>
-        <div class="row">
+       @* <div class="row">
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="Name" class="control-label">Name</label>
-                    <input for="Name" class="form-control" @bind="@product.ProductName" />
+                    <input for="Name" class="form-control" @bind="@SalesOrder.SalesOrderName" />
                 </div>
             </div>
         </div>
@@ -24,11 +24,11 @@ else
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary"@onclick="UpdateProduct"> Save</button>
+                    <button type="button" class="btn btn-primary"@onclick="UpdateSalesOrder"> Save</button>
                     <button type="button" class="btn btn-warning" @onclick="Cancel"> Cancel</button>
                 </div>
             </div>
-        </div>
+        </div>*@
     </form>
 }
 
@@ -39,19 +39,19 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        product = await ProductService.GetProductById(id);
+        SalesOrder = await SalesOrderService.GetSalesOrderById(id);
     }
-    private async Task UpdateProduct()
+    private async Task UpdateSalesOrder()
     {
-        if (!string.IsNullOrWhiteSpace(product.ProductName))
+        if (true)
         {
-            //await ProductService.Update(Product);
-            //Product.Name = string.Empty;
-            navigationManager.NavigateTo("/Product/ProductList");
+            //await SalesOrderService.Update(SalesOrder);
+            //SalesOrder.Name = string.Empty;
+            navigationManager.NavigateTo("/SalesOrder/SalesOrderList");
         }
     }
     private void Cancel()
     {
-        navigationManager.NavigateTo("/Product/ProductList");
+        navigationManager.NavigateTo("/SalesOrder/SalesOrderList");
     }
 }

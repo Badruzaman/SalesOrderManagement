@@ -2,11 +2,11 @@
 
 namespace SalesOderManagement.Web.Services.Contracts
 {
-    public interface IProductService
+    public interface ISalesOrderService
     {
-        Task<IEnumerable<DTOProduct>> GetProducts();
-        Task Create(DTOProduct model);
-        Task<DTOProduct?> GetProductById(int id);
-        Task Update(DTOProduct model);
+        Task<IEnumerable<DTOSalesOrder>> GetSalesOrders();
+        Task Create(DTOSalesOrder model);
+        Task<DTOSalesOrder?> GetSalesOrderById(int id);
+        Task Update(DTOSalesOrder model);
     }   
 }

@@ -55,13 +55,6 @@ else
 
 @code {
 
-    [Inject]
-    public IStateService StateService { get; set; }
-    IEnumerable<DTOState> States { get; set; }
-    [Inject]
-    IBuildingService BuildingService { get; set; }
-    public DTOBuilding building { get; set; } = new DTOBuilding();
-
     protected override async Task OnInitializedAsync()
     {
         States = await StateService.GetStates();

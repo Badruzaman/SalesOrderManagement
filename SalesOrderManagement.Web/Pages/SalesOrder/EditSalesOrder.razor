@@ -2,7 +2,7 @@
 @inherits SalesOrderBase
 @inject NavigationManager navigationManager
 
-@if (SalesOrder == null)
+@if (salesOrder == null)
 {
     <h3>Loading....</h3>
 }
@@ -39,7 +39,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        SalesOrder = await SalesOrderService.GetSalesOrderById(id);
+        salesOrder = await SalesOrderService.GetSalesOrderById(id);
     }
     private async Task UpdateSalesOrder()
     {

@@ -78,5 +78,19 @@ namespace SalesOrderManagement.Api.Repositories
                 return false;
             }
         }
+
+        public async Task<IEnumerable<DTOProductAttribute?>> GetProductAttributesByProductId(int id)
+        {
+            var DTOProductAttributes = await this._dbContext.ProductAttribute.Where(x => x.ProductId == id)
+            .Select(it => new DTOProductAttribute
+            {
+                ProductAttributeId = it.ProductAttributeId,
+                ProductId = it.ProductId,
+                ProductAttributeType = it.ProductAttributeType,
+                ActualDimension = it.Dimension.Width + " X " + it.Dimension.Height,
+                ProductAttributeName = it.ProductAttributeType + " " + it.Dimension.Width + " X " + it.Dimension.Height
+            }).ToListAsync();
+            return DTOProductAttributes;
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace SalesOrderManagement.Api.Repositories.Contracts
         Task<DTOProduct?> GetProductById(int id);
         Task<bool> Create(DTOProduct model);
         Task<bool> Update(DTOProduct model);
+        Task<IEnumerable<DTOProductAttribute?>> GetProductAttributesByProductId(int id);
     }
 }

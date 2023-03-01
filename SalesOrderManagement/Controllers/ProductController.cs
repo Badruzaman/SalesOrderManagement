@@ -91,6 +91,25 @@ namespace SalesOrderManagement.Api.Controllers
                    "Error storing data in the database");
             }
         }
+
+        [HttpGet("GetProductAttributesByProductId")]
+        public async Task<ActionResult<DTOProductAttribute>> GetProductAttributesByProductId(int id)
+        {
+            try
+            {
+                var ProductAttribute = await this.ProductRepository.GetProductAttributesByProductId(id);
+                if (ProductAttribute == null)
+                {
+                    return NotFound();
+                }
+                return Ok(ProductAttribute);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
     }
 }
 

@@ -16,35 +16,29 @@ namespace SalesOrderManagement.Api.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<DTOSalesOrder> GetSalesOrderById(long id)
+        public async Task<DTOSalesOrder?> GetSalesOrderById(long id)
         {
             try
             {
-                var salesOrder = await this._dbContext.SalesOrder.FindAsync(id);
+                var salesOrder = await this._dbContext.SalesOrder.Where(it => it.SalesOrderId == id).Include(_it=>_it.SalesOrderDetail).FirstOrDefaultAsync();
                 if (salesOrder == null)
                 {
                     return null;
                 }
-                var DTOSalesOrder = new DTOSalesOrder { SalesOrderId = salesOrder.SalesOrderId, BuildingsId = salesOrder.BuildingsId, StatesId = salesOrder.StatesId };
+                var DTOSalesOrder = new DTOSalesOrder
+                {
+                    SalesOrderId = salesOrder.SalesOrderId,
+                    BuildingsId = salesOrder.BuildingsId,
+                    StatesId = salesOrder.StatesId,
+                    DTOSalesOrderDetails = salesOrder.SalesOrderDetail.Select(_it => new DTOSalesOrderDetail
+                    {
+                        SalesOrderDetailId = _it.SalesOrderDetailId,
+                        SalesOrderId = _it.SalesOrderId,
+                        ProductAttributeId = _it.ProductAttributeId,
+                        QuantityOfWindows = _it.QuantityOfWindows
+                    }).ToList()
+                };
                 return DTOSalesOrder;
-                //var DtoSalesOrder = await this._dbContext.SalesOrder.FindAsync(id);
-                //DtoSalesOrder.Select(it => new DTOSalesOrder
-                //{
-                //    SalesOrderId = it.SalesOrderId,
-                //    BuildingsId = it.BuildingsId,
-                //    StatesId = it.StatesId,
-                //    StateName = it.States.Name,
-                //    BuildingName = it.Buildings.Name,
-                //    DTOSalesOrderDetails = it.SalesOrderDetail.Select(_it => new DTOSalesOrderDetail
-                //    {
-                //        SalesOrderDetailId = _it.SalesOrderDetailId,
-                //        SalesOrderId = _it.SalesOrderId,
-                //        ProductAttributeId = _it.ProductAttributeId,
-                //        QuantityOfWindows = _it.QuantityOfWindows,
-                //        ProductAttributeName = _it.ProductAttribute.Product.ProductName + " " + _it.ProductAttribute.ProductAttributeType + " " + _it.ProductAttribute.Dimension.Width + " X " + _it.ProductAttribute.Dimension.Height
-                //    }).ToList()
-                //});
-                //return DtoSalesOrder;
             }
             catch (Exception)
             {
@@ -79,7 +73,7 @@ namespace SalesOrderManagement.Api.Repositories
                 return Enumerable.Empty<DTOSalesOrder>();
             }
         }
-        
+
         public async Task<bool> Create(DTOSalesOrder model)
         {
             try

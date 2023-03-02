@@ -28,7 +28,7 @@ namespace SalesOderManagement.Web.Services
         {
             await this._httpClient.PostAsJsonAsync("api/SalesOrder", model);
         }
-        public async Task<DTOSalesOrder?> GetSalesOrderById(int id)
+        public async Task<DTOSalesOrder?> GetSalesOrderById(long id)
         {
             var SalesOrder = await this._httpClient.GetFromJsonAsync<DTOSalesOrder>("api/SalesOrder/GetSalesOrderById?id=" + id);
             return SalesOrder;

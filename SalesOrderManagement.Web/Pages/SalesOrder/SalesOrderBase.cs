@@ -22,6 +22,7 @@ namespace SalesOrderManagement.Web.Pages.SalesOrder
         protected IEnumerable<DTOBuilding> Buildings { get; set; } = Enumerable.Empty<DTOBuilding>();
         protected IEnumerable<DTOProduct> Products { get; set; } = Enumerable.Empty<DTOProduct>();
         protected IEnumerable<DTOProductAttribute> ProductAttributes { get; set; } = Enumerable.Empty<DTOProductAttribute>();
+        protected IEnumerable<DTOBuilding> BuildingList { get; set; } = Enumerable.Empty<DTOBuilding>();
 
     }
     public class AttributeType

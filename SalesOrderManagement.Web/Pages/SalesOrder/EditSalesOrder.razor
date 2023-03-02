@@ -1,4 +1,4 @@
-﻿@page "/SalesOrder/EditSalesOrder/{id:int}"
+﻿@page "/SalesOrder/EditSalesOrder/{id:long}"
 @inherits SalesOrderBase
 @inject NavigationManager navigationManager
 
@@ -17,8 +17,8 @@ else
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="State" class="control-label">State</label>
-                    <select for="State" class="form-control" @onchange="getBuildings">
-                        <option value="0">--select State--</option>
+                    <select for="State" class="form-control" value="@salesOrder.StatesId" @onchange="getBuildingsByState">
+                        <option value="0">--select state--</option>
                         @foreach (var state in States)
                         {
                             <option value="@state.StateId">@state.Name</option>
@@ -101,7 +101,6 @@ else
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <label for="Attribute" class="control-label">Product</label>
                                         <select for="dimension" class="form-control" @bind="@product.ProductAttributeId">
                                             <option value="0">--select attribute--</option>
                                             @foreach (var productAttribute in ProductAttributes)
@@ -111,8 +110,8 @@ else
                                         </select>
                                     </div>
                                 </td>
-                                <td style="text-align:right">
-                                    <input class="form-control" type="number"  value="@product.QuantityOfWindows"/>
+                                <td>
+                                    <input class="form-control" style="text-align:right" type="number" value="@product.QuantityOfWindows" />
                                 </td>
                                 <td style="text-align:right; width:10%">
                                     <button class="btn btn-warning" @onclick="@(() => RemoveItemFromList(product))">Remove</button>
@@ -139,24 +138,27 @@ else
 @code
 {
     [Parameter]
-    public int id { get; set; }
+    public long id { get; set; }
 
     int productAttributeId = 0;
     int Quantity = 0;
     int productId = 0;
     int stateId = 0;
+
     protected override async Task OnInitializedAsync()
     {
-        Buildings = Enumerable.Empty<DTOBuilding>().ToList();
-        ProductAttributes = await ProductService.GetProductAttributes();
         salesOrder.DTOSalesOrderDetails = new List<DTOSalesOrderDetail>();
         States = await StateService.GetStates();
-        Products = await ProductService.GetProducts();
+        BuildingList = await BuildingService.GetBuildings();
+        salesOrder = await SalesOrderService.GetSalesOrderById(id);
+        Buildings = from building in BuildingList
+                    where building.StateId == salesOrder.StatesId
+                    select building;
+        ProductAttributes = await ProductService.GetProductAttributes();
     }
-    async Task getBuildings(ChangeEventArgs e)
+    void getBuildingsByState(ChangeEventArgs e)
     {
         stateId = Convert.ToUInt16(e.Value);
-        var BuildingList = await BuildingService.GetBuildings();
         Buildings = from building in BuildingList
                     where building.StateId == stateId
                     select building;

@@ -8,7 +8,7 @@ namespace SalesOderManagement.Web.Services.Contracts
 
         Task<IEnumerable<DTOSalesOrder>> GetSalesOrders();
         Task Create(DTOSalesOrder model);
-        Task<DTOSalesOrder?> GetSalesOrderById(int id);
+        Task<DTOSalesOrder?> GetSalesOrderById(long id);
         Task Update(DTOSalesOrder model);
        
     }   

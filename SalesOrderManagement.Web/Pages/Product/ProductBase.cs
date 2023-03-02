@@ -7,16 +7,14 @@ namespace SalesOrderManagement.Web.Pages.Product
     public class SalesOrderBase : ComponentBase
     {
         [Inject]
-        public IProductService ProductService { get; set; }
-        public IEnumerable<DTOProduct> Products { get; set; }
+        protected IProductService ProductService { get; set; }
+        protected IEnumerable<DTOProduct> Products { get; set; }
         [Inject]
-        public IDimensionService DimensionService { get; set; }
-        public IEnumerable<DTODimension> Dimensions { get; set; }
-        public DTOProduct product { get; set; } = new DTOProduct();
-        public int AttributeTypeId { get; set; }
-        
+        protected IDimensionService DimensionService { get; set; }
+        protected IEnumerable<DTODimension> Dimensions { get; set; }
+        protected DTOProduct product { get; set; } = new DTOProduct();
+        protected int AttributeTypeId { get; set; }
     }
-
     public class AttributeType
     {
         public int Id { get; set; }

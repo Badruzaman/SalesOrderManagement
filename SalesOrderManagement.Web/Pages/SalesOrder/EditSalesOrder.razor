@@ -111,10 +111,10 @@ else
                                     </div>
                                 </td>
                                 <td>
-                                    <input class="form-control" style="text-align:right" type="number" value="@product.QuantityOfWindows" />
+                                    <input class="form-control" style="text-align:right" type="number" @bind="@product.QuantityOfWindows" />
                                 </td>
                                 <td style="text-align:right; width:10%">
-                                    <button class="btn btn-warning" @onclick="@(() => RemoveItemFromList(product))">Remove</button>
+                                    <button type="button" class="btn btn-warning" @onclick="@(() => RemoveItemFromList(product))">Remove</button>
                                 </td>
                             </tr>
                         }
@@ -132,7 +132,6 @@ else
             </div>
         </div>
     </form>
-
 }
 
 @code
@@ -172,9 +171,8 @@ else
         {
             productAttributeName = attributeInfo.ProductAttributeName;
         }
-        salesOrder.StatesId = stateId;
-        salesOrder.DTOSalesOrderDetails.Add(new
-            DTOSalesOrderDetail
+        salesOrder.DTOSalesOrderDetails.Add(
+            new DTOSalesOrderDetail
             {
                 ProductAttributeId = productAttributeId,
                 QuantityOfWindows = Quantity,

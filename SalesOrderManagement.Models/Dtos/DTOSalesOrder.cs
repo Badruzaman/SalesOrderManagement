@@ -18,8 +18,8 @@ namespace SalesOrderManagement.Models.DTOs
         public DTOBuilding? Building { get; set; }
         public int StatesId { get; set; }
         public DTOState? State  { get; set; }
-        public string StateName  { get; set; }
-        public string BuildingName  { get; set; }
+        public string? StateName  { get; set; }
+        public string? BuildingName  { get; set; }
         public List<DTOSalesOrderDetail?> DTOSalesOrderDetails { get; set; }
     }
     public class DTOSalesOrderDetail

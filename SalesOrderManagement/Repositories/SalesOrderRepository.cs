@@ -20,7 +20,7 @@ namespace SalesOrderManagement.Api.Repositories
         {
             try
             {
-                var salesOrder = await this._dbContext.SalesOrder.Where(it => it.SalesOrderId == id).Include(_it=>_it.SalesOrderDetail).FirstOrDefaultAsync();
+                var salesOrder = await this._dbContext.SalesOrder.Where(it => it.SalesOrderId == id).Include(_it => _it.SalesOrderDetail).FirstOrDefaultAsync();
                 if (salesOrder == null)
                 {
                     return null;
@@ -97,10 +97,41 @@ namespace SalesOrderManagement.Api.Repositories
         {
             try
             {
-                var salesOrder = await this._dbContext.SalesOrder.FindAsync(model.SalesOrderId);
+                List<long> deletedIds = new List<long>();
+                var salesOrder = await this._dbContext.SalesOrder.Where(it => it.SalesOrderId == model.SalesOrderId).Include(_it => _it.SalesOrderDetail).FirstOrDefaultAsync();
                 if (salesOrder != null)
                 {
-                    //SalesOrder.SalesOrderName = model.SalesOrderName;
+                    foreach (var item in salesOrder.SalesOrderDetail)
+                    {
+                        deletedIds.Add(item.SalesOrderDetailId);
+                    }
+                    salesOrder.StatesId = model.StatesId;
+                    salesOrder.BuildingsId = model.BuildingsId;
+                    foreach (var _item in model.DTOSalesOrderDetails)
+                    {
+                        if (_item.SalesOrderDetailId == 0)
+                        {
+                            salesOrder.SalesOrderDetail.Add(new SalesOrderDetail() { ProductAttributeId = _item.ProductAttributeId, QuantityOfWindows = _item.QuantityOfWindows });
+                        }
+                        else
+                        {
+                            var updateModel = salesOrder.SalesOrderDetail.FirstOrDefault(_it => _it.SalesOrderDetailId == _item.SalesOrderDetailId);
+                            if (updateModel != null)
+                            {
+                                updateModel.ProductAttributeId = _item.ProductAttributeId;
+                                updateModel.QuantityOfWindows = _item.QuantityOfWindows;
+                                deletedIds.Remove(_item.SalesOrderDetailId);
+                            }
+                        }
+                    }
+                    foreach (var id in deletedIds)
+                    {
+                        var deletedModel = salesOrder.SalesOrderDetail.FirstOrDefault(_it => _it.SalesOrderDetailId.Equals(id));
+                        if (deletedModel != null)
+                        {
+                            salesOrder.SalesOrderDetail.Remove(deletedModel);
+                        }
+                    }
                     await _dbContext.SaveChangesAsync();
                     return true;
                 }

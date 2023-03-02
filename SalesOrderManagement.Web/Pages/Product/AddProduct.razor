@@ -77,7 +77,7 @@ else
                                 <td>@item.ProductAttributeType</td>
                                 <td>@item.ActualDimension</td>
                                 <td style="text-align:right">
-                                    <button class="btn btn-warning" @onclick="@(() => RemoveFromList(item))">Remove</button>
+                                    <button type="button" class="btn btn-warning" @onclick="@(() => RemoveFromList(item))">Remove</button>
                                 </td>
                             </tr>
                         }
@@ -119,7 +119,7 @@ else
         SelectedDimensionId = Convert.ToUInt16(e.Value);
     }
 
-    private void AddToList()
+     void AddToList()
     {
         string type = Attributes.FirstOrDefault(it => it.Id == SelectedAttrValue).Name;
         var dimension = Dimensions.FirstOrDefault(it => it.DimensionId == SelectedDimensionId);
@@ -130,7 +130,7 @@ else
     {
         product.DTOProductAttributes.Remove(item);
     }
-    private async Task CreateProduct()
+    async Task CreateProduct()
     {
         if (!string.IsNullOrWhiteSpace(product.ProductName))
         {
@@ -142,7 +142,7 @@ else
             navigationManager.NavigateTo("/Product/ProductList");
         }
     }
-    private void Cancel()
+    void Cancel()
     {
         navigationManager.NavigateTo("/Product/ProductList");
     }

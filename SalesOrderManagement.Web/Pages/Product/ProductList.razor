@@ -5,7 +5,7 @@
 <div>
     <a class="btn btn-primary" href='/Product/AddProduct'>Add New Data</a>
 </div>
-@if (Products == null)
+@if (Products == null || Products.Count() == 0)
 {
     <p><em>Loading...</em></p>
 }
@@ -13,61 +13,40 @@ else
 {
     int i = 1;
     <table class="table table-bordered table-hover">
-        <tbody>
-            @if (Products == null || Products.Count() == 0)
-            {
+
+        @if (Products == null || Products.Count() == 0)
+        {
+            <tr>
+                <td colspan="4">
+                    No Records to display
+                </td>
+            </tr>
+        }
+        else
+        {
+            <thead>
                 <tr>
-                    <td colspan="4">
-                        No Records to display
-                    </td>
+                    <th style="width:1%">SL</th>
+                    <th>Product</th>
+                    <th style="text-align:right; width:10%">
+                        Action
+                    </th>
                 </tr>
-            }
-            else
+            </thead>
+            foreach (var product in Products)
             {
-                int j = 1;
-                foreach (var product in Products)
-                {
-                    <tr>
-                        <th style="width:1%">SL</th>
-                        <th colspan="3">Product</th>
-                    </tr>
+                <tbody>
                     <tr>
                         <td>@(i++)</td>
-                        <td colspan="3">@product.ProductName</td>
+                        <td>@product.ProductName</td>
+                        <td style="text-align:right; width:10%">
+                            <button type="button" class="btn btn-primary" @onclick="@(() => NavigateToEditProduct(product.ProductId))">Edit</button>
+                        </td>
                     </tr>
-                    <tr>
-                        <th>
-                            SL
-                        </th>
-                        <th>
-                            Attribute Type
-                        </th>
-                        <th>
-                            Dimension
-                        </th>
-                        <th style="text-align:right">
-                            Action
-                        </th>
-                    </tr>
-                    foreach (var attr in product.DTOProductAttributes)
-                    {
-
-                        <tr>
-                            <td>@(j++)</td>
-                            <td>
-                                @attr.ProductAttributeType
-                            </td>
-                            <td>
-                                @attr.ActualDimension
-                            </td>
-                            <td style="text-align:right">
-                                <button class="btn btn-primary" @onclick="@(() => NavigateToEditProduct(product.ProductId))">Edit</button>
-                            </td>
-                        </tr>
-                    }
-                }
+                </tbody>
             }
-        </tbody>
+        }
+
     </table>
 }
 @code {

@@ -11,14 +11,16 @@ namespace SalesOrderManagement.Models.DTOs
     {
         public DTOSalesOrder()
         {
-            this.DTOSalesOrderDetails = new List<DTOSalesOrderDetail>();
+            this.DTOSalesOrderDetails = new List<DTOSalesOrderDetail?>();
         }
         public long SalesOrderId { get; set; }
         public int BuildingsId { get; set; }
-        public DTOBuilding Building { get; set; }
+        public DTOBuilding? Building { get; set; }
         public int StatesId { get; set; }
-        public DTOState State  { get; set; }
-        public List<DTOSalesOrderDetail> DTOSalesOrderDetails { get; set; }
+        public DTOState? State  { get; set; }
+        public string StateName  { get; set; }
+        public string BuildingName  { get; set; }
+        public List<DTOSalesOrderDetail?> DTOSalesOrderDetails { get; set; }
     }
     public class DTOSalesOrderDetail
     {
@@ -26,7 +28,7 @@ namespace SalesOrderManagement.Models.DTOs
         public long SalesOrderId { get; set; }
         public int ProductAttributeId { get; set; }
         public int QuantityOfWindows { get; set; }
-        public DTOSalesOrder SalesOrder { get; set; }
-        public DTOProductAttribute ProductAttribute { get; set; }
+        public string? ProductAttributeName { get; set; }
+        public string? ProductName { get; set; }
     }
 }

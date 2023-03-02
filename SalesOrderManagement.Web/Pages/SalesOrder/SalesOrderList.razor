@@ -5,7 +5,7 @@
 <div>
     <a class="btn btn-primary" href='/SalesOrder/AddSalesOrder'>Add New Data</a>
 </div>
-@if (SalesOrders == null)
+@if (SalesOrders.Count() == 0)
 {
     <p><em>Loading...</em></p>
 }
@@ -14,68 +14,44 @@ else
     int i = 1;
     <table class="table table-bordered table-hover">
         <tbody>
-            @if (SalesOrders == null || SalesOrders.Count() == 0)
+            <tr>
+                <th style="width:1%">SL</th>
+                <th>Building</th>
+                <th>State</th>
+                <th style="text-align:right; width: 10%">
+                    Action
+                </th>
+            </tr>
+        </tbody>
+        <tbody>
+            @foreach (var salesOrder in SalesOrders)
             {
                 <tr>
-                    <td colspan="4">
-                        No Records to display
+                    <td>
+                        @(i++)
+                    </td>
+                    <td>
+                        @salesOrder.BuildingName
+                    </td>
+                    <td>
+                        @salesOrder.StateName
+                    </td>
+                    <td style="text-align:right">
+                        <button class="btn btn-primary" @onclick="@(() => NavigateToEditSalesOrder(salesOrder.SalesOrderId))">Edit</button>
                     </td>
                 </tr>
             }
-          @*  else
-            {
-                int j = 1;
-        foreach (var SalesOrder in SalesOrders)
-        {
-        <tr>
-        <th style="width:1%">SL</th>
-        <th colspan="3">SalesOrder</th>
-        </tr>
-        <tr>
-        <td>@(i++)</td>
-        <td colspan="3">@SalesOrder.SalesOrderName</td>
-        </tr>
-        <tr>
-        <th>
-        SL
-        </th>
-        <th>
-        Attribute Type
-        </th>
-        <th>
-        Dimension
-        </th>
-        <th style="text-align:right">
-        Action
-        </th>
-        </tr>*@
-                @*    foreach (var attr in SalesOrder.DTOSalesOrderAttributes)
-        {
-
-        <tr>
-        <td>@(j++)</td>
-        <td>
-        @attr.SalesOrderAttributeType
-        </td>
-        <td>
-        @attr.ActualDimension
-        </td>
-        <td style="text-align:right">
-        <button class="btn btn-primary" @onclick="@(() => NavigateToEditSalesOrder(SalesOrder.SalesOrderId))">Edit</button>
-        </td>
-        </tr>
-        }
-        }
-        }*@
         </tbody>
     </table>
 }
-@code {
+
+@code
+{
     protected override async Task OnInitializedAsync()
     {
         SalesOrders = await SalesOrderService.GetSalesOrders();
     }
-    private void NavigateToEditSalesOrder(int id)
+    private void NavigateToEditSalesOrder(long id)
     {
         navigationManager.NavigateTo($"/SalesOrder/EditSalesOrder/{id}");
     }

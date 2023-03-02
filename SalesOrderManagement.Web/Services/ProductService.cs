@@ -38,10 +38,10 @@ namespace SalesOderManagement.Web.Services
            await this._httpClient.PutAsJsonAsync("api/Product", model);
         }
 
-        public async Task<IEnumerable<DTOProductAttribute>> GetProductAttributesByProductId(int id)
+        public async Task<IEnumerable<DTOProductAttribute>> GetProductAttributes()
         {
-            var ProductAttribute = await this._httpClient.GetFromJsonAsync<IEnumerable<DTOProductAttribute>>("api/Product/GetProductAttributesByProductId?id=" + id);
-            return ProductAttribute;
+            var ProductAttributes = await this._httpClient.GetFromJsonAsync<IEnumerable<DTOProductAttribute>>("api/Product/GetProductAttributes");
+            return ProductAttributes;
         }
     }
 }

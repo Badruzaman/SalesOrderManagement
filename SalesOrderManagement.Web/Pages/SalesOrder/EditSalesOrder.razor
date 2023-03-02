@@ -8,28 +8,132 @@
 }
 else
 {
+    int i = 1;
     <h3>
-        Edit SalesOrder
+        Edit Sales Order
     </h3>
     <form>
-       @* <div class="row">
-            <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-4">
                 <div class="form-group">
-                    <label for="Name" class="control-label">Name</label>
-                    <input for="Name" class="form-control" @bind="@SalesOrder.SalesOrderName" />
+                    <label for="State" class="control-label">State</label>
+                    <select for="State" class="form-control" @onchange="getBuildings">
+                        <option value="0">--select State--</option>
+                        @foreach (var state in States)
+                        {
+                            <option value="@state.StateId">@state.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Building" class="control-label">Building</label>
+                    <select for="Building" class="form-control" @bind="salesOrder.BuildingsId">
+                        <option value="0">--select building--</option>
+                        @foreach (var buidling in Buildings)
+                        {
+                            <option value="@buidling.BuildingId">@buidling.Name</option>
+                        }
+                    </select>
                 </div>
             </div>
         </div>
 
         <div class="row">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="form-group">
+                                <label for="Attribute" class="control-label">Product</label>
+                                <select for="dimension" class="form-control" @bind="productAttributeId">
+                                    <option value="0">--select attribute--</option>
+                                    @foreach (var productAttribute in ProductAttributes)
+                                    {
+                                        <option value="@productAttribute.ProductAttributeId">@productAttribute.ProductAttributeName</option>
+                                    }
+                                </select>
+                            </div>
+                        </th>
+                        <th style="width:20%">
+                            <div class="form-group" style="text-align:right">
+                                <label for="Quantity" class="control-label">Quantity</label>
+                                <input class="form-control" style="text-align:right" type="number" @bind="Quantity" />
+                            </div>
+                        </th>
+                        <th style="width:10%">
+                            <div class="form-group" style="width:10%">
+                                <label for="" class="control-label">Action</label>
+                                <button type="button" class="btn btn-primary" @onclick="AddToList">Add</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
+        <div class="row">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th style="width:5%">
+                            SL
+                        </th>
+                        <th>
+                            Product
+                        </th>
+                        <th style="width: 30%; text-align:right">
+                            Quantity
+                        </th>
+                        <th style="width: 10%; text-align:right">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var product in salesOrder.DTOSalesOrderDetails)
+                        {
+                            <tr>
+                                <td>
+                                    @(i++)
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <label for="Attribute" class="control-label">Product</label>
+                                        <select for="dimension" class="form-control" @bind="@product.ProductAttributeId">
+                                            <option value="0">--select attribute--</option>
+                                            @foreach (var productAttribute in ProductAttributes)
+                                            {
+                                                <option value="@productAttribute.ProductAttributeId">@productAttribute.ProductAttributeName</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </td>
+                                <td style="text-align:right">
+                                    <input class="form-control" type="number"  value="@product.QuantityOfWindows"/>
+                                </td>
+                                <td style="text-align:right; width:10%">
+                                    <button class="btn btn-warning" @onclick="@(() => RemoveItemFromList(product))">Remove</button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+
+            </table>
+        </div>
+        <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary"@onclick="UpdateSalesOrder"> Save</button>
-                    <button type="button" class="btn btn-warning" @onclick="Cancel"> Cancel</button>
+                    <button type="button" class="btn btn-primary" @onclick="UpdateSalesOrder">Update</button>
+                    <button type="button" class="btn btn-warning" @onclick="Cancel">Cancel</button>
                 </div>
             </div>
-        </div>*@
+        </div>
     </form>
+
 }
 
 @code
@@ -37,16 +141,54 @@ else
     [Parameter]
     public int id { get; set; }
 
+    int productAttributeId = 0;
+    int Quantity = 0;
+    int productId = 0;
+    int stateId = 0;
     protected override async Task OnInitializedAsync()
     {
-        salesOrder = await SalesOrderService.GetSalesOrderById(id);
+        Buildings = Enumerable.Empty<DTOBuilding>().ToList();
+        ProductAttributes = await ProductService.GetProductAttributes();
+        salesOrder.DTOSalesOrderDetails = new List<DTOSalesOrderDetail>();
+        States = await StateService.GetStates();
+        Products = await ProductService.GetProducts();
+    }
+    async Task getBuildings(ChangeEventArgs e)
+    {
+        stateId = Convert.ToUInt16(e.Value);
+        var BuildingList = await BuildingService.GetBuildings();
+        Buildings = from building in BuildingList
+                    where building.StateId == stateId
+                    select building;
+    }
+
+    void AddToList()
+    {
+        string? productAttributeName = string.Empty;
+        var attributeInfo = ProductAttributes.FirstOrDefault(it => it.ProductAttributeId == productAttributeId);
+        if (attributeInfo != null)
+        {
+            productAttributeName = attributeInfo.ProductAttributeName;
+        }
+        salesOrder.StatesId = stateId;
+        salesOrder.DTOSalesOrderDetails.Add(new
+            DTOSalesOrderDetail
+            {
+                ProductAttributeId = productAttributeId,
+                QuantityOfWindows = Quantity,
+                ProductAttributeName = productAttributeName
+            });
+    }
+
+    void RemoveItemFromList(DTOSalesOrderDetail item)
+    {
+        salesOrder.DTOSalesOrderDetails.Remove(item);
     }
     private async Task UpdateSalesOrder()
     {
         if (true)
         {
-            //await SalesOrderService.Update(SalesOrder);
-            //SalesOrder.Name = string.Empty;
+            await SalesOrderService.Update(salesOrder);
             navigationManager.NavigateTo("/SalesOrder/SalesOrderList");
         }
     }

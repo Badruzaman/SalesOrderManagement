@@ -14,7 +14,7 @@ namespace SalesOrderManagement.Models.DTOs
         }
         public int ProductId { get; set; }
         public string? ProductName { get; set; }
-        public List<DTOProductAttribute?> DTOProductAttributes { get; set; }
+        public List<DTOProductAttribute> DTOProductAttributes { get; set; }
     }
     public class DTOProductAttribute
     {
@@ -22,6 +22,8 @@ namespace SalesOrderManagement.Models.DTOs
         public string? ProductAttributeType { get; set; }
         public int DimensionId { get; set; }
         public int ProductId { get; set; }
+        public string? ProductName { get; set; }
+
         public string? Width { get; set; }
         public string? Height { get; set; }
         public DTODimension? DTODimension { get; set; }

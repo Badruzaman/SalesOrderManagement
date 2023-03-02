@@ -92,12 +92,12 @@ namespace SalesOrderManagement.Api.Controllers
             }
         }
 
-        [HttpGet("GetProductAttributesByProductId")]
-        public async Task<ActionResult<DTOProductAttribute>> GetProductAttributesByProductId(int id)
+        [HttpGet("GetProductAttributes")]
+        public async Task<ActionResult<DTOProductAttribute>> GetProductAttributes()
         {
             try
             {
-                var ProductAttribute = await this.ProductRepository.GetProductAttributesByProductId(id);
+                var ProductAttribute = await this.ProductRepository.GetProductAttributes();
                 if (ProductAttribute == null)
                 {
                     return NotFound();

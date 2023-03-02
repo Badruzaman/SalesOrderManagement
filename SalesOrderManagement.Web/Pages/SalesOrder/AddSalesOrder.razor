@@ -4,7 +4,7 @@
 @inject NavigationManager navigationManager
 
 
-@if (States == null)
+@if (salesOrder == null)
 {
     <h3>Loading....</h3>
 }
@@ -16,10 +16,10 @@ else
     </h3>
     <form>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
-                    <label for="Name" class="control-label">State</label>
-                    <select for="dimension" class="form-control" @onchange="getBuildings">
+                    <label for="State" class="control-label">State</label>
+                    <select for="State" class="form-control" @onchange="getBuildings">
                         <option value="0">--select State--</option>
                         @foreach (var state in States)
                         {
@@ -28,10 +28,10 @@ else
                     </select>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
-                    <label for="Name" class="control-label">Building</label>
-                    <select for="dimension" class="form-control" @bind="salesOrder.BuildingsId">
+                    <label for="Building" class="control-label">Building</label>
+                    <select for="Building" class="form-control" @bind="salesOrder.BuildingsId">
                         <option value="0">--select building--</option>
                         @foreach (var buidling in Buildings)
                         {
@@ -41,67 +41,80 @@ else
                 </div>
             </div>
         </div>
-
+       
         <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="Name" class="control-label">Product</label>
-                    <select for="dimension" class="form-control" @onchange="getProductAttribute">
-                        <option value="0">--select product--</option>
-                        @foreach (var product in Products)
-                        {
-                            <option value="@product.ProductId">@product.ProductName</option>
-                        }
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="Name" class="control-label">product Attribute</label>
-                    <select for="dimension" class="form-control" @bind="ProductAttributeId">
-                        <option value="0">--select product attribute--</option>
-                        @foreach (var productAttribute in ProductAttributes)
-                        {
-                            <option value="@productAttribute.ProductAttributeId">@productAttribute.ProductAttributeName</option>
-                        }
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-1">
-                <div class="form-group">
-                    <label for="" class="control-label">Action</label>
-                    <button type="button" class="btn btn-primary" @onclick="AddToList">Add</button>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th style="width:1%">SL</th>
-                        <th>Attribute Type</th>
-                        <th>Dimension</th>
-                        <th style="text-align:right; width: 10%">Action</th>
+                        <th>
+                            <div class="form-group">
+                                <label for="Attribute" class="control-label">Product</label>
+                                <select for="dimension" class="form-control" @bind="productAttributeId">
+                                    <option value="0">--select attribute--</option>
+                                    @foreach (var productAttribute in ProductAttributes)
+                                    {
+                                        <option value="@productAttribute.ProductAttributeId">@productAttribute.ProductAttributeName</option>
+                                    }
+                                </select>
+                            </div>
+                        </th>
+                        <th style="width:20%">
+                            <div class="form-group" style="text-align:right">
+                                <label for="Quantity" class="control-label">Quantity</label>
+                                <input class="form-control" style="text-align:right" type="number" @bind="Quantity" />
+                            </div>
+                        </th>
+                        <th style="width:10%">
+                            <div class="form-group" style="width:10%">
+                                <label for="" class="control-label">Action</label>
+                                <button type="button" class="btn btn-primary" @onclick="AddToList">Add</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
+        <div class="row">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th style="width:5%">
+                            SL
+                        </th>
+                        <th>
+                            Product
+                        </th>
+                        <th style="width: 30%; text-align:right">
+                            Quantity
+                        </th>
+                        <th style="width: 10%; text-align:right">
+                            Action
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @*   @if (SalesOrder.DTOSalesOrderAttributes.Count() > 0)
-                {
-                foreach (var item in SalesOrder.DTOSalesOrderAttributes)
-                {
-                <tr>
-                <td>@(i++)</td>
-                <td>@item.SalesOrderAttributeType</td>
-                <td>@item.ActualDimension</td>
-                <td style="text-align:right">
-                <button class="btn btn-warning" @onclick="@(() => RemoveFromList(item))">Remove</button>
-                </td>
-                </tr>
-                }
-                }*@
-
+                    @{
+                        foreach (var product in salesOrder.DTOSalesOrderDetails)
+                        {
+                            <tr>
+                                <td>
+                                    @(i++)
+                                </td>
+                                <td>
+                                    @product.ProductAttributeName
+                                </td>
+                                <td style="text-align:right">
+                                    @product.QuantityOfWindows
+                                </td>
+                                <td style="text-align:right; width:10%">
+                                    <button class="btn btn-warning" @onclick="@(() => RemoveItemFromList(product))">Remove</button>
+                                </td>
+                            </tr>
+                        }
+                    }
                 </tbody>
+
             </table>
         </div>
         <div class="row">
@@ -116,58 +129,53 @@ else
 
 }
 
-
 @code {
 
-    int SelectedAttrValue = 0;
-    int SelectedDimensionId = 0;
-    int ProductAttributeId = 0;
-    //public List<AttributeType> Attributes = new List<AttributeType>();
+    int productAttributeId = 0;
+    int Quantity = 0;
+    int productId = 0;
+    int stateId = 0;
     protected override async Task OnInitializedAsync()
     {
-        //Attributes = new List<AttributeType>() { new AttributeType { Id = 1, Name = "Doors" }, new AttributeType { Id = 2, Name = "window" } };
-        //Dimensions = await DimensionService.GetDimensions();
+        Buildings = Enumerable.Empty<DTOBuilding>().ToList();
+        ProductAttributes = await ProductService.GetProductAttributes();
+        salesOrder.DTOSalesOrderDetails = new List<DTOSalesOrderDetail>();
         States = await StateService.GetStates();
         Products = await ProductService.GetProducts();
-        Buildings = new List<DTOBuilding>();
-        ProductAttributes = new List<DTOProductAttribute>();
     }
-
     async Task getBuildings(ChangeEventArgs e)
     {
-        int stateId = Convert.ToUInt16(e.Value);
+        stateId = Convert.ToUInt16(e.Value);
         var BuildingList = await BuildingService.GetBuildings();
         Buildings = from building in BuildingList
                     where building.StateId == stateId
                     select building;
     }
-    async Task getProductAttribute(ChangeEventArgs e)
+
+    void AddToList()
     {
-        int productId = Convert.ToUInt16(e.Value);
-        ProductAttributes = await ProductService.GetProductAttributesByProductId(productId);
+        string? productAttributeName = string.Empty;
+        var attributeInfo = ProductAttributes.FirstOrDefault(it => it.ProductAttributeId == productAttributeId);
+        if (attributeInfo != null)
+        {
+            productAttributeName = attributeInfo.ProductAttributeName;
+        }
+        salesOrder.StatesId = stateId;
+        salesOrder.DTOSalesOrderDetails.Add(new
+            DTOSalesOrderDetail
+            {
+                ProductAttributeId = productAttributeId,
+                QuantityOfWindows = Quantity,
+                ProductAttributeName = productAttributeName
+            });
     }
 
-    void GetAttributeTypeValue(ChangeEventArgs e)
+    void RemoveItemFromList(DTOSalesOrderDetail item)
     {
-        SelectedAttrValue = Convert.ToUInt16(e.Value);
-    }
-    void GetDimensionIdValue(ChangeEventArgs e)
-    {
-        SelectedDimensionId = Convert.ToUInt16(e.Value);
+        salesOrder.DTOSalesOrderDetails.Remove(item);
     }
 
-    private void AddToList()
-    {
-       // string type = Attributes.FirstOrDefault(it => it.Id == SelectedAttrValue).Name;
-        var dimension = Dimensions.FirstOrDefault(it => it.DimensionId == SelectedDimensionId);
-        string actualDimension = dimension.Width + " X " + dimension.Height;
-        //SalesOrder.DTOSalesOrderAttributes.Add(new DTOSalesOrderAttribute { SalesOrderAttributeType = type, DimensionId = SelectedDimensionId, ActualDimension = actualDimension });
-    }
-    //void RemoveFromList(DTOSalesOrderAttribute item)
-    //{
-    //    SalesOrder.DTOSalesOrderAttributes.Remove(item);
-    //}
-    private async Task CreateSalesOrder()
+    async Task CreateSalesOrder()
     {
         if (true)
         {
@@ -179,7 +187,7 @@ else
             navigationManager.NavigateTo("/SalesOrder/SalesOrderList");
         }
     }
-    private void Cancel()
+    void Cancel()
     {
         navigationManager.NavigateTo("/SalesOrder/SalesOrderList");
     }

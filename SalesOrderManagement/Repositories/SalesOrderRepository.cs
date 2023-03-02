@@ -10,51 +10,88 @@ namespace SalesOrderManagement.Api.Repositories
     {
 
         private readonly SalesOrderDBContext _dbContext;
-  
+
         public SalesOrderRepository(SalesOrderDBContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<DTOSalesOrder?> GetSalesOrderById(int id)
+        public async Task<DTOSalesOrder> GetSalesOrderById(long id)
         {
-            var SalesOrder = await this._dbContext.SalesOrder.FindAsync(id);
-            if (SalesOrder == null)
+            try
+            {
+                var salesOrder = await this._dbContext.SalesOrder.FindAsync(id);
+                if (salesOrder == null)
+                {
+                    return null;
+                }
+                var DTOSalesOrder = new DTOSalesOrder { SalesOrderId = salesOrder.SalesOrderId, BuildingsId = salesOrder.BuildingsId, StatesId = salesOrder.StatesId };
+                return DTOSalesOrder;
+                //var DtoSalesOrder = await this._dbContext.SalesOrder.FindAsync(id);
+                //DtoSalesOrder.Select(it => new DTOSalesOrder
+                //{
+                //    SalesOrderId = it.SalesOrderId,
+                //    BuildingsId = it.BuildingsId,
+                //    StatesId = it.StatesId,
+                //    StateName = it.States.Name,
+                //    BuildingName = it.Buildings.Name,
+                //    DTOSalesOrderDetails = it.SalesOrderDetail.Select(_it => new DTOSalesOrderDetail
+                //    {
+                //        SalesOrderDetailId = _it.SalesOrderDetailId,
+                //        SalesOrderId = _it.SalesOrderId,
+                //        ProductAttributeId = _it.ProductAttributeId,
+                //        QuantityOfWindows = _it.QuantityOfWindows,
+                //        ProductAttributeName = _it.ProductAttribute.Product.ProductName + " " + _it.ProductAttribute.ProductAttributeType + " " + _it.ProductAttribute.Dimension.Width + " X " + _it.ProductAttribute.Dimension.Height
+                //    }).ToList()
+                //});
+                //return DtoSalesOrder;
+            }
+            catch (Exception)
             {
                 return null;
             }
-            var DTOSalesOrder = new DTOSalesOrder { SalesOrderId = SalesOrder.SalesOrderId};
-            return DTOSalesOrder;
         }
         public async Task<IEnumerable<DTOSalesOrder>> GetSalesOrders()
         {
-            var DTOSalesOrders = await this._dbContext.SalesOrder
-            .Select(it => new DTOSalesOrder
+            try
             {
-                SalesOrderId = it.SalesOrderId,
-                //SalesOrderName = it.SalesOrderName,
-                //DTOSalesOrderAttributes = it.SalesOrderAttribute.Select(_it => new DTOSalesOrderAttribute
-                //{
-                //    SalesOrderAttributeId = _it.SalesOrderAttributeId,
-                //    SalesOrderAttributeType = _it.SalesOrderAttributeType,
-                //    DimensionId = _it.DimensionId,
-                //    ActualDimension = _it.Dimension.Width + " X " + _it.Dimension.Height
-                //}).ToList()
-            }).ToListAsync();
-            return DTOSalesOrders;
+                var DTOSalesOrders = await this._dbContext.SalesOrder.Include(it => it.Buildings).Include(it => it.States)
+                .Select(it => new DTOSalesOrder
+                {
+                    SalesOrderId = it.SalesOrderId,
+                    BuildingsId = it.BuildingsId,
+                    StatesId = it.StatesId,
+                    StateName = it.States.Name,
+                    BuildingName = it.Buildings.Name,
+                    DTOSalesOrderDetails = it.SalesOrderDetail.Select(_it => new DTOSalesOrderDetail
+                    {
+                        SalesOrderDetailId = _it.SalesOrderDetailId,
+                        SalesOrderId = _it.SalesOrderId,
+                        ProductAttributeId = _it.ProductAttributeId,
+                        QuantityOfWindows = _it.QuantityOfWindows,
+                        ProductAttributeName = _it.ProductAttribute.Product.ProductName + " " + _it.ProductAttribute.ProductAttributeType + " " + _it.ProductAttribute.Dimension.Width + " X " + _it.ProductAttribute.Dimension.Height
+                    }).ToList()
+                }).ToListAsync();
+                return DTOSalesOrders;
+            }
+            catch (Exception)
+            {
+                return Enumerable.Empty<DTOSalesOrder>();
+            }
         }
+        
         public async Task<bool> Create(DTOSalesOrder model)
         {
             try
             {
-                var SalesOrder = new SalesOrder() {};
+                var salesOrder = new SalesOrder() { BuildingsId = model.BuildingsId, StatesId = model.StatesId };
                 foreach (var attribute in model.DTOSalesOrderDetails)
                 {
-                    var _attribute = new SalesOrderDetail() {  };
-                    SalesOrder.SalesOrderDetail.Add(_attribute);
+                    var _attribute = new SalesOrderDetail() { ProductAttributeId = attribute.ProductAttributeId, QuantityOfWindows = attribute.QuantityOfWindows };
+                    salesOrder.SalesOrderDetail.Add(_attribute);
                 }
-                await _dbContext.SalesOrder.AddAsync(SalesOrder);
-                var result = await _dbContext.SaveChangesAsync();
+                await _dbContext.SalesOrder.AddAsync(salesOrder);
+                await _dbContext.SaveChangesAsync();
                 return true;
             }
             catch (Exception)
@@ -66,8 +103,8 @@ namespace SalesOrderManagement.Api.Repositories
         {
             try
             {
-                var SalesOrder = await this._dbContext.SalesOrder.FindAsync(model.SalesOrderId);
-                if (SalesOrder != null)
+                var salesOrder = await this._dbContext.SalesOrder.FindAsync(model.SalesOrderId);
+                if (salesOrder != null)
                 {
                     //SalesOrder.SalesOrderName = model.SalesOrderName;
                     await _dbContext.SaveChangesAsync();

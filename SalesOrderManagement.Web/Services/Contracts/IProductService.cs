@@ -9,6 +9,6 @@ namespace SalesOderManagement.Web.Services.Contracts
         Task Create(DTOProduct model);
         Task<DTOProduct?> GetProductById(int id);
         Task Update(DTOProduct model);
-        Task<IEnumerable<DTOProductAttribute>> GetProductAttributesByProductId(int id);
+        Task<IEnumerable<DTOProductAttribute>> GetProductAttributes();
     }   
 }

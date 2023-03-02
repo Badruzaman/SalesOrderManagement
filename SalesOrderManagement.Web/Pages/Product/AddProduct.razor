@@ -23,39 +23,47 @@ else
                 </div>
             </div>
         </div>
-
         <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="Name" class="control-label">Attribute Type</label>
-                    <select for="State" class="form-control" @onchange="GetAttributeTypeValue">
-                        <option value="0">--select attribute type--</option>
-                        @foreach (var attr in Attributes)
-                        {
-                            <option value="@attr.Id">@attr.Name</option>
-                        }
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="Name" class="control-label">Dimension</label>
-                    <select for="dimension" class="form-control" @onchange="GetDimensionIdValue">
-                        <option value="0">--select dimension--</option>
-                        @foreach (var dimension in Dimensions)
-                        {
-                            <option value="@dimension.DimensionId">@(dimension.Width + " X " + dimension.Height)</option>
-                        }
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="" class="control-label">Action</label>
-                    <button type="button" class="btn btn-primary" @onclick="AddToList">Add</button>
-                </div>
-            </div>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="form-group">
+                                <label for="Name" class="control-label">Attribute Type</label>
+                                <select for="State" class="form-control" @onchange="GetAttributeTypeValue">
+                                    <option value="0">--select attribute type--</option>
+                                    @foreach (var attr in Attributes)
+                                    {
+                                        <option value="@attr.TypeId">@attr.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </th>
+                        <th style="width:20%">
+                            <div class="form-group">
+                                <label for="Name" class="control-label">Dimension</label>
+                                <select for="dimension" class="form-control" @bind="dimensionValue">
+                                    <option value="0">--select dimension--</option>
+                                    @foreach (var dimension in Dimensions)
+                                    {
+                                        <option value="@dimension.DimensionId">@(dimension.Width + " X " + dimension.Height)</option>
+                                    }
+                                </select>
+                            </div>
+                        </th>
+                        <th style="width:10%">
+                            <div class="form-group" style="width:10%">
+                                <label for="" class="control-label">Action</label>
+                                <button type="button" class="btn btn-primary" @onclick="AddToList">Add</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+
+            </table>
         </div>
+
+        
         <div class="row">
 
             <table class="table table-bordered table-hover">
@@ -102,11 +110,11 @@ else
 @code {
 
     int SelectedAttrValue = 0;
-    int SelectedDimensionId = 0;
+    int dimensionValue = 0;
     public List<AttributeType> Attributes = new List<AttributeType>();
     protected override async Task OnInitializedAsync()
     {
-        Attributes = new List<AttributeType>() { new AttributeType { Id = 1, Name = "Doors" }, new AttributeType { Id = 2, Name = "window" } };
+        Attributes = GetAttributeTypes();
         Dimensions = await DimensionService.GetDimensions();
     }
 
@@ -114,17 +122,14 @@ else
     {
         SelectedAttrValue = Convert.ToUInt16(e.Value);
     }
-    void GetDimensionIdValue(ChangeEventArgs e)
-    {
-        SelectedDimensionId = Convert.ToUInt16(e.Value);
-    }
 
-     void AddToList()
+
+    void AddToList()
     {
-        string type = Attributes.FirstOrDefault(it => it.Id == SelectedAttrValue).Name;
-        var dimension = Dimensions.FirstOrDefault(it => it.DimensionId == SelectedDimensionId);
+        string type = Attributes.FirstOrDefault(it => it.TypeId == SelectedAttrValue).Name;
+        var dimension = Dimensions.FirstOrDefault(it => it.DimensionId == dimensionValue);
         string actualDimension = dimension.Width + " X " + dimension.Height;
-        product.DTOProductAttributes.Add(new DTOProductAttribute { ProductAttributeType = type, DimensionId = SelectedDimensionId, ActualDimension = actualDimension });
+        product.DTOProductAttributes.Add(new DTOProductAttribute { ProductAttributeType = type, DimensionId = dimensionValue, ActualDimension = actualDimension });
     }
     void RemoveFromList(DTOProductAttribute item)
     {

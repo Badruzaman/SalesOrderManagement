@@ -14,10 +14,15 @@ namespace SalesOrderManagement.Web.Pages.Product
         protected IEnumerable<DTODimension> Dimensions { get; set; }
         protected DTOProduct product { get; set; } = new DTOProduct();
         protected int AttributeTypeId { get; set; }
+
+        protected List<AttributeType> GetAttributeTypes()
+        {
+           return new List<AttributeType>() { new AttributeType { TypeId = 1, Name = "Doors" }, new AttributeType { TypeId = 2, Name = "Window" } };
+        }
     }
     public class AttributeType
     {
-        public int Id { get; set; }
+        public int TypeId { get; set; }
         public string Name { get; set; }
     }
 

@@ -8,6 +8,7 @@
 }
 else
 {
+    int i = 1;
     <h3>
         Edit Product
     </h3>
@@ -20,37 +21,192 @@ else
                 </div>
             </div>
         </div>
-
+@*
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary"@onclick="UpdateProduct"> Save</button>
-                    <button type="button" class="btn btn-warning" @onclick="Cancel"> Cancel</button>
+                    <label for="Name" class="control-label">Attribute Type</label>
+                    <select for="State" class="form-control" @bind="selectedAttrValue">
+                        <option value="0">--select attribute type--</option>
+                        @foreach (var attr in Attributes)
+                        {
+                            <option value="@attr.TypeId">@attr.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Name" class="control-label">Dimension</label>
+                    <select for="dimension" class="form-control" @bind="dimensionValue">
+                        <option value="0">--select dimension--</option>
+                        @foreach (var dimension in Dimensions)
+                        {
+                            <option value="@dimension.DimensionId">@(dimension.Width + " X " + dimension.Height)</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="" class="control-label">Action</label>
+                    <button type="button" class="btn btn-primary" @onclick="AddToList">Add</button>
+                </div>
+            </div>
+        </div>*@
+        <div class="row">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="form-group">
+                                <label for="Name" class="control-label">Attribute Type</label>
+                                <select for="State" class="form-control" @bind="selectedAttrValue">
+                                    <option value="0">--select attribute type--</option>
+                                    @foreach (var attr in Attributes)
+                                    {
+                                        <option value="@attr.TypeId">@attr.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </th>
+                        <th style="width:20%">
+                            <div class="form-group">
+                                <label for="Name" class="control-label">Dimension</label>
+                                <select for="dimension" class="form-control" @bind="dimensionValue">
+                                    <option value="0">--select dimension--</option>
+                                    @foreach (var dimension in Dimensions)
+                                    {
+                                        <option value="@dimension.DimensionId">@(dimension.Width + " X " + dimension.Height)</option>
+                                    }
+                                </select>
+                            </div>
+                        </th>
+                        <th style="width:10%">
+                            <div class="form-group" style="width:10%">
+                                <label for="" class="control-label">Action</label>
+                                <button type="button" class="btn btn-primary" @onclick="AddToList">Add</button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
+
+        <div class="row">
+
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th style="width:1%">SL</th>
+                        <th>Attribute Type</th>
+                        <th>Dimension</th>
+                        <th style="text-align:right; width: 10%">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (product.DTOProductAttributes.Count() > 0)
+                    {
+                        foreach (var productAttr in product.DTOProductAttributes)
+                        {
+                            <tr>
+                                <td>@(i++)</td>
+                                <td>
+                                    <div class="form-group">
+                                        <select for="State" class="form-control" @bind="productAttr.TypeId">
+                                            <option value="0">--select attribute type--</option>
+                                            @foreach (var attr in Attributes)
+                                            {
+                                                <option value="@attr.TypeId">@attr.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <select for="dimension" class="form-control" @bind="productAttr.DimensionId">
+                                            <option value="0">--select dimension--</option>
+                                            @foreach (var dimension in Dimensions)
+                                            {
+                                                <option value="@dimension.DimensionId">@(dimension.Width + " X " + dimension.Height)</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </td>
+                                <td style="text-align:right">
+                                    <button type="button" class="btn btn-warning" @onclick="@(() => RemoveFromList(productAttr))">Remove</button>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" @onclick="UpdateProduct">Update</button>
+                    <button type="button" class="btn btn-warning" @onclick="Cancel">Cancel</button>
                 </div>
             </div>
         </div>
     </form>
+
 }
+
 
 @code
 {
     [Parameter]
     public int id { get; set; }
+    int selectedAttrValue = 0;
+    int dimensionValue = 0;
+    public List<AttributeType> Attributes = new List<AttributeType>();
 
     protected override async Task OnInitializedAsync()
     {
+        Dimensions = new List<DTODimension>();
         product = await ProductService.GetProductById(id);
+        Attributes = GetAttributeTypes();
+        Dimensions = await DimensionService.GetDimensions();
     }
-    private async Task UpdateProduct()
+    async Task UpdateProduct()
     {
         if (!string.IsNullOrWhiteSpace(product.ProductName))
         {
-            //await ProductService.Update(Product);
+            await ProductService.Update(product);
             //Product.Name = string.Empty;
             navigationManager.NavigateTo("/Product/ProductList");
         }
     }
-    private void Cancel()
+
+    void AddToList()
+    {
+        string type = string.Empty;
+        var Attrtype = Attributes.FirstOrDefault(it => it.TypeId == selectedAttrValue);
+        if (Attrtype != null)
+        {
+            type = Attrtype.Name;
+        }
+        var dimension = Dimensions.FirstOrDefault(it => it.DimensionId == dimensionValue);
+        string actualDimension = dimension.Width + " X " + dimension.Height;
+        product.DTOProductAttributes.Add(new DTOProductAttribute { ProductAttributeType = type, DimensionId = dimensionValue, ActualDimension = actualDimension });
+    }
+    void RemoveFromList(DTOProductAttribute item)
+    {
+        product.DTOProductAttributes.Remove(item);
+    }
+    async Task CreateProduct()
+    {
+        if (!string.IsNullOrWhiteSpace(product.ProductName))
+        {
+            await ProductService.Create(product);
+            navigationManager.NavigateTo("/Product/ProductList");
+        }
+    }
+    void Cancel()
     {
         navigationManager.NavigateTo("/Product/ProductList");
     }

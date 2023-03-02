@@ -18,13 +18,27 @@ namespace SalesOrderManagement.Api.Repositories
         {
             try
             {
-                var Product = await this._dbContext.Product.FindAsync(id);
-                if (Product == null)
-                {
-                    return null;
-                }
-                var DTOProduct = new DTOProduct { ProductId = Product.ProductId, ProductName = Product.ProductName };
-                return DTOProduct;
+                var dTOProduct = await (from product in _dbContext.Product
+                                        join productAttribute in _dbContext.ProductAttribute
+                                        on product.ProductId equals productAttribute.ProductId
+                                        join dimension in _dbContext.Dimension
+                                        on productAttribute.DimensionId equals dimension.DimensionId
+                                        where product.ProductId == id
+                                        select new DTOProduct
+                                        {
+                                            ProductId = product.ProductId,
+                                            ProductName = product.ProductName,
+                                            DTOProductAttributes = product.ProductAttribute.Select(_it => new DTOProductAttribute
+                                            {
+                                                ProductAttributeId = _it.ProductAttributeId,
+                                                ProductAttributeType = _it.ProductAttributeType,
+                                                TypeId = _it.ProductAttributeType == "Doors" ? 1 : 2,
+                                                DimensionId = _it.DimensionId,
+                                                ActualDimension = _it.Dimension.Width + " X " + _it.Dimension.Height
+                                            }).ToList()
+                                        }).FirstOrDefaultAsync();
+
+                return dTOProduct;
             }
             catch (Exception)
             {
@@ -36,7 +50,7 @@ namespace SalesOrderManagement.Api.Repositories
         {
             try
             {
-                var DTOProducts = await this._dbContext.Product
+                var dTOProducts = await this._dbContext.Product
                 .Select(it => new DTOProduct
                 {
                     ProductId = it.ProductId,
@@ -49,7 +63,7 @@ namespace SalesOrderManagement.Api.Repositories
                         ActualDimension = _it.Dimension.Width + " X " + _it.Dimension.Height
                     }).ToList()
                 }).ToListAsync();
-                return DTOProducts;
+                return dTOProducts;
             }
             catch (Exception)
             {
@@ -79,14 +93,43 @@ namespace SalesOrderManagement.Api.Repositories
         {
             try
             {
-                var Product = await this._dbContext.Product.FindAsync(model.ProductId);
-                if (Product != null)
+                List<int> deletedIds = new List<int>();
+                var product = await this._dbContext.Product.Where(it => it.ProductId == model.ProductId).Include(_it => _it.ProductAttribute).FirstOrDefaultAsync();
+                if (product != null)
                 {
-                    Product.ProductName = model.ProductName ?? string.Empty;
+                    foreach (var item in product.ProductAttribute)
+                    {
+                        deletedIds.Add(item.ProductAttributeId);
+                    }
+                    product.ProductName = model.ProductName ?? string.Empty;
+                    foreach (var _item in model.DTOProductAttributes)
+                    {
+                        if (_item.ProductAttributeId == 0)
+                        {
+                            product.ProductAttribute.Add(new ProductAttribute() { ProductAttributeId = _item.ProductAttributeId, ProductAttributeType = _item.ProductAttributeType, DimensionId = _item.DimensionId });
+                        }
+                        else
+                        {
+                            var updateModel = product.ProductAttribute.FirstOrDefault(_it => _it.ProductAttributeId == _item.ProductAttributeId);
+                            if (updateModel != null)
+                            {
+                                updateModel.ProductAttributeId = _item.ProductAttributeId;
+                                updateModel.ProductAttributeType = _item.ProductAttributeType;
+                                deletedIds.Remove(_item.ProductAttributeId);
+                            }
+                        }
+                    }
+                    foreach (var id in deletedIds)
+                    {
+                        var deletedModel = product.ProductAttribute.FirstOrDefault(_it => _it.ProductAttributeId.Equals(id));
+                        if (deletedModel != null)
+                        {
+                            product.ProductAttribute.Remove(deletedModel);
+                        }
+                    }
                     await _dbContext.SaveChangesAsync();
-                    return true;
                 }
-                return false;
+                return true;
             }
             catch (Exception)
             {

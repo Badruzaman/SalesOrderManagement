@@ -20,6 +20,7 @@ namespace SalesOrderManagement.Models.DTOs
     {
         public int ProductAttributeId { get; set; }
         public string? ProductAttributeType { get; set; }
+        public int TypeId { get; set; }
         public int DimensionId { get; set; }
         public int ProductId { get; set; }
         public string? ProductName { get; set; }

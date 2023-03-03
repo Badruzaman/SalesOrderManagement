@@ -20,25 +20,24 @@ namespace SalesOrderManagement.Api.Repositories
         {
             try
             {
-                var salesOrder = await this._dbContext.SalesOrder.Where(it => it.SalesOrderId == id).Include(_it => _it.SalesOrderDetail).FirstOrDefaultAsync();
-                if (salesOrder == null)
-                {
-                    return null;
-                }
-                var DTOSalesOrder = new DTOSalesOrder
-                {
-                    SalesOrderId = salesOrder.SalesOrderId,
-                    BuildingsId = salesOrder.BuildingsId,
-                    StatesId = salesOrder.StatesId,
-                    DTOSalesOrderDetails = salesOrder.SalesOrderDetail.Select(_it => new DTOSalesOrderDetail
-                    {
-                        SalesOrderDetailId = _it.SalesOrderDetailId,
-                        SalesOrderId = _it.SalesOrderId,
-                        ProductAttributeId = _it.ProductAttributeId,
-                        QuantityOfWindows = _it.QuantityOfWindows
-                    }).ToList()
-                };
-                return DTOSalesOrder;
+                var dTOSalesOrder = await (from saleorder in _dbContext.SalesOrder
+                                        join salesOrderDetail in _dbContext.SalesOrder
+                                        on saleorder.SalesOrderId equals salesOrderDetail.SalesOrderId
+                                        where saleorder.SalesOrderId == id
+                                        select new DTOSalesOrder
+                                        {
+                                            SalesOrderId = saleorder.SalesOrderId,
+                                            BuildingsId = saleorder.BuildingsId,
+                                            StatesId = saleorder.StatesId,
+                                            DTOSalesOrderDetails = saleorder.SalesOrderDetail.Select(_it => new DTOSalesOrderDetail
+                                            {
+                                                SalesOrderDetailId = _it.SalesOrderDetailId,
+                                                ProductAttributeId = _it.ProductAttributeId,
+                                                SalesOrderId = _it.SalesOrderId,
+                                                QuantityOfWindows = _it.QuantityOfWindows,
+                                            }).ToList()
+                                        }).FirstOrDefaultAsync();
+                return dTOSalesOrder;
             }
             catch (Exception)
             {
@@ -49,7 +48,9 @@ namespace SalesOrderManagement.Api.Repositories
         {
             try
             {
-                var DTOSalesOrders = await this._dbContext.SalesOrder.Include(it => it.Buildings).Include(it => it.States)
+                var dTOSalesOrders = await this._dbContext
+                .SalesOrder.Include(it => it.Buildings)
+                .Include(it => it.States)
                 .Select(it => new DTOSalesOrder
                 {
                     SalesOrderId = it.SalesOrderId,
@@ -66,11 +67,11 @@ namespace SalesOrderManagement.Api.Repositories
                         ProductAttributeName = _it.ProductAttribute.Product.ProductName + " " + _it.ProductAttribute.ProductAttributeType + " " + _it.ProductAttribute.Dimension.Width + " X " + _it.ProductAttribute.Dimension.Height
                     }).ToList()
                 }).ToListAsync();
-                return DTOSalesOrders;
+                return dTOSalesOrders;
             }
             catch (Exception)
             {
-                return Enumerable.Empty<DTOSalesOrder>();
+                return null;
             }
         }
 

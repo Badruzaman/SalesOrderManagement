@@ -74,7 +74,7 @@ namespace SalesOrderManagement.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<HttpResponseMessage>> Update(DTOProduct model)
+        public async Task<ActionResult<bool>> Update(DTOProduct model)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace SalesOrderManagement.Api.Controllers
                 {
                     return Ok(result);
                 }
-               return BadRequest();
+               return NotFound();
             }
             catch (Exception)
             {

@@ -93,14 +93,10 @@ namespace SalesOrderManagement.Api.Repositories
         {
             try
             {
-                List<int> deletedIds = new List<int>();
+                
                 var product = await this._dbContext.Product.Where(it => it.ProductId == model.ProductId).Include(_it => _it.ProductAttribute).FirstOrDefaultAsync();
                 if (product != null)
                 {
-                    foreach (var item in product.ProductAttribute)
-                    {
-                        deletedIds.Add(item.ProductAttributeId);
-                    }
                     product.ProductName = model.ProductName ?? string.Empty;
                     foreach (var _item in model.DTOProductAttributes)
                     {
@@ -115,16 +111,8 @@ namespace SalesOrderManagement.Api.Repositories
                             {
                                 updateModel.ProductAttributeId = _item.ProductAttributeId;
                                 updateModel.ProductAttributeType = _item.ProductAttributeType;
-                                deletedIds.Remove(_item.ProductAttributeId);
+                                updateModel.DimensionId = _item.DimensionId;
                             }
-                        }
-                    }
-                    foreach (var id in deletedIds)
-                    {
-                        var deletedModel = product.ProductAttribute.FirstOrDefault(_it => _it.ProductAttributeId.Equals(id));
-                        if (deletedModel != null)
-                        {
-                            product.ProductAttribute.Remove(deletedModel);
                         }
                     }
                     await _dbContext.SaveChangesAsync();

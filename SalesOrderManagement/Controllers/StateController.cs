@@ -45,7 +45,11 @@ namespace SalesOrderManagement.Api.Controllers
             try
             {
                 var result = await this.StateRepository.Create(model);
-                return Ok(result);
+                if (result)
+                {
+                    return Ok(result);
+                }
+                return NotFound();
             }
             catch (Exception)
             {
@@ -74,7 +78,7 @@ namespace SalesOrderManagement.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<HttpResponseMessage>> Update(DTOState model)
+        public async Task<ActionResult<bool>> Update(DTOState model)
         {
             try
             {
@@ -83,7 +87,7 @@ namespace SalesOrderManagement.Api.Controllers
                 {
                     return Ok(result);
                 }
-               return BadRequest();
+               return NotFound();
             }
             catch (Exception)
             {

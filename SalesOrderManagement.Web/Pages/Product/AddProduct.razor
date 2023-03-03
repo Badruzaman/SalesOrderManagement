@@ -2,7 +2,12 @@
 @using SalesOderManagement.Web.Services.Contracts;
 @inherits SalesOrderBase
 @inject NavigationManager navigationManager
+@inject IJSRuntime JSRuntime
 
+
+<h5 class="alert-danger" style="text-align:center">
+    @message
+</h5>
 
 @if (Dimensions == null)
 {
@@ -63,7 +68,7 @@ else
             </table>
         </div>
 
-        
+
         <div class="row">
 
             <table class="table table-bordered table-hover">
@@ -126,10 +131,23 @@ else
 
     void AddToList()
     {
+        message = string.Empty;
         string type = Attributes.FirstOrDefault(it => it.TypeId == SelectedAttrValue).Name;
         var dimension = Dimensions.FirstOrDefault(it => it.DimensionId == dimensionValue);
         string actualDimension = dimension.Width + " X " + dimension.Height;
-        product.DTOProductAttributes.Add(new DTOProductAttribute { ProductAttributeType = type, DimensionId = dimensionValue, ActualDimension = actualDimension });
+        if(!string.IsNullOrEmpty(type) && dimensionValue > 0)
+        {
+            bool isExist = checkDuplicateProduct(product,dimensionValue, type);
+            if(!isExist)
+            {
+                product.DTOProductAttributes.Add(new DTOProductAttribute { ProductAttributeType = type, DimensionId = dimensionValue, ActualDimension = actualDimension });
+            }
+            else
+            {
+                message = "please check inputs";
+            }
+        }
+       
     }
     void RemoveFromList(DTOProductAttribute item)
     {
@@ -137,14 +155,25 @@ else
     }
     async Task CreateProduct()
     {
-        if (!string.IsNullOrWhiteSpace(product.ProductName))
+        message = string.Empty;
+        bool isvalid = getModelValidation(product); // model validation
+        if (isvalid)
         {
-            await ProductService.Create(product);
-            //if (response.StatusCode.ToString() == "OK")
-            //{
-            //    //DisplayAlert = true;
-            //}
-            navigationManager.NavigateTo("/Product/ProductList");
+            if (!await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to save product?"))
+                return;
+            var result = await ProductService.Create(product);
+            if (result)
+            {
+                navigationManager.NavigateTo("/Product/ProductList");
+            }
+            else
+            {
+                message = "error while storing data";
+            }
+        }
+        else
+        {
+            message = "please check inputs";
         }
     }
     void Cancel()

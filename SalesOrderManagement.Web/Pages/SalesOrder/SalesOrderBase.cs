@@ -23,8 +23,41 @@ namespace SalesOrderManagement.Web.Pages.SalesOrder
         protected IEnumerable<DTOProduct> Products { get; set; } = Enumerable.Empty<DTOProduct>();
         protected IEnumerable<DTOProductAttribute> ProductAttributes { get; set; } = Enumerable.Empty<DTOProductAttribute>();
         protected IEnumerable<DTOBuilding> BuildingList { get; set; } = Enumerable.Empty<DTOBuilding>();
+        protected string message = string.Empty;
 
+        protected bool getModelValidation(DTOSalesOrder model)
+        {
+            if (!(model.StatesId > 0) && !(model.BuildingsId > 0))
+            {
+                return false;
+            }
+            else
+            {
+                if (!(model.DTOSalesOrderDetails.Count() > 0))
+                {
+                    return false;
+                }
+                else
+                {
+                    foreach (var item in model.DTOSalesOrderDetails)
+                    {
+                        if (!(item.ProductAttributeId > 0 && item.QuantityOfWindows > 0))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        protected bool checkDuplicateProduct(DTOSalesOrder model, int productAttrId)
+        {
+            bool isExist = model.DTOSalesOrderDetails.Any(it => it.ProductAttributeId == productAttrId);
+            return isExist;
+        }
     }
+
     public class AttributeType
     {
         public int Id { get; set; }

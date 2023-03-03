@@ -2,8 +2,11 @@
 @using SalesOderManagement.Web.Services.Contracts;
 @inherits SalesOrderBase
 @inject NavigationManager navigationManager
+@inject IJSRuntime JSRuntime
 
-
+<h5 class="alert-danger" style="text-align:center">
+    @message
+</h5>
 @if (salesOrder == null)
 {
     <h3>Loading....</h3>
@@ -41,7 +44,7 @@ else
                 </div>
             </div>
         </div>
-       
+
         <div class="row">
             <table class="table table-bordered table-hover">
                 <thead>
@@ -108,7 +111,7 @@ else
                                     @product.QuantityOfWindows
                                 </td>
                                 <td style="text-align:right; width:10%">
-                                    <button class="btn btn-warning" @onclick="@(() => RemoveItemFromList(product))">Remove</button>
+                                    <button type="button" class="btn btn-warning" @onclick="@(() => RemoveItemFromList(product))">Remove</button>
                                 </td>
                             </tr>
                         }
@@ -135,6 +138,7 @@ else
     int Quantity = 0;
     int productId = 0;
     int stateId = 0;
+
     protected override async Task OnInitializedAsync()
     {
         Buildings = Enumerable.Empty<DTOBuilding>().ToList();
@@ -154,6 +158,7 @@ else
 
     void AddToList()
     {
+        message = string.Empty;
         string? productAttributeName = string.Empty;
         var attributeInfo = ProductAttributes.FirstOrDefault(it => it.ProductAttributeId == productAttributeId);
         if (attributeInfo != null)
@@ -161,13 +166,25 @@ else
             productAttributeName = attributeInfo.ProductAttributeName;
         }
         salesOrder.StatesId = stateId;
-        salesOrder.DTOSalesOrderDetails.Add(new
-            DTOSalesOrderDetail
+        if (productAttributeId > 0 && Quantity > 0)
+        {
+            bool isExist = checkDuplicateProduct(salesOrder, productAttributeId); // check duplicate product 
+            if (!isExist)
             {
-                ProductAttributeId = productAttributeId,
-                QuantityOfWindows = Quantity,
-                ProductAttributeName = productAttributeName
-            });
+
+                salesOrder.DTOSalesOrderDetails.Add(new
+                DTOSalesOrderDetail
+                    {
+                        ProductAttributeId = productAttributeId,
+                        QuantityOfWindows = Quantity,
+                        ProductAttributeName = productAttributeName
+                    });
+            }
+            else
+            {
+                message = "The product has already added";
+            }
+        }
     }
 
     void RemoveItemFromList(DTOSalesOrderDetail item)
@@ -177,15 +194,27 @@ else
 
     async Task CreateSalesOrder()
     {
-        if (true)
+        message = string.Empty;
+        bool isvalid = getModelValidation(salesOrder); // model validation
+        if (isvalid)
         {
-            await SalesOrderService.Create(salesOrder);
-            //if (response.StatusCode.ToString() == "OK")
-            //{
-            //    //DisplayAlert = true;
-            //}
-            navigationManager.NavigateTo("/SalesOrder/SalesOrderList");
+            if (!await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to save sales order?"))
+                return;
+            var result = await SalesOrderService.Create(salesOrder);
+            if (result)
+            {
+                navigationManager.NavigateTo("/SalesOrder/SalesOrderList");
+            }
+            else
+            {
+                message = "error while storing data";
+            }
         }
+        else
+        {
+            message = "please check inputs";
+        }
+
     }
     void Cancel()
     {

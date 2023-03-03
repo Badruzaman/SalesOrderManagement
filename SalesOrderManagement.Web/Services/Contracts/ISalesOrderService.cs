@@ -5,7 +5,6 @@ namespace SalesOderManagement.Web.Services.Contracts
     public interface ISalesOrderService
     {
        
-
         Task<IEnumerable<DTOSalesOrder>> GetSalesOrders();
         Task<bool> Create(DTOSalesOrder model);
         Task<DTOSalesOrder?> GetSalesOrderById(long id);

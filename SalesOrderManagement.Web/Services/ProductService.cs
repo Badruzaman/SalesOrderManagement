@@ -24,18 +24,45 @@ namespace SalesOderManagement.Web.Services
                 throw;
             }
         }
-        public async Task Create(DTOProduct model)
+        public async Task<bool> Create(DTOProduct model)
         {
-            await this._httpClient.PostAsJsonAsync("api/Product", model);
+            try
+            {
+                var response = await this._httpClient.PostAsJsonAsync("api/Product", model);
+                if (response.StatusCode.ToString().Equals("OK"))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
         public async Task<DTOProduct?> GetProductById(int id)
         {
             var Product = await this._httpClient.GetFromJsonAsync<DTOProduct>("api/Product/GetProductById?id=" + id);
             return Product;
         }
-        public async Task Update(DTOProduct model)
+        public async Task<bool> Update(DTOProduct model)
         {
-           await this._httpClient.PutAsJsonAsync("api/Product", model);
+            try
+            {
+                var response = await this._httpClient.PutAsJsonAsync("api/Product", model);
+                if (response.StatusCode.ToString().Equals("OK"))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public async Task<IEnumerable<DTOProductAttribute>> GetProductAttributes()

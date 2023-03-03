@@ -1,6 +1,13 @@
 ﻿@page "/SalesOrder/EditSalesOrder/{id:long}"
 @inherits SalesOrderBase
 @inject NavigationManager navigationManager
+@inject IJSRuntime JSRuntime
+
+
+
+<h5 class="alert-danger" style="text-align:center">
+    @message
+</h5>
 
 @if (salesOrder == null)
 {
@@ -165,19 +172,32 @@ else
 
     void AddToList()
     {
+        message = string.Empty;
         string? productAttributeName = string.Empty;
         var attributeInfo = ProductAttributes.FirstOrDefault(it => it.ProductAttributeId == productAttributeId);
         if (attributeInfo != null)
         {
             productAttributeName = attributeInfo.ProductAttributeName;
         }
-        salesOrder.DTOSalesOrderDetails.Add(
-            new DTOSalesOrderDetail
+        if (productAttributeId > 0 && Quantity > 0)
+        {
+            bool isExist = checkDuplicateProduct(salesOrder, productAttributeId); // check duplicate product 
+            if (!isExist)
             {
-                ProductAttributeId = productAttributeId,
-                QuantityOfWindows = Quantity,
-                ProductAttributeName = productAttributeName
-            });
+
+                salesOrder.DTOSalesOrderDetails.Add(new
+                DTOSalesOrderDetail
+                    {
+                        ProductAttributeId = productAttributeId,
+                        QuantityOfWindows = Quantity,
+                        ProductAttributeName = productAttributeName
+                    });
+            }
+            else
+            {
+                message = "The product has already added";
+            }
+        }
     }
 
     void RemoveItemFromList(DTOSalesOrderDetail item)
@@ -186,10 +206,25 @@ else
     }
     private async Task UpdateSalesOrder()
     {
-        if (true)
+        message = string.Empty;
+        bool isvalid = getModelValidation(salesOrder); // model validation
+        if (isvalid)
         {
-            await SalesOrderService.Update(salesOrder);
-            navigationManager.NavigateTo("/SalesOrder/SalesOrderList");
+            if (!await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to update sales order?"))
+                return;
+            var result = await SalesOrderService.Update(salesOrder);
+            if (result)
+            {
+                navigationManager.NavigateTo("/SalesOrder/SalesOrderList");
+            }
+            else
+            {
+                message = "error while updating data";
+            }
+        }
+        else
+        {
+            message = "please check inputs";
         }
     }
     private void Cancel()

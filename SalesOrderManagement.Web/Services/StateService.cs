@@ -23,18 +23,42 @@ namespace SalesOderManagement.Web.Services
                 throw;
             }
         }
-        public async Task Create(DTOState model)
+        public async Task<bool> Create(DTOState model)
         {
-            await this._httpClient.PostAsJsonAsync("api/State", model);
+            try
+            {
+                var response = await this._httpClient.PostAsJsonAsync("api/State", model);
+                if (response.StatusCode.ToString().Equals("OK"))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public async Task<DTOState?> GetStateById(int id)
         {
             var state = await this._httpClient.GetFromJsonAsync<DTOState>("api/State/GetStateById?id=" + id);
             return state;
         }
-        public async Task Update(DTOState model)
+        public async Task<bool> Update(DTOState model)
         {
-           await this._httpClient.PutAsJsonAsync("api/State", model);
+            try
+            {
+                var response = await this._httpClient.PutAsJsonAsync("api/State", model);
+                if (response.StatusCode.ToString().Equals("OK"))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

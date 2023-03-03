@@ -1,6 +1,11 @@
 ﻿@page "/Product/EditProduct/{id:int}"
 @inherits SalesOrderBase
 @inject NavigationManager navigationManager
+@inject IJSRuntime JSRuntime
+
+<h5 class="alert-danger" style="text-align:center">
+    @message
+</h5>
 
 @if (product == null)
 {
@@ -102,7 +107,6 @@ else
                         <th style="width:1%">SL</th>
                         <th>Attribute Type</th>
                         <th>Dimension</th>
-                        <th style="text-align:right; width: 10%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -134,9 +138,7 @@ else
                                         </select>
                                     </div>
                                 </td>
-                                <td style="text-align:right">
-                                    <button type="button" class="btn btn-warning" @onclick="@(() => RemoveFromList(productAttr))">Remove</button>
-                                </td>
+                                
                             </tr>
                         }
                     }
@@ -174,16 +176,31 @@ else
     }
     async Task UpdateProduct()
     {
-        if (!string.IsNullOrWhiteSpace(product.ProductName))
+        message = string.Empty;
+        bool isvalid = getModelValidation(product); // model validation
+        if (isvalid)
         {
-            await ProductService.Update(product);
-            //Product.Name = string.Empty;
-            navigationManager.NavigateTo("/Product/ProductList");
+            if (!await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to update product?"))
+                return;
+            var result = await ProductService.Update(product);
+            if (result)
+            {
+                navigationManager.NavigateTo("/Product/ProductList");
+            }
+            else
+            {
+                message = "error while storing data";
+            }
+        }
+        else
+        {
+            message = "please check inputs";
         }
     }
 
     void AddToList()
     {
+        message = string.Empty;
         string type = string.Empty;
         var Attrtype = Attributes.FirstOrDefault(it => it.TypeId == selectedAttrValue);
         if (Attrtype != null)
@@ -192,20 +209,20 @@ else
         }
         var dimension = Dimensions.FirstOrDefault(it => it.DimensionId == dimensionValue);
         string actualDimension = dimension.Width + " X " + dimension.Height;
-        product.DTOProductAttributes.Add(new DTOProductAttribute { ProductAttributeType = type, DimensionId = dimensionValue, ActualDimension = actualDimension });
-    }
-    void RemoveFromList(DTOProductAttribute item)
-    {
-        product.DTOProductAttributes.Remove(item);
-    }
-    async Task CreateProduct()
-    {
-        if (!string.IsNullOrWhiteSpace(product.ProductName))
+        if (!string.IsNullOrEmpty(type) && dimensionValue > 0)
         {
-            await ProductService.Create(product);
-            navigationManager.NavigateTo("/Product/ProductList");
+            bool isExist = checkDuplicateProduct(product, dimensionValue, type);
+            if (isExist)
+            {
+                product.DTOProductAttributes.Add(new DTOProductAttribute { ProductAttributeType = type, DimensionId = dimensionValue, ActualDimension = actualDimension });
+            }
+            else
+            {
+                message = "please check inputs";
+            }
         }
     }
+   
     void Cancel()
     {
         navigationManager.NavigateTo("/Product/ProductList");

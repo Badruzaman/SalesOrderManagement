@@ -1,6 +1,11 @@
 ﻿@page "/State/EditState/{id:int}"
 @inherits StateBase
 @inject NavigationManager navigationManager
+@inject IJSRuntime JSRuntime
+
+<h5 class="alert-danger" style="text-align:center">
+    @message
+</h5>
 
 @if (state == null)
 {
@@ -16,7 +21,7 @@ else
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="Name" class="control-label">Name</label>
-                    <input for="Name" class="form-control"@bind="@state.Name" />
+                    <input for="Name" class="form-control" @bind="@state.Name" />
                 </div>
             </div>
         </div>
@@ -45,9 +50,21 @@ else
     {
         if (!string.IsNullOrWhiteSpace(state.Name))
         {
-            await StateService.Update(state);
-            state.Name = string.Empty;
-            navigationManager.NavigateTo("/State/StateList");
+            if (!await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to update state?"))
+                return;
+            var result = await StateService.Update(state);
+            if (result)
+            {
+                navigationManager.NavigateTo("/State/StateList");
+            }
+            else
+            {
+                message = "error in storing data";
+            }
+        }
+        else
+        {
+            message = "please check input";
         }
     }
     private void Cancel()

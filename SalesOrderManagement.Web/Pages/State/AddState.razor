@@ -1,6 +1,11 @@
 ﻿@page "/State/AddState"
 @inherits StateBase
 @inject NavigationManager navigationManager
+@inject IJSRuntime JSRuntime
+
+<h5 class="alert-danger" style="text-align:center">
+    @message
+</h5>
 
 
 <h3>
@@ -29,17 +34,25 @@
 
 @code {
 
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    States = await StateService.GetStates();
-    //}
     private async Task CreateState()
     {
         if (!string.IsNullOrWhiteSpace(state.Name))
         {
-            await StateService.Create(state);
-            state.Name = string.Empty;
-            navigationManager.NavigateTo("/State/StateList");
+            if (!await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to save state?"))
+                return;
+            var result = await StateService.Create(state);
+            if (result)
+            {
+                navigationManager.NavigateTo("/State/StateList");
+            }
+            else
+            {
+                message = "error in storing data";
+            }
+        }
+        else
+        {
+            message = "please check input";
         }
     }
 

@@ -13,5 +13,6 @@ namespace SalesOrderManagement.Web.Pages.State
         public IStateService StateService { get; set; }
         public IEnumerable<DTOState> States { get; set; }
         public DTOState state { get; set; } = new DTOState();
+        protected string message = string.Empty;
     }
 }

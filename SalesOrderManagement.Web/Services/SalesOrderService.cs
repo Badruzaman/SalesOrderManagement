@@ -24,18 +24,52 @@ namespace SalesOderManagement.Web.Services
                 throw;
             }
         }
-        public async Task Create(DTOSalesOrder model)
+        public async Task<bool> Create(DTOSalesOrder model)
         {
-            await this._httpClient.PostAsJsonAsync("api/SalesOrder", model);
+            try
+            {
+                var response = await this._httpClient.PostAsJsonAsync("api/SalesOrder", model);
+                if (response.StatusCode.ToString().Equals("OK"))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            
         }
         public async Task<DTOSalesOrder?> GetSalesOrderById(long id)
         {
-            var SalesOrder = await this._httpClient.GetFromJsonAsync<DTOSalesOrder>("api/SalesOrder/GetSalesOrderById?id=" + id);
-            return SalesOrder;
+            try
+            {
+                var SalesOrder = await this._httpClient.GetFromJsonAsync<DTOSalesOrder>("api/SalesOrder/GetSalesOrderById?id=" + id);
+                return SalesOrder;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+           
         }
-        public async Task Update(DTOSalesOrder model)
+        public async Task<bool> Update(DTOSalesOrder model)
         {
-           await this._httpClient.PutAsJsonAsync("api/SalesOrder", model);
+            try
+            {
+               var response = await this._httpClient.PutAsJsonAsync("api/SalesOrder", model);
+                if (response.StatusCode.ToString().Equals("OK"))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+          
         }
     }
 }

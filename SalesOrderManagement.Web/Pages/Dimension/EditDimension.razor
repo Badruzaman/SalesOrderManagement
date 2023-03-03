@@ -1,6 +1,12 @@
 ﻿@page "/Dimension/EditDimension/{id:int}"
 @inherits DimensionBase
 @inject NavigationManager navigationManager
+@inject IJSRuntime JSRuntime
+
+
+<h5 class="alert-danger" style="text-align:center">
+    @message
+</h5>
 
 @if (dimension == null)
 {
@@ -47,22 +53,29 @@ else
     {
         dimension = await DimensionService.GetDimensionById(id);
     }
-    private async Task UpdateDimension()
+    async Task UpdateDimension()
     {
-       
-            await DimensionService.Update(dimension);
-            if (true)
+        if (!string.IsNullOrWhiteSpace(dimension.Width) && !string.IsNullOrWhiteSpace(dimension.Height))
+        {
+            if (!await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to update dimension?"))
+                return;
+            var result = await DimensionService.Update(dimension);
+            if (result)
             {
-                clear();
-                navigationManager.NavigateTo("/Dimension/DimensionList");
+                navigationManager.NavigateTo($"/Dimension/DimensionList");
             }
+            else
+            {
+                message = "error while storing data";
+            }
+        }
+        else
+        {
+            message = "please check inputs";
+        }
     }
-    private void clear()
-    {
-        dimension.Width = string.Empty;
-        dimension.Height = string.Empty;
-    }
-    private void Cancel()
+
+    void Cancel()
     {
         navigationManager.NavigateTo("/Dimension/DimensionList");
     }

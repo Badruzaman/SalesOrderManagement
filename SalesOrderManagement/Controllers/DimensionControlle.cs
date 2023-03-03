@@ -20,14 +20,14 @@ namespace SalesOrderManagement.Api.Controllers
         {
             try
             {
-                var Dimensions = await this.DimensionRepository.GetDimensions();
-                if (Dimensions == null)
+                var dimensions = await this.DimensionRepository.GetDimensions();
+                if (dimensions == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    return Ok(Dimensions);
+                    return Ok(dimensions);
                 }
             }
             catch (Exception)
@@ -40,16 +40,21 @@ namespace SalesOrderManagement.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<bool>> Create(DTODimension model)
         {
-            var result = await this.DimensionRepository.Create(model);
-            if (result)
+            try
             {
-                return Ok(model);
-            }
-            else
-            {
+                var result = await this.DimensionRepository.Create(model);
+                if (result)
+                {
+                    return Ok(result);
+                }
                 return NotFound();
             }
-            
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                   "error updating data in the database");
+            }
+
         }
         [HttpPut]
         public async Task<ActionResult<bool>> Update(DTODimension model)

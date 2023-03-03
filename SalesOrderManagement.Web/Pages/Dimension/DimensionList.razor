@@ -2,6 +2,7 @@
 @inherits DimensionBase
 @inject NavigationManager navigationManager
 
+
 <div>
     <a class="btn btn-primary" href='/Dimension/AddDimension'>Add New Data</a>
 </div>
@@ -48,6 +49,7 @@ else
     </table>
 }
 @code {
+
     protected override async Task OnInitializedAsync()
     {
         Dimensions = await DimensionService.GetDimensions();

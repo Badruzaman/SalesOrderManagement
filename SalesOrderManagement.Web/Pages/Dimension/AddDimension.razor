@@ -1,7 +1,11 @@
 ﻿@page "/Dimension/AddDimension"
 @inherits DimensionBase
 @inject NavigationManager navigationManager
+@inject IJSRuntime JSRuntime
 
+<h5 class="alert-danger" style="text-align:center">
+    @message
+</h5>
 <h3>
     Add Dimension
 </h3>
@@ -29,29 +33,36 @@
             </div>
         </div>
     </div>
+
+   
+
 </form>
 
 
 @code {
-
-    private async Task CreateDimension()
+    
+    async Task CreateDimension()
     {
         if (!string.IsNullOrWhiteSpace(dimension.Width) && !string.IsNullOrWhiteSpace(dimension.Height))
         {
-            await DimensionService.Create(dimension);
-            if (true)
+            if (!await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to save dimension?"))
+                return;
+            var result = await DimensionService.Create(dimension);
+            if (result)
             {
-                clear();
-                navigationManager.NavigateTo("/Dimension/DimensionList");
+                navigationManager.NavigateTo($"/Dimension/DimensionList");
+            }
+            else
+            {
+                message = "error while storing data";
             }
         }
+        else
+        {
+            message = "please check inputs";
+        }
     }
-    private void clear()
-    {
-        dimension.Width = string.Empty;
-        dimension.Height = string.Empty;
-    }
-    private void Cancel()
+    void Cancel()
     {
         navigationManager.NavigateTo("/Dimension/DimensionList");
     }

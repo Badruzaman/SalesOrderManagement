@@ -8,9 +8,10 @@ namespace SalesOrderManagement.Web.Pages.Dimension
     public class DimensionBase : ComponentBase
     {
         [Inject]
-        public IDimensionService DimensionService { get; set; }
-        public IEnumerable<DTODimension> Dimensions { get; set; }
-        public DTODimension dimension { get; set; } = new DTODimension();
-        
+        protected IDimensionService DimensionService { get; set; }
+        protected IEnumerable<DTODimension> Dimensions { get; set; }
+        protected DTODimension dimension { get; set; } = new DTODimension();
+        protected string message = string.Empty;
     }
+
 }

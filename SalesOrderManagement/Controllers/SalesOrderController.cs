@@ -25,10 +25,7 @@ namespace SalesOrderManagement.Api.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    return Ok(SalesOrders);
-                }
+                return Ok(SalesOrders);
             }
             catch (Exception)
             {
@@ -43,7 +40,11 @@ namespace SalesOrderManagement.Api.Controllers
             try
             {
                 var result = await this.SalesOrderRepository.Create(model);
-                return Ok(result);
+                if (result)
+                {
+                    return Ok(result);
+                }
+                return NotFound();
             }
             catch (Exception)
             {
@@ -72,7 +73,7 @@ namespace SalesOrderManagement.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<HttpResponseMessage>> Update(DTOSalesOrder model)
+        public async Task<ActionResult<bool>> Update(DTOSalesOrder model)
         {
             try
             {
@@ -81,7 +82,7 @@ namespace SalesOrderManagement.Api.Controllers
                 {
                     return Ok(result);
                 }
-                return BadRequest();
+                return NotFound();
             }
             catch (Exception)
             {

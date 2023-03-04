@@ -27,7 +27,7 @@ namespace SalesOrderManagement.Models.DTOs
         public long SalesOrderDetailId { get; set; }
         public long SalesOrderId { get; set; }
         public int ProductAttributeId { get; set; }
-        public int QuantityOfWindows { get; set; }
+        public decimal QuantityOfWindows { get; set; }
         public string? ProductAttributeName { get; set; }
         public string? ProductName { get; set; }
     }

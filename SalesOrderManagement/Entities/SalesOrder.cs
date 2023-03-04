@@ -20,7 +20,7 @@ namespace SalesOrderManagement.Api.Entities
         public long SalesOrderDetailId { get; set; }
         public long SalesOrderId { get; set; }
         public int ProductAttributeId { get; set; }
-        public int QuantityOfWindows { get; set; }
+        public decimal QuantityOfWindows { get; set; }
         public virtual SalesOrder SalesOrder { get; set; }
         public virtual ProductAttribute ProductAttribute { get; set; }
     }

@@ -46,7 +46,7 @@ else
     {
         state = await StateService.GetStateById(id);
     }
-    private async Task UpdateState()
+    async Task UpdateState()
     {
         if (!string.IsNullOrWhiteSpace(state.Name))
         {
@@ -67,7 +67,7 @@ else
             message = "please check input";
         }
     }
-    private void Cancel()
+    void Cancel()
     {
         navigationManager.NavigateTo("/State/StateList");
     }

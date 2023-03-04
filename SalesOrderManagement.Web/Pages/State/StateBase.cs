@@ -10,9 +10,9 @@ namespace SalesOrderManagement.Web.Pages.State
     public class StateBase : ComponentBase
     {
         [Inject]
-        public IStateService StateService { get; set; }
-        public IEnumerable<DTOState> States { get; set; }
-        public DTOState state { get; set; } = new DTOState();
+        protected IStateService StateService { get; set; }
+        protected IEnumerable<DTOState> States { get; set; }
+        protected DTOState state { get; set; } = new DTOState();
         protected string message = string.Empty;
     }
 }

@@ -34,7 +34,7 @@
 
 @code {
 
-    private async Task CreateState()
+    async Task CreateState()
     {
         if (!string.IsNullOrWhiteSpace(state.Name))
         {
@@ -56,7 +56,7 @@
         }
     }
 
-    private void Cancel()
+     void Cancel()
     {
         navigationManager.NavigateTo("/State/StateList");
     }

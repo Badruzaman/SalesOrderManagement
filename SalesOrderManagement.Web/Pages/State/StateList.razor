@@ -50,7 +50,7 @@ else
     {
         States = await StateService.GetStates();
     }
-    private void NavigateToEditState(int id)
+    void NavigateToEditState(int id)
     {
         navigationManager.NavigateTo($"/State/EditState/{id}");
     }

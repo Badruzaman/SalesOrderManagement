@@ -62,7 +62,7 @@ namespace SalesOrderManagement.Api.Controllers
                 {
                     return Ok(result);
                 }
-                return BadRequest();
+                return NotFound();
             }
             catch (Exception)
             {

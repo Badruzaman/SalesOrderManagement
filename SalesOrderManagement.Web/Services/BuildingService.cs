@@ -30,13 +30,39 @@ namespace SalesOderManagement.Web.Services
             var state = await this._httpClient.GetFromJsonAsync<DTOBuilding>("api/Building/GetBuildingById?id=" + id);
             return state;
         }
-        public async Task Create(DTOBuilding model)
+        public async Task<bool> Create(DTOBuilding model)
         {
-             await this._httpClient.PostAsJsonAsync("api/Building", model);
+            try
+            {
+                var response = await this._httpClient.PostAsJsonAsync("api/Building", model);
+                if (response.StatusCode.ToString().Equals("OK"))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
-        public async Task Update(DTOBuilding model)
+        public async Task<bool> Update(DTOBuilding model)
         {
-            await this._httpClient.PutAsJsonAsync("api/Building", model);
+            try
+            {
+                var response = await this._httpClient.PutAsJsonAsync("api/Building", model);
+                if (response.StatusCode.ToString().Equals("OK"))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

@@ -6,7 +6,7 @@ namespace SalesOderManagement.Web.Services.Contracts
     {
         Task<IEnumerable<DTOBuilding>> GetBuildings();
         Task<DTOBuilding?> GetBuildingById(int id);
-        Task Create(DTOBuilding model);
-        Task Update(DTOBuilding model);
+        Task<bool> Create(DTOBuilding model);
+        Task<bool> Update(DTOBuilding model);
     }
 }

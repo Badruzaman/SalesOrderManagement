@@ -2,6 +2,11 @@
 @inherits BuildingBase
 @inject NavigationManager navigationManager
 @using SalesOderManagement.Web.Services.Contracts
+@inject IJSRuntime JSRuntime
+
+<h5 class="alert-danger" style="text-align:center">
+    @message
+</h5>
 
 @if (building == null)
 {
@@ -17,7 +22,7 @@ else
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="Name" class="control-label">Name</label>
-                    <input for="Name" class="form-control"@bind="@building.Name" />
+                    <input for="Name" class="form-control" @bind="@building.Name" />
                 </div>
             </div>
             <div class="col-md-4">
@@ -37,7 +42,7 @@ else
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary"@onclick="UpdateBuilding"> Update</button>
+                    <button type="button" class="btn btn-primary" @onclick="UpdateBuilding"> Update</button>
                     <button type="button" class="btn btn-warning" @onclick="Cancel"> Cancel</button>
                 </div>
             </div>
@@ -50,29 +55,33 @@ else
     [Parameter]
     public int id { get; set; }
 
-    [Inject]
-    public IStateService StateService { get; set; }
-    IEnumerable<DTOState> States { get; set; }
-
-    [Inject]
-    IBuildingService BuildingService { get; set; }
-    public DTOBuilding building { get; set; } = new DTOBuilding();
-
     protected override async Task OnInitializedAsync()
     {
         building = await BuildingService.GetBuildingById(id);
         States = await StateService.GetStates();
     }
-    private async Task UpdateBuilding()
+    async Task UpdateBuilding()
     {
         if (!string.IsNullOrWhiteSpace(building.Name))
         {
-            await BuildingService.Update(building);
-            building.Name = string.Empty;
-            navigationManager.NavigateTo("/Building/BuildingList");
+            if (!await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to update building info?"))
+                return;
+            var result = await BuildingService.Update(building);
+            if (result)
+            {
+                navigationManager.NavigateTo("/Building/BuildingList");
+            }
+            else
+            {
+                message = "error in storing data";
+            }
+        }
+        else
+        {
+            message = "please check input";
         }
     }
-    private void Cancel()
+    void Cancel()
     {
         navigationManager.NavigateTo("/Building/BuildingList");
     }

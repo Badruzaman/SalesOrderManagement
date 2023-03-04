@@ -12,42 +12,43 @@ Requirements
 Provide source code with all necessary information to run and test the application. 
 Test data for storing into the database: 
 
-
-<Orders> 
- <Order Name="New York Building 1" State="NY"> 
- <Windows> 
- <Window Name="A51" QuantityOfWindows="4" TotalSubElements="3"> 
- <SubElements> 
- <SubElement Element="1" Type="Doors" Width="1200" Height="1850" /> 
- <SubElement Element="2" Type="Window" Width="800" Height="1850" /> 
- <SubElement Element="3" Type="Window" Width="700" Height="1850" /> 
- </SubElements> 
- </Window> 
- <Window Name="C Zone 5" QuantityOfWindows="2" TotalSubElements="1"> 
- <SubElements> 
- <SubElement Element="1" Type="Window" Width="1500" Height="2000" /> 
- </SubElements> 
- </Window> 
- </Windows> 
- </Order> 
- <Order Name="California Hotel AJK" State="CA"> 
- <Windows> 
- <Window Name="GLB" QuantityOfWindows="3" TotalSubElements="2"> 
- <SubElements> 
- <SubElement Element="1" Type="Doors" Width="1400" Height="2200" /> 
- <SubElement Element="2" Type="Window" Width="600" Height="2200" />
+<pre>
+&lt;Orders&gt;
+ &lt;Order Name="New York Building 1" State="NY"&gt;
+ &lt;Windows&gt;
+ &lt;Window Name="A51" QuantityOfWindows="4" TotalSubElements="3"&gt;
+ &lt;SubElements&gt;
+ &lt;SubElement Element="1" Type="Doors" Width="1200" Height="1850" /&gt;
+ &lt;SubElement Element="2" Type="Window" Width="800" Height="1850" /&gt;
+ &lt;SubElement Element="3" Type="Window" Width="700" Height="1850" /&gt;
+ &lt;/SubElements&gt;
+ &lt;/Window&gt;
+ &lt;Window Name="C Zone 5" QuantityOfWindows="2" TotalSubElements="1"&gt;
+ &lt;SubElements&gt;
+ &lt;SubElement Element="1" Type="Window" Width="1500" Height="2000" /&gt;
+ &lt;/SubElements&gt;
+ &lt;/Window&gt;
+ &lt;/Windows&gt;
+ &lt;/Order&gt;
+ &lt;Order Name="California Hotel AJK" State="CA"&gt;
+ &lt;Windows&gt;
+ &lt;Window Name="GLB" QuantityOfWindows="3" TotalSubElements="2"&gt;
+ &lt;SubElements&gt;
+ &lt;SubElement Element="1" Type="Doors" Width="1400" Height="2200" /&gt;
+ &lt;SubElement Element="2" Type="Window" Width="600" Height="2200" />
  
- </SubElements> 
- </Window> 
- <Window Name="OHF" QuantityOfWindows="10" TotalSubElements="2"> 
- <SubElements> 
- <SubElement Element="1" Type="Window" Width="1500" Height="2000" /> 
- <SubElement Element="1" Type="Window" Width="1500" Height="2000" /> 
- </SubElements> 
- </Window> 
- </Windows> 
- </Order> 
-</Orders>
+ &lt;/SubElements&gt;
+ &lt;/Window&gt;
+ &lt;Window Name="OHF" QuantityOfWindows="10" TotalSubElements="2"&gt;
+ &lt;SubElements&gt;
+ &lt;SubElement Element="1" Type="Window" Width="1500" Height="2000" /&gt;
+ &lt;SubElement Element="1" Type="Window" Width="1500" Height="2000" /&gt;
+ &lt;/SubElements&gt;
+ &lt;/Window&gt;
+ &lt;/Windows&gt;
+ &lt;/Order&gt;
+&lt;/Orders>
+</pre>
 
 ## Findings based on order test data
 + Order has building and state information as master data.

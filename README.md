@@ -76,9 +76,9 @@ Test data for storing into the database:
 ### Order Entry
 ![SalesOrderEntry](/SalesOrderManagement.Web/images/SalesOrderEntry.png)
 ### Order List
-![SalesOrderList](/SalesOrderManagement.Web/images/SalesOrderList.png)
+![SalesOrderList](/SalesOrderManagement.Web/images/SalesOrderList.PNG)
 ### Update Order
-![SalesOrderEdit](/SalesOrderManagement.Web/images/SalesOrderEdit.png)
+![SalesOrderEdit](/SalesOrderManagement.Web/images/SalesOrderEdit.PNG)
 
 
 

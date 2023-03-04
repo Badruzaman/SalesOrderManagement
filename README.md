@@ -72,7 +72,7 @@ Test data for storing into the database:
 + Entity Framework
 + Linq
 
-## Project Architecture
+## User Interfaces
 
 
 

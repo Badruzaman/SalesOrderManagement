@@ -74,7 +74,7 @@ Test data for storing into the database:
 
 ## User Interfaces
 
-![sales](/SalesOrderManagement.Web/images/SalesOrderEntry.PNG)
+![sales_order](/SalesOrderManagement.Web/images/SalesOrderEntry.PNG)
 
 
 

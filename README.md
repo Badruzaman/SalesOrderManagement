@@ -50,7 +50,8 @@ Test data for storing into the database:
 &lt;/Orders>
 </pre>
 
-## Findings based on order test data
+# Solution
+
 + Order has building and state information as master data.
 + Order has product which is windows.
 + Product has different attributes like type and dimension.

@@ -64,3 +64,18 @@ Test data for storing into the database:
 + Every sales order has one building and one state, one to one relationship among sales order with state and building.
 + Every sales order has one or more than one sales order detail and every order detail has one products, so one to many relationship between sales order and sales order details and one to one relationship beteween sales order details and products.
 
+## Tools and Technology 
++ MS SQL SERVER 2022
++ Visual Studio 2022
++ Blazor WebAssembly
++ MS .NET CORE WEB API
++ Core First Approach
++ Entity Framework
++ LINQ
+
+
+
+
+
+
+

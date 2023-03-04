@@ -137,10 +137,10 @@ else
         string actualDimension = dimension.Width + " X " + dimension.Height;
         if(!string.IsNullOrEmpty(type) && dimensionValue > 0)
         {
-            bool isExist = checkDuplicateProduct(product,dimensionValue, type);
+            bool isExist = checkDuplicateProduct(product, dimensionValue, SelectedAttrValue);
             if(!isExist)
             {
-                product.DTOProductAttributes.Add(new DTOProductAttribute { ProductAttributeType = type, DimensionId = dimensionValue, ActualDimension = actualDimension });
+                product.DTOProductAttributes.Add(new DTOProductAttribute { ProductAttributeType = type, TypeId=SelectedAttrValue, DimensionId = dimensionValue, ActualDimension = actualDimension });
             }
             else
             {

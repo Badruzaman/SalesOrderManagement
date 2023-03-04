@@ -26,44 +26,11 @@ else
                 </div>
             </div>
         </div>
-@*
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="Name" class="control-label">Attribute Type</label>
-                    <select for="State" class="form-control" @bind="selectedAttrValue">
-                        <option value="0">--select attribute type--</option>
-                        @foreach (var attr in Attributes)
-                        {
-                            <option value="@attr.TypeId">@attr.Name</option>
-                        }
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="Name" class="control-label">Dimension</label>
-                    <select for="dimension" class="form-control" @bind="dimensionValue">
-                        <option value="0">--select dimension--</option>
-                        @foreach (var dimension in Dimensions)
-                        {
-                            <option value="@dimension.DimensionId">@(dimension.Width + " X " + dimension.Height)</option>
-                        }
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="" class="control-label">Action</label>
-                    <button type="button" class="btn btn-primary" @onclick="AddToList">Add</button>
-                </div>
-            </div>
-        </div>*@
         <div class="row">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>
+                        <th style="width:30%">
                             <div class="form-group">
                                 <label for="Name" class="control-label">Attribute Type</label>
                                 <select for="State" class="form-control" @bind="selectedAttrValue">
@@ -75,7 +42,7 @@ else
                                 </select>
                             </div>
                         </th>
-                        <th style="width:20%">
+                        <th>
                             <div class="form-group">
                                 <label for="Name" class="control-label">Dimension</label>
                                 <select for="dimension" class="form-control" @bind="dimensionValue">
@@ -165,6 +132,7 @@ else
     public int id { get; set; }
     int selectedAttrValue = 0;
     int dimensionValue = 0;
+
     public List<AttributeType> Attributes = new List<AttributeType>();
 
     protected override async Task OnInitializedAsync()
@@ -211,10 +179,10 @@ else
         string actualDimension = dimension.Width + " X " + dimension.Height;
         if (!string.IsNullOrEmpty(type) && dimensionValue > 0)
         {
-            bool isExist = checkDuplicateProduct(product, dimensionValue, type);
-            if (isExist)
+            bool isExist = checkDuplicateProduct(product, dimensionValue, selectedAttrValue);
+            if (!isExist)
             {
-                product.DTOProductAttributes.Add(new DTOProductAttribute { ProductAttributeType = type, DimensionId = dimensionValue, ActualDimension = actualDimension });
+                product.DTOProductAttributes.Add(new DTOProductAttribute { ProductAttributeType = type, TypeId = selectedAttrValue ,DimensionId = dimensionValue, ActualDimension = actualDimension });
             }
             else
             {

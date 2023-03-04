@@ -40,9 +40,9 @@ namespace SalesOrderManagement.Web.Pages.Product
             }
             return true;
         }
-        protected bool checkDuplicateProduct(DTOProduct model, int dimensionId, string Attrtype)
+        protected bool checkDuplicateProduct(DTOProduct model, int dimensionId, int typeId)
         {
-            bool isExist = model.DTOProductAttributes.Any(it => it.DimensionId == dimensionId && it.ProductAttributeType == Attrtype);
+            bool isExist = model.DTOProductAttributes.Any(it => it.DimensionId == dimensionId && it.TypeId == typeId);
             return isExist;
         }
         protected List<AttributeType> GetAttributeTypes()

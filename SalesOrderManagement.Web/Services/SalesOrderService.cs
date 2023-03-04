@@ -69,7 +69,23 @@ namespace SalesOderManagement.Web.Services
             {
                 return false;
             }
-          
+        }
+        public async Task<bool> Delete(long id)
+        {
+            try
+            {
+                var response = await this._httpClient.DeleteAsync($"api/SalesOrder?id={id}");
+                var result = response.Content.ReadFromJsonAsync<bool>();
+                if (result.Result)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

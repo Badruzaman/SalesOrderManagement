@@ -48,8 +48,8 @@ namespace SalesOrderManagement.Api.Repositories
         {
             try
             {
-                var dTOSalesOrders = await this._dbContext
-                .SalesOrder.Include(it => it.Buildings)
+                var dTOSalesOrders = await this._dbContext.SalesOrder
+                .Include(it => it.Buildings)
                 .Include(it => it.States)
                 .Select(it => new DTOSalesOrder
                 {
@@ -58,14 +58,6 @@ namespace SalesOrderManagement.Api.Repositories
                     StatesId = it.StatesId,
                     StateName = it.States.Name,
                     BuildingName = it.Buildings.Name,
-                    DTOSalesOrderDetails = it.SalesOrderDetail.Select(_it => new DTOSalesOrderDetail
-                    {
-                        SalesOrderDetailId = _it.SalesOrderDetailId,
-                        SalesOrderId = _it.SalesOrderId,
-                        ProductAttributeId = _it.ProductAttributeId,
-                        QuantityOfWindows = _it.QuantityOfWindows,
-                        ProductAttributeName = _it.ProductAttribute.Product.ProductName + " " + _it.ProductAttribute.ProductAttributeType + " " + _it.ProductAttribute.Dimension.Width + " X " + _it.ProductAttribute.Dimension.Height
-                    }).ToList()
                 }).ToListAsync();
                 return dTOSalesOrders;
             }
@@ -133,6 +125,24 @@ namespace SalesOrderManagement.Api.Repositories
                             salesOrder.SalesOrderDetail.Remove(deletedModel);
                         }
                     }
+                    await _dbContext.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public async Task<bool> Delete(long id)
+        {
+            try
+            {
+                var salesOrder = await this._dbContext.SalesOrder.Where(it => it.SalesOrderId == id).FirstOrDefaultAsync();
+                if (salesOrder != null)
+                {
+                    var deletedModel = _dbContext.SalesOrder.Remove(salesOrder);
                     await _dbContext.SaveChangesAsync();
                     return true;
                 }

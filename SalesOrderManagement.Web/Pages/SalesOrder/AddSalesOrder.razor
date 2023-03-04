@@ -165,7 +165,6 @@ else
         {
             productAttributeName = attributeInfo.ProductAttributeName;
         }
-        salesOrder.StatesId = stateId;
         if (productAttributeId > 0 && Quantity > 0)
         {
             bool isExist = checkDuplicateProduct(salesOrder, productAttributeId); // check duplicate product 
@@ -195,6 +194,7 @@ else
     async Task CreateSalesOrder()
     {
         message = string.Empty;
+        salesOrder.StatesId = stateId;
         bool isvalid = getModelValidation(salesOrder); // model validation
         if (isvalid)
         {

@@ -90,5 +90,27 @@ namespace SalesOrderManagement.Api.Controllers
                    "Error storing data in the database");
             }
         }
+
+        [HttpDelete]
+        public async Task<ActionResult<bool>> Delete(long id)
+        {
+            try
+            {
+                if(id > 0)
+                {
+                    var result = await this.SalesOrderRepository.Delete(id);
+                    if (result)
+                    {
+                        return Ok(result);
+                    }
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                   "Error storing data in the database");
+            }
+        }
     }
 }

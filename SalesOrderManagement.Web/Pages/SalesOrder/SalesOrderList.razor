@@ -1,13 +1,20 @@
 ﻿@page "/SalesOrder/SalesOrderList"
 @inherits SalesOrderBase
 @inject NavigationManager navigationManager
+@inject IJSRuntime JSRuntime
+
+<h5 class="@alertClass" style="text-align:center">
+    @message
+</h5>
 
 <div>
     <a class="btn btn-primary" href='/SalesOrder/AddSalesOrder'>Add New Data</a>
 </div>
 @if (SalesOrders.Count() == 0)
 {
-    <p><em>Loading...</em></p>
+    <div colspan="3">
+        No Records to display
+    </div>
 }
 else
 {
@@ -19,7 +26,10 @@ else
                 <th>Building</th>
                 <th>State</th>
                 <th style="text-align:right; width: 10%">
-                    Action
+                    Edit
+                </th>
+                <th style="text-align:right; width: 10%">
+                    Delete
                 </th>
             </tr>
         </tbody>
@@ -39,6 +49,9 @@ else
                     <td style="text-align:right">
                         <button class="btn btn-primary" @onclick="@(() => NavigateToEditSalesOrder(salesOrder.SalesOrderId))">Edit</button>
                     </td>
+                    <td style="text-align:right">
+                        <button class="btn btn-warning" @onclick="@(() => DeleteSalesOrder(salesOrder.SalesOrderId))">Delete</button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -47,13 +60,41 @@ else
 
 @code
 {
+    string alertClass = string.Empty;
+
     protected override async Task OnInitializedAsync()
     {
         SalesOrders = await SalesOrderService.GetSalesOrders();
     }
-    private void NavigateToEditSalesOrder(long id)
+    void NavigateToEditSalesOrder(long id)
     {
         navigationManager.NavigateTo($"/SalesOrder/EditSalesOrder/{id}");
+    }
+    async Task DeleteSalesOrder(long id)
+    {
+        if (id > 0)
+        {
+            if (!await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete sales order?"))
+                return;
+            var result = await SalesOrderService.Delete(id);
+            if (result)
+            {
+                SalesOrders = SalesOrders.Where(it => it.SalesOrderId != id);
+                alertClass = "alert-success";
+                message = "deleted successfully";
+            }
+            else
+            {
+                alertClass = "alert-danger";
+                message = "error while deleting data";
+            }
+        }
+        else
+        {
+            alertClass = "alert-danger";
+            message = "error while deleting data";
+        }
+
     }
 }
 

@@ -6,7 +6,7 @@
 <div>
     <a class="btn btn-primary" href='/Dimension/AddDimension'>Add New Data</a>
 </div>
-@if (Dimensions == null)
+@if (Dimensions == null || Dimensions.Count() == 0)
 {
     <p><em>Loading...</em></p>
 }

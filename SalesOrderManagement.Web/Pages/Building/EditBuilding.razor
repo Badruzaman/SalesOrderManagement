@@ -19,12 +19,7 @@ else
     </h3>
     <form>
         <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="Name" class="control-label">Name</label>
-                    <input for="Name" class="form-control" @bind="@building.Name" />
-                </div>
-            </div>
+           
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="Name" class="control-label">State</label>
@@ -35,6 +30,12 @@ else
                             <option value="@state.StateId">@state.Name</option>
                         }
                     </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="Name" class="control-label">Name</label>
+                    <input for="Name" class="form-control" @bind="@building.Name" />
                 </div>
             </div>
         </div>
@@ -57,8 +58,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        building = await BuildingService.GetBuildingById(id);
         States = await StateService.GetStates();
+        building = await BuildingService.GetBuildingById(id);
     }
     async Task UpdateBuilding()
     {
@@ -73,7 +74,7 @@ else
             }
             else
             {
-                message = "error in storing data";
+                message = "error in updating data";
             }
         }
         else

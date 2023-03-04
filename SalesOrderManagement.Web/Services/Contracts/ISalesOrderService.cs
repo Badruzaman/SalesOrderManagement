@@ -9,6 +9,6 @@ namespace SalesOderManagement.Web.Services.Contracts
         Task<bool> Create(DTOSalesOrder model);
         Task<DTOSalesOrder?> GetSalesOrderById(long id);
         Task<bool> Update(DTOSalesOrder model);
-       
+        Task<bool> Delete(long id);
     }   
 }

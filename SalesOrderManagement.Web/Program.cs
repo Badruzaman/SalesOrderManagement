@@ -9,8 +9,8 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7096") });
-builder.Services.AddScoped<IBuildingService, BuildingService>();
 builder.Services.AddScoped<IStateService, StateService>();
+builder.Services.AddScoped<IBuildingService, BuildingService>();
 builder.Services.AddScoped<IDimensionService, DimensionService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ISalesOrderService, SalesOrderService>();

@@ -6,7 +6,7 @@
 <div>
     <a class="btn btn-primary" href='/Building/AddBuilding'>Add New Data</a>
 </div>
-@if (Buildings == null)
+@if (Buildings == null || Buildings.Count() == 0)
 {
     <p><em>Loading...</em></p>
 }
@@ -49,8 +49,7 @@ else
     </table>
 }
 @code {
-    [Inject]
-    public IBuildingService BuildingService { get; set; }
+    
     protected override async Task OnInitializedAsync()
     {
         Buildings = await BuildingService.GetBuildings();

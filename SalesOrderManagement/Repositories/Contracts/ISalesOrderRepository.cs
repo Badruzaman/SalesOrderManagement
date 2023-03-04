@@ -9,5 +9,6 @@ namespace SalesOrderManagement.Api.Repositories.Contracts
         Task<DTOSalesOrder?> GetSalesOrderById(long id);
         Task<bool> Create(DTOSalesOrder model);
         Task<bool> Update(DTOSalesOrder model);
+        Task<bool> Delete(long id);
     }
 }

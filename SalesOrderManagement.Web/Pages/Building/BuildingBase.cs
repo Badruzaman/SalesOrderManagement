@@ -10,10 +10,10 @@ namespace SalesOrderManagement.Web.Pages.Building
         protected IBuildingService BuildingService { get; set; }
         protected IEnumerable<DTOBuilding> Buildings { get; set; }
         protected DTOBuilding building { get; set; } = new DTOBuilding();
-
+        
         [Inject]
         protected IStateService StateService { get; set; }
-        protected IEnumerable<DTOState> States { get; set; }
+        protected IEnumerable<DTOState> States { get; set; } = new List<DTOState>();
         protected string message = string.Empty;
     }
 }

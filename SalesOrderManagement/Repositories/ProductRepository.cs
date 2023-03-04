@@ -54,14 +54,7 @@ namespace SalesOrderManagement.Api.Repositories
                 .Select(it => new DTOProduct
                 {
                     ProductId = it.ProductId,
-                    ProductName = it.ProductName,
-                    DTOProductAttributes = it.ProductAttribute.Select(_it => new DTOProductAttribute
-                    {
-                        ProductAttributeId = _it.ProductAttributeId,
-                        ProductAttributeType = _it.ProductAttributeType,
-                        DimensionId = _it.DimensionId,
-                        ActualDimension = _it.Dimension.Width + " X " + _it.Dimension.Height
-                    }).ToList()
+                    ProductName = it.ProductName
                 }).ToListAsync();
                 return dTOProducts;
             }

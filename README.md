@@ -51,7 +51,6 @@ Test data for storing into the database:
 </pre>
 
 # Solution
-
 + Order has building and state information as master data.
 + Order has product which is windows.
 + Product has different attributes like type and dimension.
@@ -72,6 +71,10 @@ Test data for storing into the database:
 + Core First Approach
 + Entity Framework
 + Linq
+
+## Project Architecture
+
+
 
 
 

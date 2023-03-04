@@ -26,8 +26,8 @@ else
             <tr>
                 <th style="width:1%">SL</th>
                 <th>Code</th>
-                <th>Building</th>
                 <th>State</th>
+                <th>Building</th>
                 <th style="text-align:right; width: 10%">
                     Edit
                 </th>
@@ -45,10 +45,10 @@ else
                     </td>
                     <td>@salesOrder.Code</td>
                     <td>
-                        @salesOrder.BuildingName
+                        @salesOrder.StateName
                     </td>
                     <td>
-                        @salesOrder.StateName
+                        @salesOrder.BuildingName
                     </td>
                     <td style="text-align:right">
                         <button class="btn btn-primary" @onclick="@(() => NavigateToEditSalesOrder(salesOrder.SalesOrderId))">Edit</button>

@@ -51,8 +51,34 @@ Test data for storing into the database:
 </pre>
 
 # Solution
-
 + Order has building and state information as master data.
 + Order has product which is windows.
 + Product has different attributes like type and dimension.
 + Every product has quantity  
+
+## Relationship
++ One state can have multiple building, one to many relationship. 
++ One product attribute can have one dimension, one to one relationship.
++ One product can  have multiple product attribute, one to many relationship.
++ Every sales order has one building and one state, one to one relationship among sales order with state and building.
++ Every sales order has one or more than one sales order detail and every order detail has one products, so one to many relationship between sales order and sales order details and one to one relationship beteween sales order details and products.
+
+## Tools and Technology 
++ MS SQL SERVER 2022
++ Visual Studio 2022
++ Blazor WebAssembly
++ MS .Net Core Web Api
++ Core First Approach
++ Entity Framework
++ Linq
+
+## User Interfaces
+
+
+
+
+
+
+
+
+

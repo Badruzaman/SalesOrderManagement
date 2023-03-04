@@ -13,7 +13,7 @@ Provide source code with all necessary information to run and test the applicati
 Test data for storing into the database: 
 
 
-'''<Orders> 
+<Orders> 
  <Order Name="New York Building 1" State="NY"> 
  <Windows> 
  <Window Name="A51" QuantityOfWindows="4" TotalSubElements="3"> 
@@ -47,7 +47,7 @@ Test data for storing into the database:
  </Window> 
  </Windows> 
  </Order> 
-</Orders>.'''
+</Orders>
 
 ## Findings based on order test data
 + Order has building and state information as master data.

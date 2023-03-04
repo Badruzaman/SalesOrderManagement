@@ -68,10 +68,10 @@ Test data for storing into the database:
 + MS SQL SERVER 2022
 + Visual Studio 2022
 + Blazor WebAssembly
-+ MS .NET CORE WEB API
++ MS .Net Core Web Api
 + Core First Approach
 + Entity Framework
-+ LINQ
++ Linq
 
 
 

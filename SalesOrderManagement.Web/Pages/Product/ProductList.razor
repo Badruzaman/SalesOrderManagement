@@ -6,13 +6,7 @@
 <div>
     <a class="btn btn-primary" href='/Product/AddProduct'>Add New Data</a>
 </div>
-@if (Products == null || Products.Count() == 0)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    int i = 1;
+
     <table class="table table-bordered table-hover">
 
         @if (Products == null || Products.Count() == 0)
@@ -25,6 +19,7 @@ else
         }
         else
         {
+        int i = 1;
             <thead>
                 <tr>
                     <th style="width:1%">SL</th>
@@ -49,7 +44,7 @@ else
         }
 
     </table>
-}
+
 @code {
     protected override async Task OnInitializedAsync()
     {

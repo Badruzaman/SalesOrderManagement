@@ -3,12 +3,14 @@ using SalesOrderManagement.Api.Data;
 using SalesOrderManagement.Api.Entities;
 using SalesOrderManagement.Api.Repositories.Contracts;
 using SalesOrderManagement.Models.DTOs;
+using System;
 
 namespace SalesOrderManagement.Api.Repositories
 {
     public class SalesOrderRepository : ISalesOrderRepository
     {
 
+        private readonly Random _random = new Random();
         private readonly SalesOrderDBContext _dbContext;
 
         public SalesOrderRepository(SalesOrderDBContext dbContext)
@@ -21,22 +23,23 @@ namespace SalesOrderManagement.Api.Repositories
             try
             {
                 var dTOSalesOrder = await (from saleorder in _dbContext.SalesOrder
-                                        join salesOrderDetail in _dbContext.SalesOrder
-                                        on saleorder.SalesOrderId equals salesOrderDetail.SalesOrderId
-                                        where saleorder.SalesOrderId == id
-                                        select new DTOSalesOrder
-                                        {
-                                            SalesOrderId = saleorder.SalesOrderId,
-                                            BuildingsId = saleorder.BuildingsId,
-                                            StatesId = saleorder.StatesId,
-                                            DTOSalesOrderDetails = saleorder.SalesOrderDetail.Select(_it => new DTOSalesOrderDetail
-                                            {
-                                                SalesOrderDetailId = _it.SalesOrderDetailId,
-                                                ProductAttributeId = _it.ProductAttributeId,
-                                                SalesOrderId = _it.SalesOrderId,
-                                                QuantityOfWindows = _it.QuantityOfWindows,
-                                            }).ToList()
-                                        }).FirstOrDefaultAsync();
+                                           join salesOrderDetail in _dbContext.SalesOrder
+                                           on saleorder.SalesOrderId equals salesOrderDetail.SalesOrderId
+                                           where saleorder.SalesOrderId == id
+                                           select new DTOSalesOrder
+                                           {
+                                               SalesOrderId = saleorder.SalesOrderId,
+                                               BuildingsId = saleorder.BuildingsId,
+                                               StatesId = saleorder.StatesId,
+                                               Code = saleorder.Code,
+                                               DTOSalesOrderDetails = saleorder.SalesOrderDetail.Select(_it => new DTOSalesOrderDetail
+                                               {
+                                                   SalesOrderDetailId = _it.SalesOrderDetailId,
+                                                   ProductAttributeId = _it.ProductAttributeId,
+                                                   SalesOrderId = _it.SalesOrderId,
+                                                   QuantityOfWindows = _it.QuantityOfWindows,
+                                               }).ToList()
+                                           }).FirstOrDefaultAsync();
                 return dTOSalesOrder;
             }
             catch (Exception)
@@ -58,6 +61,7 @@ namespace SalesOrderManagement.Api.Repositories
                     StatesId = it.StatesId,
                     StateName = it.States.Name,
                     BuildingName = it.Buildings.Name,
+                    Code = it.Code
                 }).ToListAsync();
                 return dTOSalesOrders;
             }
@@ -77,6 +81,8 @@ namespace SalesOrderManagement.Api.Repositories
                     var _attribute = new SalesOrderDetail() { ProductAttributeId = attribute.ProductAttributeId, QuantityOfWindows = attribute.QuantityOfWindows };
                     salesOrder.SalesOrderDetail.Add(_attribute);
                 }
+                var code = "SO-" + Generate();
+                salesOrder.Code = code;
                 await _dbContext.SalesOrder.AddAsync(salesOrder);
                 await _dbContext.SaveChangesAsync();
                 return true;
@@ -152,6 +158,15 @@ namespace SalesOrderManagement.Api.Repositories
             {
                 return false;
             }
+        }
+        private string Generate()
+        {
+            const string chars = "0123456789";
+            var salesOrderCode = new string(Enumerable.Repeat(chars, 5)
+                .Select(s => s[_random.Next(s.Length)])
+                .ToArray());
+
+            return salesOrderCode;
         }
     }
 }

@@ -8,13 +8,8 @@
 <div>
     <a class="btn btn-primary" href='/Building/AddBuilding'>Add New Data</a>
 </div>
-@if (Buildings == null || Buildings.Count() == 0)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    int i = 1;
+
+   
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
@@ -35,6 +30,7 @@ else
             }
             else
             {
+            int i = 1;
                 foreach (var building in Buildings)
                 {
                     <tr>
@@ -49,7 +45,7 @@ else
             }
         </tbody>
     </table>
-}
+
 @code {
     
     protected override async Task OnInitializedAsync()

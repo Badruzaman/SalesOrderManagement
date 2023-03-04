@@ -47,7 +47,7 @@ Test data for storing into the database:
  </Window> 
  </Windows> 
  </Order> 
-</Orders>'''.
+</Orders>.'''
 
 ## Findings based on order test data
 + Order has building and state information as master data.

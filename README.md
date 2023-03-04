@@ -1,4 +1,4 @@
-# SalesOrderManagement
+# Sales Order Management
 ## Findings based on order test data
 + Order has building and state information as master data.
 + Order has product which is windows.

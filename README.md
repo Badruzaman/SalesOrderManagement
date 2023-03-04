@@ -74,6 +74,7 @@ Test data for storing into the database:
 
 ## User Interfaces
 
+![](/images/SalesOrderEntry.JPG)
 
 
 

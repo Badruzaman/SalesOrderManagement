@@ -73,8 +73,8 @@ Test data for storing into the database:
 + Linq
 
 ## Project Architecture 
-![Architecture](/SalesOrderManagement.Web/images/Architecture.png)
-![Architecture](/SalesOrderManagement.Web/images/ProjectDescription.png)
+![Architecture](/SalesOrderManagement.Web/images/Architecture.PNG)
+![ProjectDescription](/SalesOrderManagement.Web/images/ProjectDescription.PNG)
 
 ## User Interfaces
 ### Order Entry

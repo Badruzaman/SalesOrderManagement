@@ -78,6 +78,11 @@ I have developed three projects as part of this project: a web API, which serves
 ![ProjectDescription](/SalesOrderManagement.Web/images/PorjectDescription.PNG)
 
 ## User Interfaces
+### Product Entry
++ One product can have multiple attributes.
+
+![ProductEntry](/SalesOrderManagement.Web/images/EntryProduct.PNG)
+
 ### Order Entry
 ![SalesOrderEntry](/SalesOrderManagement.Web/images/SalesOrderEntry.png)
 ### Order List
@@ -103,7 +108,7 @@ I have developed three projects as part of this project: a web API, which serves
 + Pick up the client application URL and put it in the web api Program.cs file for Enabling Cross-Origin Requests.
 
 ![clientUrl](/SalesOrderManagement.Web/images/ServerSideConfig.PNG)
-+ Code first approach for a new database.
+## Code first approach for a new database.
 + delete the migration folder.
 + Make sure database connection.
 

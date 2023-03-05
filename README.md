@@ -73,6 +73,7 @@ Test data for storing into the database:
 + Linq
 
 ## Project Architecture 
+I have developed three projects as part of this project: a web API, which serves as the intermediary between the database server and the other components of the application; a web client, which provides the user interface for interacting with the system; and a data transfer model, which defines the structure and format of the data exchanged between the API and the client.
 ![Architecture](/SalesOrderManagement.Web/images/Architecture.PNG)
 ![ProjectDescription](/SalesOrderManagement.Web/images/PorjectDescription.PNG)
 

@@ -51,17 +51,17 @@ Test data for storing into the database:
 </pre>
 
 # Solution
-+ Order has building and state information as master data.
-+ Order has product which is windows.
-+ Product has different attributes like type and dimension.
-+ Every product has quantity  
++ Each order contains master data for the building and state associated with the order.
++ Every order includes one or more windows as a product.
++ Each window has various attributes such as type and dimension.
++ Every window is associated with a quantity.  
 
 ## Relationship
-+ One state can have multiple building, one to many relationship. 
-+ One product attribute can have one dimension, one to one relationship.
-+ One product can  have multiple product attribute, one to many relationship.
-+ Every sales order has one building and one state, one to one relationship among sales order with state and building.
-+ Every sales order has one or more than one sales order detail and every order detail has one products, so one to many relationship between sales order and sales order details and one to one relationship beteween sales order details and products.
++ Each state can have multiple buildings, representing a one-to-many relationship between states and buildings. 
++ Each product attribute can have one dimension, indicating a one-to-one relationship between product attributes and dimensions.
++ Each product can have multiple product attributes, resulting in a one-to-many relationship between products and product attributes.
++ Each sales order is associated with one building and one state, establishing a one-to-one relationship between sales orders and both buildings and states.
++ Each sales order has one or more sales order details, resulting in a one-to-many relationship between sales orders and sales order details, and each sales order       detail is associated with one product, and a one-to-one relationship between sales order details and products.
 
 ## Tools and Technology 
 + MS SQL SERVER 2022
@@ -72,6 +72,11 @@ Test data for storing into the database:
 + Entity Framework
 + Linq
 
+## Project Architecture 
+I have developed three projects as part of this project: a web API, which serves as the intermediary between the database server and the other components of the application; a web client, which provides the user interface for interacting with the system; and a data transfer model, which defines the structure and format of the data exchanged between the API and the client.
+![Architecture](/SalesOrderManagement.Web/images/Architecture.PNG)
+![ProjectDescription](/SalesOrderManagement.Web/images/PorjectDescription.PNG)
+
 ## User Interfaces
 ### Order Entry
 ![SalesOrderEntry](/SalesOrderManagement.Web/images/SalesOrderEntry.png)
@@ -80,6 +85,8 @@ Test data for storing into the database:
 ### Update Order
 ![SalesOrderEdit](/SalesOrderManagement.Web/images/SalesOrderEdit.PNG)
 
+## Project Configuration
++ Clone or download the repository 
 
 
 

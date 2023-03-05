@@ -57,11 +57,11 @@ Test data for storing into the database:
 + Every product has quantity  
 
 ## Relationship
-+ One state can have multiple building, one to many relationship. 
-+ One product attribute can have one dimension, one to one relationship.
-+ One product can  have multiple product attribute, one to many relationship.
-+ Every sales order has one building and one state, one to one relationship among sales order with state and building.
-+ Every sales order has one or more than one sales order detail and every order detail has one products, so one to many relationship between sales order and sales order details and one to one relationship beteween sales order details and products.
++ Each state can have multiple buildings, representing a one-to-many relationship between states and buildings. 
++ Each product attribute can have one dimension, indicating a one-to-one relationship between product attributes and dimensions.
++ Each product can have multiple product attributes, resulting in a one-to-many relationship between products and product attributes.
++ Each sales order is associated with one building and one state, establishing a one-to-one relationship between sales orders and both buildings and states.
++ Each sales order has one or more sales order details, resulting in a one-to-many relationship between sales orders and sales order details, and each sales order       detail is associated with one product, and a one-to-one relationship between sales order details and products.
 
 ## Tools and Technology 
 + MS SQL SERVER 2022

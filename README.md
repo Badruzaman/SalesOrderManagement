@@ -79,18 +79,18 @@ I have developed three projects as part of this project: a web API, which serves
 
 ## User Interfaces
 
-### State Entry
 
 ![stateEntry](/SalesOrderManagement.Web/images/StateEntry.PNG)
 ![stateList](/SalesOrderManagement.Web/images/StateList.PNG)
-### Building Entry
+
 
 ![buildEntry](/SalesOrderManagement.Web/images/BuildingEntry.PNG)
 ![buildList](/SalesOrderManagement.Web/images/BuildingList.PNG)
-### Dimension Entry
+
 
 ![dimEntry](/SalesOrderManagement.Web/images/DimensionEntry.PNG)
 ![dimList](/SalesOrderManagement.Web/images/DimensionList.PNG)
+
 ### Product Entry
 
 + One product can have multiple attributes.

@@ -88,12 +88,12 @@ I have developed three projects as part of this project: a web API, which serves
 ## Project Configuration
 + Clone or download the repository 
 + Attach the database or run the SQL Script
-+ ![DatabaseBackupFile](/SalesOrderManagement.Web/images/SalesOrderManagement.bak)
-+ ![DatabaseScript](/SalesOrderManagement.Web/images/SalesOrderManagementSqlScript.sql)
++ ![](/SalesOrderManagement.Web/images/SalesOrderManagement.bak)
++ ![](/SalesOrderManagement.Web/images/SalesOrderManagementSqlScript.sql)
 + Change the connection string
 
 ![DatabaseConnection](/SalesOrderManagement.Web/images/DBConnectionString.PNG)
-+ Right click on the solution explorer, go to the property and make changes
++ Right-click on the solution explorer, go to the property, and make changes.
 
 ![MultiProject](/SalesOrderManagement.Web/images/MultipleProjectSelect.PNG)
 + Run the solution 
@@ -103,14 +103,20 @@ I have developed three projects as part of this project: a web API, which serves
 + Pick up the client application URL and put it in the web api Program.cs file for Enabling Cross-Origin Requests.
 
 ![clientUrl](/SalesOrderManagement.Web/images/ServerSideConfig.PNG)
-
-+ For new database generate, delete migration folder and make sure database connection.
++ Code first approach for a new database.
++ delete the migration folder.
++ Make sure database connection.
 
 ![clientUrl](/SalesOrderManagement.Web/images/DeleteMigration.PNG) 
-+ After successful migration update the database command and it generate the errors. 
++ After successful migration, update the database
++ This generates errors. 
 
-+ Make changes and try again.
-![clientUrl](/SalesOrderManagement.Web/images/MigrationCorrection.PNG) 
+![Error](/SalesOrderManagement.Web/images/DbError.PNG) 
++ Make changes in initial.cs file
+
+![correctionPlace](/SalesOrderManagement.Web/images/errorCorrectionPlace.PNG) 
+![correction](/SalesOrderManagement.Web/images/MigrationCorrection.PNG) 
++ Try again
 
 
 

@@ -78,10 +78,25 @@ I have developed three projects as part of this project: a web API, which serves
 ![ProjectDescription](/SalesOrderManagement.Web/images/PorjectDescription.PNG)
 
 ## User Interfaces
-### Product Entry
-+ One product can have multiple attributes.
 
+
+![stateEntry](/SalesOrderManagement.Web/images/StateEntry.PNG)
+![stateList](/SalesOrderManagement.Web/images/StateList.PNG)
+
+
+![buildEntry](/SalesOrderManagement.Web/images/BuildingEntry.PNG)
+![buildList](/SalesOrderManagement.Web/images/BuildingList.PNG)
+
+
+![dimEntry](/SalesOrderManagement.Web/images/DimensionEntry.PNG)
+![dimList](/SalesOrderManagement.Web/images/DimensionList.PNG)
+
+### Product Entry
+
++ One product can have multiple attributes.
 ![ProductEntry](/SalesOrderManagement.Web/images/EntryProduct.PNG)
+![ProductList](/SalesOrderManagement.Web/images/ProductList.PNG)
+
 
 ### Order Entry
 ![SalesOrderEntry](/SalesOrderManagement.Web/images/SalesOrderEntry.png)

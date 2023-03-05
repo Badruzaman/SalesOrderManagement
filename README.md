@@ -108,7 +108,7 @@ I have developed three projects as part of this project: a web API, which serves
 + Pick up the client application URL and put it in the web api Program.cs file for Enabling Cross-Origin Requests.
 
 ![clientUrl](/SalesOrderManagement.Web/images/ServerSideConfig.PNG)
-+ Code first approach for a new database.
+## Code first approach for a new database.
 + delete the migration folder.
 + Make sure database connection.
 

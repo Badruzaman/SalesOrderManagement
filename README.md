@@ -87,7 +87,9 @@ I have developed three projects as part of this project: a web API, which serves
 
 ## Project Configuration
 + Clone or download the repository 
-
++ Attach the database or run the SQL Script
+![DatabaseBackupFile](/SalesOrderManagement.Web/images/SalesOrderManagement.bak)
+![DatabaseScript](/SalesOrderManagement.Web/images/SalesOrderManagementSqlScript.sql)
 
 
 

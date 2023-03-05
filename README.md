@@ -93,7 +93,7 @@ I have developed three projects as part of this project: a web API, which serves
 + Change the connection string
 
 ![DatabaseConnection](/SalesOrderManagement.Web/images/DBConnectionString.PNG)
-+ Right click on the solution explorer, go to the property and make changes
++ Right-click on the solution explorer, go to the property, and make changes.
 
 ![MultiProject](/SalesOrderManagement.Web/images/MultipleProjectSelect.PNG)
 + Run the solution 

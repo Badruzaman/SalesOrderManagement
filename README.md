@@ -78,6 +78,11 @@ I have developed three projects as part of this project: a web API, which serves
 ![ProjectDescription](/SalesOrderManagement.Web/images/PorjectDescription.PNG)
 
 ## User Interfaces
+### Product Entry
++ One product can have multiple attributes.
+
+![ProductEntry](/SalesOrderManagement.Web/images/EntryProduct.png)
+
 ### Order Entry
 ![SalesOrderEntry](/SalesOrderManagement.Web/images/SalesOrderEntry.png)
 ### Order List

@@ -90,6 +90,15 @@ I have developed three projects as part of this project: a web API, which serves
 + Attach the database or run the SQL Script
 ![DatabaseBackupFile](/SalesOrderManagement.Web/images/SalesOrderManagement.bak)
 ![DatabaseScript](/SalesOrderManagement.Web/images/SalesOrderManagementSqlScript.sql)
++ Change the connection string
+![DatabaseConnection](/SalesOrderManagement.Web/images/DBConnectionString.PNG)
++ Right click on the solution explorer, go to the property and make changes
+![MultiProject](/SalesOrderManagement.Web/images/MultipleProjectSelect.PNG)
++ Run the solution 
++ It runs two application at the same time pick up web api URL and put it on the client application program.cs file for base URL.
+![ApiUrl](/SalesOrderManagement.Web/images/ClientSideConfig.PNG)
++ Pick up client application URL and put it on the web api program.cs file for Enabling Cross-Origin Requests.
+![clientUrl](/SalesOrderManagement.Web/images/ServerSideConfig.PNG)
 
 
 

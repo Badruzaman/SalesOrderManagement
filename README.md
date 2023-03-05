@@ -74,7 +74,7 @@ Test data for storing into the database:
 
 ## Project Architecture 
 ![Architecture](/SalesOrderManagement.Web/images/Architecture.PNG)
-![ProjectDescription](/SalesOrderManagement.Web/images/ProjectDescription.PNG)
+![ProjectDescription](/SalesOrderManagement.Web/images/PorjectDescription.PNG)
 
 ## User Interfaces
 ### Order Entry

@@ -108,9 +108,13 @@ I have developed three projects as part of this project: a web API, which serves
 
 ![clientUrl](/SalesOrderManagement.Web/images/DeleteMigration.PNG) 
 + After successful migration update the database command and it generate the errors. 
++ 
+![Error](/SalesOrderManagement.Web/images/DbError.PNG) 
++ Make changes
 
-+ Make changes and try again.
-![clientUrl](/SalesOrderManagement.Web/images/MigrationCorrection.PNG) 
+![correctionPlace](/SalesOrderManagement.Web/images/errorCorrectionPlace.PNG) 
+![correction](/SalesOrderManagement.Web/images/MigrationCorrection.PNG) 
++ try again
 
 
 

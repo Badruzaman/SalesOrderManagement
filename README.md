@@ -81,7 +81,7 @@ I have developed three projects as part of this project: a web API, which serves
 ### Product Entry
 + One product can have multiple attributes.
 
-![ProductEntry](/SalesOrderManagement.Web/images/EntryProduct.png)
+![ProductEntry](/SalesOrderManagement.Web/images/EntryProduct.PNG)
 
 ### Order Entry
 ![SalesOrderEntry](/SalesOrderManagement.Web/images/SalesOrderEntry.png)

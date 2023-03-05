@@ -106,10 +106,11 @@ I have developed three projects as part of this project: a web API, which serves
 
 + For new database generate, delete migration folder and make sure database connection.
 
+![clientUrl](/SalesOrderManagement.Web/images/DeleteMigration.PNG) 
 + After successful migration update the database command and it generate the errors. 
 
 + Make changes and try again.
-
+![clientUrl](/SalesOrderManagement.Web/images/MigrationCorrection.PNG) 
 
 
 

@@ -85,6 +85,8 @@ I have developed three projects as part of this project: a web API, which serves
 ### Update Order
 ![SalesOrderEdit](/SalesOrderManagement.Web/images/SalesOrderEdit.PNG)
 
+## Project Configuration
++ Clone or download the repository 
 
 
 

@@ -88,9 +88,27 @@ I have developed three projects as part of this project: a web API, which serves
 ## Project Configuration
 + Clone or download the repository 
 + Attach the database or run the SQL Script
-![DatabaseBackupFile](/SalesOrderManagement.Web/images/SalesOrderManagement.bak)
-![DatabaseScript](/SalesOrderManagement.Web/images/SalesOrderManagementSqlScript.sql)
++ ![DatabaseBackupFile](/SalesOrderManagement.Web/images/SalesOrderManagement.bak)
++ ![DatabaseScript](/SalesOrderManagement.Web/images/SalesOrderManagementSqlScript.sql)
++ Change the connection string
 
+![DatabaseConnection](/SalesOrderManagement.Web/images/DBConnectionString.PNG)
++ Right click on the solution explorer, go to the property and make changes
+
+![MultiProject](/SalesOrderManagement.Web/images/MultipleProjectSelect.PNG)
++ Run the solution 
++ It runs two applications at the same time, picks up the web API URL, and put it in the client application's Program.cs file as the base URL
+
+![ApiUrl](/SalesOrderManagement.Web/images/ClientSideConfig.PNG)
++ Pick up the client application URL and put it in the web api Program.cs file for Enabling Cross-Origin Requests.
+
+![clientUrl](/SalesOrderManagement.Web/images/ServerSideConfig.PNG)
+
++ For new database generate, delete migration folder and make sure database connection.
+
++ After successful migration update the database command and it generate the errors. 
+
++ Make changes and try again.
 
 
 

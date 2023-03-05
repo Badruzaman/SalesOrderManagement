@@ -103,18 +103,20 @@ I have developed three projects as part of this project: a web API, which serves
 + Pick up the client application URL and put it in the web api Program.cs file for Enabling Cross-Origin Requests.
 
 ![clientUrl](/SalesOrderManagement.Web/images/ServerSideConfig.PNG)
-
-+ For new database generate, delete migration folder and make sure database connection.
++ Code first approach for a new database.
++ delete the migration folder.
++ Make sure database connection.
 
 ![clientUrl](/SalesOrderManagement.Web/images/DeleteMigration.PNG) 
-+ After successful migration update the database command and it generate the errors. 
-+ 
++ After successful migration, update the database
++ This generates errors. 
+
 ![Error](/SalesOrderManagement.Web/images/DbError.PNG) 
-+ Make changes
++ Make changes in initial.cs file
 
 ![correctionPlace](/SalesOrderManagement.Web/images/errorCorrectionPlace.PNG) 
 ![correction](/SalesOrderManagement.Web/images/MigrationCorrection.PNG) 
-+ try again
++ Try again
 
 
 

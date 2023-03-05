@@ -88,8 +88,8 @@ I have developed three projects as part of this project: a web API, which serves
 ## Project Configuration
 + Clone or download the repository 
 + Attach the database or run the SQL Script
-+ ![/SalesOrderManagement.Web/images/database.svg](/SalesOrderManagement.Web/images/SalesOrderManagement.bak)
-+ ![/SalesOrderManagement.Web/images/script.jfif](/SalesOrderManagement.Web/images/SalesOrderManagementSqlScript.sql)
++ ![backup](/SalesOrderManagement.Web/images/SalesOrderManagement.bak)
++ ![script](/SalesOrderManagement.Web/images/SalesOrderManagementSqlScript.sql)
 + Change the connection string
 
 ![DatabaseConnection](/SalesOrderManagement.Web/images/DBConnectionString.PNG)

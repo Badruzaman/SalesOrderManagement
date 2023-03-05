@@ -97,13 +97,18 @@ I have developed three projects as part of this project: a web API, which serves
 
 ![MultiProject](/SalesOrderManagement.Web/images/MultipleProjectSelect.PNG)
 + Run the solution 
-+ It runs two applications at the same time, picks up the web API URL, and puts it in the client application's program.cs file as the base URL
++ It runs two applications at the same time, picks up the web API URL, and put it in the client application's Program.cs file as the base URL
 
 ![ApiUrl](/SalesOrderManagement.Web/images/ClientSideConfig.PNG)
-+ Pick up the client application URL and put it in the web api program.cs file for Enabling Cross-Origin Requests.
++ Pick up the client application URL and put it in the web api Program.cs file for Enabling Cross-Origin Requests.
 
 ![clientUrl](/SalesOrderManagement.Web/images/ServerSideConfig.PNG)
 
++ For new database generate, delete migration folder and make sure database connection.
+
++ After successful migration update the database command and it generate the errors. 
+
++ Make changes and try again.
 
 
 

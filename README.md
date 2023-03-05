@@ -86,8 +86,8 @@ I have developed three projects as part of this project: a web API, which serves
 ![SalesOrderEdit](/SalesOrderManagement.Web/images/SalesOrderEdit.PNG)
 
 ## Project Configuration
-+Clone or download the repository 
-+Attach the database or run the SQL Script
++ Clone or download the repository 
++ Attach the database or run the SQL Script
 ![DBBak](/SalesOrderManagement.Web/images/SalesOrderManagement.bak)
 ![DBScript](/SalesOrderManagement.Web/images/SalesOrderManagementSqlScript.sql)
 

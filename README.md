@@ -72,6 +72,10 @@ Test data for storing into the database:
 + Entity Framework
 + Linq
 
+## Project Architecture 
+![Architecture](/SalesOrderManagement.Web/images/Architecture.png)
+![Architecture](/SalesOrderManagement.Web/images/ProjectDescription.png)
+
 ## User Interfaces
 ### Order Entry
 ![SalesOrderEntry](/SalesOrderManagement.Web/images/SalesOrderEntry.png)

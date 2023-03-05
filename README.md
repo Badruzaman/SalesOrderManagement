@@ -51,10 +51,10 @@ Test data for storing into the database:
 </pre>
 
 # Solution
-+ Order has building and state information as master data.
-+ Order has product which is windows.
-+ Product has different attributes like type and dimension.
-+ Every product has quantity  
++ Each order contains master data for the building and state associated with the order.
++ Every order includes one or more windows as a product.
++ Each window has various attributes such as type and dimension.
++ Every window is associated with a quantity.  
 
 ## Relationship
 + Each state can have multiple buildings, representing a one-to-many relationship between states and buildings. 

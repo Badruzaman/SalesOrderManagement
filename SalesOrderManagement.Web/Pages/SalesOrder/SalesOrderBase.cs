@@ -50,18 +50,10 @@ namespace SalesOrderManagement.Web.Pages.SalesOrder
             }
             return true;
         }
-
         protected bool checkDuplicateProduct(DTOSalesOrder model, int productAttrId)
         {
             bool isExist = model.DTOSalesOrderDetails.Any(it => it.ProductAttributeId == productAttrId);
             return isExist;
         }
     }
-
-    public class AttributeType
-    {
-        public int Id { get; set; }
-        public string? Name { get; set; }
-    }
-
 }

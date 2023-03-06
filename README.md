@@ -79,10 +79,9 @@ I have developed three projects as part of this project: a web API, which serves
 
 ## User Interfaces
 
-
+![main](/SalesOrderManagement.Web/images/MainApp.PNG)
 ![stateEntry](/SalesOrderManagement.Web/images/StateEntry.PNG)
 ![stateList](/SalesOrderManagement.Web/images/StateList.PNG)
-
 
 ![buildEntry](/SalesOrderManagement.Web/images/BuildingEntry.PNG)
 ![buildList](/SalesOrderManagement.Web/images/BuildingList.PNG)

@@ -64,7 +64,7 @@ Test data for storing into the database:
 + Each sales order has one or more sales order details, resulting in a one-to-many relationship between sales orders and sales order details, and each sales order       detail is associated with one product, and a one-to-one relationship between sales order details and products.
 
 ## Tools and Technology 
-+ MS SQL SERVER 2022
++ Microsoft SQL Server 2022 (RTM) - 16.0.1000.6 (X64) Developer Edition (64-bit)
 + Microsoft Visual Studio Enterprise 2022 (64-bit) - Current Version 17.4.5
 + Blazor WebAssembly
 + MS .Net Core Web Api

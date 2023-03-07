@@ -66,8 +66,8 @@ Test data for storing into the database:
 ## Tools and Technology 
 + Microsoft SQL Server 2022 (RTM) - 16.0.1000.6 (X64) Developer Edition (64-bit)
 + Microsoft Visual Studio Enterprise 2022 (64-bit) - Current Version 17.4.5
-+ Blazor WebAssembly .NET 7.0
-+ MS .Net Core Web Api
++ Blazor WebAssembly (.NET 7.0)
++ MS .Net Core Web Api (.NET 7.0)
 + Core First Approach
 + Entity Framework
 + Linq

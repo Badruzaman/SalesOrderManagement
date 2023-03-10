@@ -64,16 +64,17 @@ Test data for storing into the database:
 + Each sales order has one or more sales order details, resulting in a one-to-many relationship between sales orders and sales order details, and each sales order       detail is associated with one product, and a one-to-one relationship between sales order details and products.
 
 ## Tools and Technology 
-+ MS SQL SERVER 2022
-+ Visual Studio 2022
-+ Blazor WebAssembly
-+ MS .Net Core Web Api
++ Microsoft SQL Server 2022 (RTM) - 16.0.1000.6 (X64) Developer Edition (64-bit)
++ Microsoft Visual Studio Enterprise 2022 (64-bit) - Current Version 17.4.5
++ Blazor WebAssembly (.NET 7.0)
++ MS .Net Core Web Api (.NET 7.0)
 + Core First Approach
 + Entity Framework
 + Linq
 
 ## Project Architecture 
 I have developed three projects as part of this project: a web API, which serves as the intermediary between the database server and the other components of the application; a web client, which provides the user interface for interacting with the system; and a data transfer model, which defines the structure and format of the data exchanged between the API and the client.
+
 ![Architecture](/SalesOrderManagement.Web/images/Architecture.PNG)
 ![ProjectDescription](/SalesOrderManagement.Web/images/PorjectDescription.PNG)
 

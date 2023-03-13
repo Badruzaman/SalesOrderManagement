@@ -69,7 +69,7 @@ Test data for storing into the database:
 + Blazor WebAssembly (.NET 7.0)
 + MS .Net Core Web Api (.NET 7.0)
 + Core First Approach
-+ Entity Framework
++ Entity Framework Core
 + Linq
 
 ## Project Architecture 

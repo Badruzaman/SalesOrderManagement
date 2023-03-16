@@ -138,6 +138,10 @@ I have developed three projects as part of this project: a web API, which serves
 ![correction](/SalesOrderManagement.Web/images/MigrationCorrection.PNG) 
 + Try again
 
+## Project Run Issue
+If the application shows this error while running, please visit the URL and follow the instructions. 
+https://stackoverflow.com/questions/26424902/process-with-an-id-of-is-not-running-in-visual-studio
+
 
 
 

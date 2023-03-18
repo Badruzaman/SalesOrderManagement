@@ -165,9 +165,8 @@ namespace SalesOrderManagement.Api.Repositories
             var code = string.Empty;
             var year = DateTime.Now.Year.ToString();
             var SOcode = this._dbContext.SalesOrder.OrderByDescending(it => it.SalesOrderId).FirstOrDefault();
-            var CodeNumber = SOcode != null ? SOcode.Code.Substring(3) : "";
-            code = SOcode == null ? year + "00001" : (Convert.ToInt32(CodeNumber) + 1).ToString();
-            return "SO-" + code;
+            code = SOcode == null ? year + "0001" : (Convert.ToInt32(SOcode.Code) + 1).ToString();
+            return code;
         }
     }
 }

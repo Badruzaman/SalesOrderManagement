@@ -16,8 +16,8 @@ namespace SalesOderManagement.Web.Services
         {
             try
             {
-                var SalesOrders = await this._httpClient.GetFromJsonAsync<IEnumerable<DTOSalesOrder>>("api/SalesOrder");
-                return SalesOrders;
+                var salesOrders = await this._httpClient.GetFromJsonAsync<IEnumerable<DTOSalesOrder>>("api/SalesOrder/GetAll");
+                return salesOrders;
             }
             catch (Exception)
             {
@@ -28,7 +28,7 @@ namespace SalesOderManagement.Web.Services
         {
             try
             {
-                var response = await this._httpClient.PostAsJsonAsync("api/SalesOrder", model);
+                var response = await this._httpClient.PostAsJsonAsync("api/SalesOrder/Create", model);
                 if (response.StatusCode.ToString().Equals("OK"))
                 {
                     return true;
@@ -45,7 +45,7 @@ namespace SalesOderManagement.Web.Services
         {
             try
             {
-                var SalesOrder = await this._httpClient.GetFromJsonAsync<DTOSalesOrder>("api/SalesOrder/GetSalesOrderById?id=" + id);
+                var SalesOrder = await this._httpClient.GetFromJsonAsync<DTOSalesOrder>("api/SalesOrder/GetById?id=" + id);
                 return SalesOrder;
             }
             catch (Exception)
@@ -58,8 +58,8 @@ namespace SalesOderManagement.Web.Services
         {
             try
             {
-               var response = await this._httpClient.PutAsJsonAsync("api/SalesOrder", model);
-                if (response.StatusCode.ToString().Equals("OK"))
+               var response = await this._httpClient.PutAsJsonAsync("api/SalesOrder/Update", model);
+                if (response.IsSuccessStatusCode)
                 {
                     return true;
                 }
@@ -74,9 +74,8 @@ namespace SalesOderManagement.Web.Services
         {
             try
             {
-                var response = await this._httpClient.DeleteAsync($"api/SalesOrder?id={id}");
-                var result = response.Content.ReadFromJsonAsync<bool>();
-                if (result.Result)
+                var response = await this._httpClient.DeleteAsync($"api/SalesOrder/Delete?id={id}");
+                if (response.IsSuccessStatusCode)
                 {
                     return true;
                 }

@@ -78,10 +78,10 @@ namespace SalesOrderManagement.Api.Repositories
                 var salesOrder = new SalesOrder() { BuildingsId = model.BuildingsId, StatesId = model.StatesId };
                 foreach (var attribute in model.DTOSalesOrderDetails)
                 {
-                    var _attribute = new SalesOrderDetail() { ProductAttributeId = attribute.ProductAttributeId, QuantityOfWindows = attribute.QuantityOfWindows };
-                    salesOrder.SalesOrderDetail.Add(_attribute);
+                    var salesOrderDetail = new SalesOrderDetail() { ProductAttributeId = attribute.ProductAttributeId, QuantityOfWindows = attribute.QuantityOfWindows };
+                    salesOrder.SalesOrderDetail.Add(salesOrderDetail);
                 }
-                var code = "SO-" + Generate();
+                var code = GenerateSOCode();
                 salesOrder.Code = code;
                 await _dbContext.SalesOrder.AddAsync(salesOrder);
                 await _dbContext.SaveChangesAsync();
@@ -100,10 +100,11 @@ namespace SalesOrderManagement.Api.Repositories
                 var salesOrder = await this._dbContext.SalesOrder.Where(it => it.SalesOrderId == model.SalesOrderId).Include(_it => _it.SalesOrderDetail).FirstOrDefaultAsync();
                 if (salesOrder != null)
                 {
-                    foreach (var item in salesOrder.SalesOrderDetail)
+                    salesOrder.SalesOrderDetail.ToList().ForEach(it =>
                     {
-                        deletedIds.Add(item.SalesOrderDetailId);
-                    }
+                        deletedIds.Add(it.SalesOrderDetailId);
+                    });
+
                     salesOrder.StatesId = model.StatesId;
                     salesOrder.BuildingsId = model.BuildingsId;
                     foreach (var _item in model.DTOSalesOrderDetails)
@@ -159,14 +160,14 @@ namespace SalesOrderManagement.Api.Repositories
                 return false;
             }
         }
-        private string Generate()
+        private string GenerateSOCode()
         {
-            const string chars = "0123456789";
-            var salesOrderCode = new string(Enumerable.Repeat(chars, 5)
-                .Select(s => s[_random.Next(s.Length)])
-                .ToArray());
-
-            return salesOrderCode;
+            var code = string.Empty;
+            var year = DateTime.Now.Year.ToString();
+            var SOcode = this._dbContext.SalesOrder.OrderByDescending(it => it.SalesOrderId).FirstOrDefault();
+            var CodeNumber = SOcode != null ? SOcode.Code.Substring(3) : "";
+            code = SOcode == null ? year + "00001" : (Convert.ToInt32(CodeNumber) + 1).ToString();
+            return "SO-" + code;
         }
     }
 }

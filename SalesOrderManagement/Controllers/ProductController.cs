@@ -17,7 +17,7 @@ namespace SalesOrderManagement.Api.Controllers
             this.ProductRepository = ProductRepository;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<DTOProduct>>> GetProducts()
         {
             try
@@ -39,7 +39,7 @@ namespace SalesOrderManagement.Api.Controllers
             }
 
         }
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<ActionResult<bool>> Create(DTOProduct model)
         {
             try
@@ -54,7 +54,7 @@ namespace SalesOrderManagement.Api.Controllers
             }
         }
 
-        [HttpGet("GetProductById")]
+        [HttpGet("GetById")]
         public async Task<ActionResult<DTOProduct>> GetProductById(int id)
         {
             try
@@ -73,7 +73,7 @@ namespace SalesOrderManagement.Api.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("Update")]
         public async Task<ActionResult<bool>> Update(DTOProduct model)
         {
             try
@@ -92,17 +92,17 @@ namespace SalesOrderManagement.Api.Controllers
             }
         }
 
-        [HttpGet("GetProductAttributes")]
+        [HttpGet("GetAllAttributes")]
         public async Task<ActionResult<DTOProductAttribute>> GetProductAttributes()
         {
             try
             {
-                var ProductAttribute = await this.ProductRepository.GetProductAttributes();
-                if (ProductAttribute == null)
+                var productAttribute = await this.ProductRepository.GetProductAttributes();
+                if (productAttribute == null)
                 {
                     return NotFound();
                 }
-                return Ok(ProductAttribute);
+                return Ok(productAttribute);
             }
             catch (Exception)
             {

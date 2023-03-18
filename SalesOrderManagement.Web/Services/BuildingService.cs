@@ -17,7 +17,7 @@ namespace SalesOderManagement.Web.Services
         {
             try
             {
-                var buildling = await this._httpClient.GetFromJsonAsync<IEnumerable<DTOBuilding>>("api/Building");
+                var buildling = await this._httpClient.GetFromJsonAsync<IEnumerable<DTOBuilding>>("api/Building/GetAll");
                 return buildling;
             }
             catch (Exception)
@@ -27,15 +27,15 @@ namespace SalesOderManagement.Web.Services
         }
         public async Task<DTOBuilding?> GetBuildingById(int id)
         {
-            var state = await this._httpClient.GetFromJsonAsync<DTOBuilding>("api/Building/GetBuildingById?id=" + id);
+            var state = await this._httpClient.GetFromJsonAsync<DTOBuilding>("api/Building/GetById?id=" + id);
             return state;
         }
         public async Task<bool> Create(DTOBuilding model)
         {
             try
             {
-                var response = await this._httpClient.PostAsJsonAsync("api/Building", model);
-                if (response.StatusCode.ToString().Equals("OK"))
+                var response = await this._httpClient.PostAsJsonAsync("api/Building/Create", model);
+                if (response.IsSuccessStatusCode)
                 {
                     return true;
                 }
@@ -52,8 +52,8 @@ namespace SalesOderManagement.Web.Services
         {
             try
             {
-                var response = await this._httpClient.PutAsJsonAsync("api/Building", model);
-                if (response.StatusCode.ToString().Equals("OK"))
+                var response = await this._httpClient.PutAsJsonAsync("api/Building/Update", model);
+                if (response.IsSuccessStatusCode)
                 {
                     return true;
                 }

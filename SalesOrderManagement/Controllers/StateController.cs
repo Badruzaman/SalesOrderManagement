@@ -17,7 +17,7 @@ namespace SalesOrderManagement.Api.Controllers
             this.StateRepository = StateRepository;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<DTOState>>> GetStates()
         {
             try
@@ -39,7 +39,7 @@ namespace SalesOrderManagement.Api.Controllers
             }
 
         }
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<ActionResult<bool>> Create(DTOState model)
         {
             try
@@ -58,7 +58,7 @@ namespace SalesOrderManagement.Api.Controllers
             }
         }
 
-        [HttpGet("GetStateById")]
+        [HttpGet("GetById")]
         public async Task<ActionResult<DTOState>> GetStateById(int id)
         {
             try
@@ -77,7 +77,7 @@ namespace SalesOrderManagement.Api.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("Update")]
         public async Task<ActionResult<bool>> Update(DTOState model)
         {
             try

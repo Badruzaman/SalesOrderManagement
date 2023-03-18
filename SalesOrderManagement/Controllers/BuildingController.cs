@@ -16,7 +16,7 @@ namespace SalesOrderManagement.Api.Controllers
             this.BuildingRepository = BuildingRepository;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<DTOBuilding>>> GetBuildings()
         {
             try
@@ -38,7 +38,7 @@ namespace SalesOrderManagement.Api.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<ActionResult<bool>> Create(DTOBuilding model)
         {
             try
@@ -52,7 +52,7 @@ namespace SalesOrderManagement.Api.Controllers
                     "Error storing data in the database");
             }
         }
-        [HttpPut]
+        [HttpPut("Update")]
         public async Task<ActionResult<bool>> Update(DTOBuilding model)
         {
             try
@@ -71,7 +71,7 @@ namespace SalesOrderManagement.Api.Controllers
             }
         }
 
-        [HttpGet("GetBuildingById")]
+        [HttpGet("GetById")]
         public async Task<ActionResult<Building>> GetBuildingById(int id)
         {
             try

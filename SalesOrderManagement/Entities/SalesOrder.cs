@@ -13,7 +13,7 @@ namespace SalesOrderManagement.Api.Entities
         public virtual Building Buildings { get; set; }
         public int StatesId { get; set; }
         public virtual State States { get; set; }
-        [StringLength(8)]
+        [StringLength(12)]
         public string Code { get; set; }
         public virtual ICollection<SalesOrderDetail> SalesOrderDetail { get; set; }
     }

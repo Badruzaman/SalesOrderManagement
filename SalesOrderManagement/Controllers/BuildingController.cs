@@ -4,6 +4,8 @@ using SalesOrderManagement.Api.Entities;
 using SalesOrderManagement.Api.Repositories;
 using SalesOrderManagement.Api.Repositories.Contracts;
 using SalesOrderManagement.Models.DTOs;
+
+
 namespace SalesOrderManagement.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -91,7 +93,6 @@ namespace SalesOrderManagement.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error retrieving data from the database");
             }
-
         }
     }
 }

@@ -41,10 +41,9 @@ namespace SalesOderManagement.Web.Services
                 }
                 return false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
 
         }

@@ -15,7 +15,7 @@ namespace SalesOrderManagement.Api.Controllers
             this.SalesOrderRepository = SalesOrderRepository;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<DTOSalesOrder>>> GetSalesOrders()
         {
             try
@@ -34,7 +34,7 @@ namespace SalesOrderManagement.Api.Controllers
             }
 
         }
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<ActionResult<bool>> Create(DTOSalesOrder model)
         {
             try
@@ -53,7 +53,7 @@ namespace SalesOrderManagement.Api.Controllers
             }
         }
 
-        [HttpGet("GetSalesOrderById")]
+        [HttpGet("GetById")]
         public async Task<ActionResult<DTOSalesOrder>> GetSalesOrderById(int id)
         {
             try
@@ -72,7 +72,7 @@ namespace SalesOrderManagement.Api.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("Update")]
         public async Task<ActionResult<bool>> Update(DTOSalesOrder model)
         {
             try
@@ -91,7 +91,7 @@ namespace SalesOrderManagement.Api.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("Delete")]
         public async Task<ActionResult<bool>> Delete(long id)
         {
             try

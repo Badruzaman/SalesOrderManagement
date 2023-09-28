@@ -15,7 +15,7 @@ namespace SalesOrderManagement.Api.Controllers
             this.DimensionRepository = DimensionRepository;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<Dimension>>> GetDimensions()
         {
             try
@@ -37,7 +37,7 @@ namespace SalesOrderManagement.Api.Controllers
             }
 
         }
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<ActionResult<bool>> Create(DTODimension model)
         {
             try
@@ -56,7 +56,7 @@ namespace SalesOrderManagement.Api.Controllers
             }
 
         }
-        [HttpPut]
+        [HttpPut("Update")]
         public async Task<ActionResult<bool>> Update(DTODimension model)
         {
             try
@@ -74,7 +74,7 @@ namespace SalesOrderManagement.Api.Controllers
                    "Error storing data in the database");
             }
         }
-        [HttpGet("GetDimensionById")]
+        [HttpGet("GetById")]
         public async Task<ActionResult<Dimension>> GetDimensionById(int id)
         {
             try

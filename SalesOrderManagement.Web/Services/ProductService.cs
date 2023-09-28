@@ -16,7 +16,7 @@ namespace SalesOderManagement.Web.Services
         {
             try
             {
-                var products = await this._httpClient.GetFromJsonAsync<IEnumerable<DTOProduct>>("api/Product");
+                var products = await this._httpClient.GetFromJsonAsync<IEnumerable<DTOProduct>>("api/Product/GetAll");
                 return products;
             }
             catch (Exception)
@@ -28,8 +28,8 @@ namespace SalesOderManagement.Web.Services
         {
             try
             {
-                var response = await this._httpClient.PostAsJsonAsync("api/Product", model);
-                if (response.StatusCode.ToString().Equals("OK"))
+                var response = await this._httpClient.PostAsJsonAsync("api/Product/Create", model);
+                if (response.IsSuccessStatusCode)
                 {
                     return true;
                 }
@@ -44,15 +44,15 @@ namespace SalesOderManagement.Web.Services
         }
         public async Task<DTOProduct?> GetProductById(int id)
         {
-            var Product = await this._httpClient.GetFromJsonAsync<DTOProduct>("api/Product/GetProductById?id=" + id);
+            var Product = await this._httpClient.GetFromJsonAsync<DTOProduct>("api/Product/GetById?id=" + id);
             return Product;
         }
         public async Task<bool> Update(DTOProduct model)
         {
             try
             {
-                var response = await this._httpClient.PutAsJsonAsync("api/Product", model);
-                if (response.StatusCode.ToString().Equals("OK"))
+                var response = await this._httpClient.PutAsJsonAsync("api/Product/Update", model);
+                if (response.IsSuccessStatusCode)
                 {
                     return true;
                 }
@@ -67,8 +67,8 @@ namespace SalesOderManagement.Web.Services
 
         public async Task<IEnumerable<DTOProductAttribute>> GetProductAttributes()
         {
-            var ProductAttributes = await this._httpClient.GetFromJsonAsync<IEnumerable<DTOProductAttribute>>("api/Product/GetProductAttributes");
-            return ProductAttributes;
+            var productAttributes = await this._httpClient.GetFromJsonAsync<IEnumerable<DTOProductAttribute>>("api/Product/GetAllAttributes");
+            return productAttributes;
         }
     }
 }

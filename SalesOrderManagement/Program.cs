@@ -26,7 +26,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors(policy=> policy.WithOrigins("https://localhost:7256", "http://localhost:7256").AllowAnyMethod().WithHeaders(HeaderNames.ContentType));
+//app.UseCors(policy=> policy.WithOrigins("http://10.10.83.153:71", "https://10.10.83.153:71").AllowAnyMethod().WithHeaders(HeaderNames.ContentType));
+app.UseCors(policy => policy.WithOrigins("http://localhost:7256", "https://localhost:7256").AllowAnyMethod().WithHeaders(HeaderNames.ContentType));
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

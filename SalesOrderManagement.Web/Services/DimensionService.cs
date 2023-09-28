@@ -15,7 +15,7 @@ namespace SalesOderManagement.Web.Services
         {
             try
             {
-                var dimensions = await this._httpClient.GetFromJsonAsync<IEnumerable<DTODimension>>("api/Dimension");
+                var dimensions = await this._httpClient.GetFromJsonAsync<IEnumerable<DTODimension>>("api/Dimension/GetAll");
                 return dimensions;
             }
             catch (Exception)
@@ -27,7 +27,7 @@ namespace SalesOderManagement.Web.Services
         {
             try
             {
-                var dimension = await this._httpClient.GetFromJsonAsync<DTODimension>("api/Dimension/GetDimensionById?id=" + id);
+                var dimension = await this._httpClient.GetFromJsonAsync<DTODimension>("api/Dimension/GetById?id=" + id);
                 return dimension;
             }
             catch (Exception)
@@ -40,8 +40,8 @@ namespace SalesOderManagement.Web.Services
         {
             try
             {
-                var response = await this._httpClient.PostAsJsonAsync("api/Dimension", model);
-                if (response.StatusCode.ToString().Equals("OK"))
+                var response = await this._httpClient.PostAsJsonAsync("api/Dimension/Create", model);
+                if (response.IsSuccessStatusCode)
                 {
                     return true;
                 }
@@ -56,8 +56,8 @@ namespace SalesOderManagement.Web.Services
         {
             try
             {
-                var response = await this._httpClient.PutAsJsonAsync("api/Dimension", model);
-                if (response.StatusCode.ToString().Equals("OK"))
+                var response = await this._httpClient.PutAsJsonAsync("api/Dimension/Update", model);
+                if (response.IsSuccessStatusCode)
                 {
                     return true;
                 }

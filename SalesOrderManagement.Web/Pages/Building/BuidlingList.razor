@@ -3,51 +3,48 @@
 @inherits BuildingBase
 @inject NavigationManager navigationManager
 
-
 <PageTitle>Building List</PageTitle>
 <div>
     <a class="btn btn-primary" href='/Building/AddBuilding'>Add New Data</a>
 </div>
-
-   
-    <table class="table table-bordered table-hover">
-        <thead>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th style="width:1%">SL</th>
+            <th>Building</th>
+            <th>State</th>
+            <th style="text-align:right; width: 10%">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Buildings == null || Buildings.Count() == 0)
+        {
             <tr>
-                <th style="width:1%">SL</th>
-                <th>Building</th>
-                <th>State</th>
-                <th style="text-align:right; width: 10%">Action</th>
+                <td colspan="3">
+                    No Records to display
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @if (Buildings == null || Buildings.Count() == 0)
+        }
+        else
+        {
+            int i = 1;
+            foreach (var building in Buildings)
             {
                 <tr>
-                    <td colspan="3">
-                        No Records to display
+                    <td>@(i++)</td>
+                    <td>@building.Name</td>
+                    <td>@building.StateName</td>
+                    <td style="text-align:right">
+                        <button class="btn btn-primary" @onclick="@(() => NavigateToEditBuilding(building.BuildingId))">Edit</button>
                     </td>
                 </tr>
             }
-            else
-            {
-            int i = 1;
-                foreach (var building in Buildings)
-                {
-                    <tr>
-                        <td>@(i++)</td>
-                        <td>@building.Name</td>
-                        <td>@building.StateName</td>
-                        <td style="text-align:right">
-                            <button class="btn btn-primary" @onclick="@(() => NavigateToEditBuilding(building.BuildingId))">Edit</button>
-                        </td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 
 @code {
-    
+
     protected override async Task OnInitializedAsync()
     {
         Buildings = await BuildingService.GetBuildings();
